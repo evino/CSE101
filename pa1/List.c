@@ -168,10 +168,16 @@ bool isEmpty(List L) {
 // Not fully sure if this works. My logic is that I can just delete/free the list
 // from memory, then just 'create' a new list.
 void clear(List L) {
-    List *pL = &L;
-    freeList(pL);
-    newList();
-    return;
+    moveFront(L);
+    Node *pN;
+    while (index(L) >= 0) {
+        freeNode(pN);
+    }
+    L->front = NULL;
+    L->back = NULL;
+    L->cursor = NULL;
+    L->index = -1;
+    L->length = 0;
 }
 
 void set(List L, int x) {
