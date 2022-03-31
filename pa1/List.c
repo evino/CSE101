@@ -7,7 +7,7 @@ List.c
 
 
 #include "List.h"
-#include <stdio.h>
+//#include <stdio.h>
 #include <stdlib.h>
 //#include <stdbool.h>
 
@@ -172,9 +172,9 @@ void clear(List L) {
     moveFront(L);
     Node N;
     Node temp;
-    for (L->cursor = L->front; L->cursor <= L->length; moveNext(L)) {
+    for (L->cursor = L->front; L->cursor != L->back; moveNext(L)) {
         temp = N->next;
-        freeNode(N);
+        freeNode(&N);
         N = temp;
     }
     L->front = NULL;
@@ -222,6 +222,20 @@ void moveNext(List L) {
     }
     if (L->cursor != NULL && L->cursor == L->back) {
         L->cursor = NULL;
+    }
+    return;
+}
+
+
+void append(List L, int x) {
+    Node temp = newNode(x);
+    if (!isEmpty(L)) {
+        L->back->next = temp;
+        temp->previous = L->back;
+        L->back = temp;
+    } else {
+        L->front = temp;
+        L->back = temp;
     }
     return;
 }
