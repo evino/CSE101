@@ -7,6 +7,7 @@ List.h
 
 #pragma once
 
+#include <stdio.h>
 #include <stdbool.h>
 
 // Exported type --------------------------------------------------------------
