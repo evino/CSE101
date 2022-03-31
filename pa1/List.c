@@ -27,6 +27,7 @@ typedef struct ListObj {
     Node back;
     Node cursor;
     int length;
+    int index;
 } ListObj;
 
 // Constructors-Destructors ---------------------
@@ -42,7 +43,7 @@ Node newNode (int data) {
 
 // Frees heap mem pointed to by *pN, sets *pN to NULL
 void freeNode (Node *pN) {
-    if (pN != NULL *pN != NULL) {
+    if (pN != NULL || *pN != NULL) {
         free(*pN);
         *pN = NULL;
     }
@@ -55,7 +56,7 @@ List newList(void) {
     L->front = NULL;
     L->back = NULL;
     L->cursor = NULL;
-    L->index = -1;
+    //L->index = -1;
     L->length = 0;
     return(L);
 }
@@ -171,8 +172,7 @@ void clear(List L) {
     moveFront(L);
     Node N;
     Node temp;
-    Node current;
-    for (L->current = L->front; L->current <= L->length; L->current++) {
+    for (L->cursor = L->front; L->cursor <= L->length; moveNext(L)) {
         temp = N->next;
         freeNode(N);
         N = temp;
@@ -216,4 +216,12 @@ void moveBack(List L) {
 }
 
 
-
+void moveNext(List L) {
+    if (L->cursor != NULL && L->cursor != L->back) {
+        L->cursor = L->cursor->next;
+    }
+    if (L->cursor != NULL && L->cursor == L->back) {
+        L->cursor = NULL;
+    }
+    return;
+}
