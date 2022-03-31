@@ -24,7 +24,7 @@ int back(List L); // Returns back element of L. Pre: length()>0
 int get(List L); // Returns cursor element of L. Pre: length()>0, index()>=0
 bool equals(List A, List B); // Returns true iff Lists A and B are in same
                             // state, and returns false otherwise.
-bool isEqual(List L); // Returns true if L is empty, otherwise returns false.
+bool isEmpty(List L); // Returns true if L is empty, otherwise returns false.
 
 // Manipulation procedures ----------------------------------------------------
 void clear(List L); // Resets L to its original empty state.
