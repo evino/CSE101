@@ -46,6 +46,7 @@ void freeNode (Node *pN) {
         free(*pN);
         *pN = NULL;
     }
+    return;
 }
 
 List newList(void) {
@@ -67,6 +68,7 @@ void freeList(List *pL) {
         free(*pL);
         *pL = NULL;
     }
+    return;
 }
 
 
@@ -154,9 +156,6 @@ bool equals(List A, List B) {
     return eq;
 }
 
-
-
-
 bool isEmpty(List L) {
     if (L == NULL) {
         printf("List Error: calling isEmpty() on NULL List reference\n");
@@ -165,3 +164,46 @@ bool isEmpty(List L) {
        
     return (L->length == 0);
 }
+
+// Not fully sure if this works. My logic is that I can just delete/free the list
+// from memory, then just 'create' a new list.
+void clear(List L) {
+    List *pL = &L;
+    freeList(pL);
+    newList();
+    return;
+}
+
+void set(List L, int x) {
+    if (L == NULL) {
+        printf("List Error: calling set() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (length(L) <= 0) {
+        printf("List Error: calling set() on an empty List\n");
+        exit(EXIT_FAILURE);
+    }
+    if (index(L) < 0) {
+        printf("List Error: calling set() undefined cursor\n");
+        exit(EXIT_FAILURE);
+    }
+    L->cursor->data = x; // Just replaces cursor data with a new int
+    return;
+}
+
+void moveFront(List L) {
+    if (!isEmpty(L)) {
+        L->cursor = L->front;
+    }
+    return;
+}
+
+void moveBack(List L) {
+    if (!isEmpty(L)) {
+        L->cursor = L->back;
+    }
+    return;
+}
+
+
+
