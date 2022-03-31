@@ -250,6 +250,9 @@ void delete(List L) {
         printf("List Error: calling delete() on already undefined cursor\n");
         exit(EXIT_FAILURE);
     }
+    L->cursor->previous->next = L->cursor->next;
+    L->cursror->next->previous = L->cursor->previous;
+    // 
     // Need keep them linked before freeing
     freeNode(L->cursor);
     L->cursor = NULL;
