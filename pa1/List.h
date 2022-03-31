@@ -5,6 +5,11 @@ pa1
 List.h
 */
 
+#pragma once
+
+#include <stdbool.h>
+
+
 // Constructors-Destructors ---------------------------------------------------
 List newList(void); // Creates and returns a new empty List.
 void freeList(List* pL); // Frees all heap memory associated with *pL, and sets
