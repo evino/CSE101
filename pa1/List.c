@@ -169,9 +169,13 @@ bool isEmpty(List L) {
 // from memory, then just 'create' a new list.
 void clear(List L) {
     moveFront(L);
-    Node *pN;
-    while (index(L) >= 0) {
-        freeNode(pN);
+    Node N;
+    Node temp;
+    Node current;
+    for (L->current = L->front; L->current <= L->length; L->current++) {
+        temp = N->next;
+        freeNode(N);
+        N = temp;
     }
     L->front = NULL;
     L->back = NULL;
