@@ -239,3 +239,17 @@ void append(List L, int x) {
     }
     return;
 }
+
+
+void delete(List L) {
+    if (length(L) <= 0) {
+        printf("List Error: calling delete() on empty list\n");
+        exit(EXIT_FAILURE);
+    }
+    if (index(L) < 0) {
+        printf("List Error: calling delete() on already undefined cursor\n");
+        exit(EXIT_FAILURE);
+    }
+    // Need keep them linked before freeing
+    freeNode(L->cursor);
+    L->cursor = NULL;
