@@ -261,10 +261,14 @@ void delete(List L) {
 
 // Other operations -----------------------
 void printList(FILE* out, List L) {
-    L->cursor = L->front;
-    while (L->cursor != NULL) {
-        L->cursor = L->cursor->next;
-        fprintf(out, "%d ", L->cursor->data);
+    Node N = NULL;
+
+    if (L == NULL) {
+        printf("List Error: calling printList() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
+    for (N = L->front; N != NULL; N = N->next) {
+        printf("%d ", N->data);
     }
     printf("\n");
     return;
