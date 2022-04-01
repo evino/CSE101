@@ -251,8 +251,9 @@ void delete(List L) {
         exit(EXIT_FAILURE);
     }
     L->cursor->previous->next = L->cursor->next;
-    L->cursror->next->previous = L->cursor->previous;
+    L->cursor->next->previous = L->cursor->previous;
     // 
     // Need keep them linked before freeing
-    freeNode(L->cursor);
+    freeNode(&(L->cursor));
     L->cursor = NULL;
+}
