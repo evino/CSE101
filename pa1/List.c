@@ -257,3 +257,15 @@ void delete(List L) {
     freeNode(&(L->cursor));
     L->cursor = NULL;
 }
+
+
+// Other operations -----------------------
+void printList(FILE* out, List L) {
+    L->cursor = L->front;
+    while (L->cursor != NULL) {
+        L->cursor = L->cursor->next;
+        fprintf(out, "%d ", L->cursor->data);
+    }
+    printf("\n");
+    return;
+}
