@@ -56,7 +56,7 @@ List newList(void) {
     L->front = NULL;
     L->back = NULL;
     L->cursor = NULL;
-    //L->index = -1;
+    L->index = -1;
     L->length = 0;
     return(L);
 }
@@ -158,8 +158,10 @@ bool equals(List A, List B) {
 }
 
 bool isEmpty(List L) {
-    if (L == NULL) {
+    if (L == NULL) {  // Prints in red just for fun :)
+        printf("\033[1;31m");
         printf("List Error: calling isEmpty() on NULL List reference\n");
+        printf("\033[0m");
         exit(EXIT_FAILURE);
     }
        
@@ -205,6 +207,7 @@ void moveFront(List L) {
     if (!isEmpty(L)) {
         L->cursor = L->front;
     }
+    L->index = 0;
     return;
 }
 
@@ -212,6 +215,8 @@ void moveBack(List L) {
     if (!isEmpty(L)) {
         L->cursor = L->back;
     }
+    L->index -= 1;
+    L->index = (L->length - 1);
     return;
 }
 
@@ -223,6 +228,7 @@ void moveNext(List L) {
     if (L->cursor != NULL && L->cursor == L->back) {
         L->cursor = NULL;
     }
+    L->index += 1;
     return;
 }
 
@@ -233,10 +239,13 @@ void append(List L, int x) {
         L->back->next = temp;
         temp->previous = L->back;
         L->back = temp;
+        L->back->next = NULL; // Added this in, since I think this should be done
+                             // just in case.
     } else {
         L->front = temp;
         L->back = temp;
     }
+    L->length += 1;
     return;
 }
 
@@ -255,6 +264,7 @@ void delete(List L) {
     // 
     // Need keep them linked before freeing
     freeNode(&(L->cursor));
+    L->length -= 1;
     L->cursor = NULL;
 }
 
