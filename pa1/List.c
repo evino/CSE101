@@ -149,7 +149,7 @@ bool equals(List A, List B) {
     eq = (A->length == B->length);
     N = A->front;
     M = B->front;
-    while (eq && N!= NULL) {
+    while (eq && N != NULL) {
         eq = (N->data == M->data);
         N =  N->next;
         M = M->next;
