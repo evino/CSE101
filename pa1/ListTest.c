@@ -7,21 +7,26 @@ int main(int argc, char *argv[]) {
     List A = newList();
     //List B = newList();
     //List C = NULL;
-    for(int i=1; i<=20; i++) {
+    for(int i=23; i<=44; i++) {
         printf("Appending: %d\n", i);
         append(A, i);
     }
     moveFront(A);
     int myIndex = index(A);
-    printf("Index @: %d\n", myIndex);
     moveNext(A);
-    printf("Index now at: %d\n", index(A));
+    printf("Cursor element at index %d is: %d\n", index(A), get(A));
     moveNext(A);
-    printf("Index now at: %d\n", index(A));
-    moveBack(A);
+    printf("Cursor element now: %d\n", get(A));
+    moveNext(A);
+    moveNext(A);
+    printf("Cursor ndex now at: %d\n", index(A));
+    //moveBack(A);
     myIndex = index(A);
     printf("Index @ %d\n", myIndex);
     printList(stdout, A);
-
+    freeList(&A);
+    printf("Segfualt here\n");
+    //delete(A);
+    printf("Cursor now at %d and equals %d\n", index(A), get(A));
     return (EXIT_SUCCESS);
 }
