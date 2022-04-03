@@ -129,7 +129,7 @@ int get(List L) {
         printf("List Error: calling get() on empty List\n");
         exit(EXIT_FAILURE);
     }
-    if (index(L) <= 0) {
+    if (index(L) < 0) {
         printf("List Error: calling get() with undefined cursor\n");
         exit(EXIT_FAILURE);
     }
