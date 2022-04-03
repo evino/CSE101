@@ -43,7 +43,7 @@ Node newNode (int data) {
 
 // Frees heap mem pointed to by *pN, sets *pN to NULL
 void freeNode (Node *pN) {
-    if (pN != NULL || *pN != NULL) {
+    if (pN != NULL && *pN != NULL) {
         free(*pN);
         *pN = NULL;
     }
@@ -63,7 +63,9 @@ List newList(void) {
 
 void freeList(List *pL) {
     if(pL != NULL && *pL != NULL) {
+        moveFront(*pL);
         while (!isEmpty(*pL)) {
+            //moveNext(*pL);
             delete(*pL);
         }
         free(*pL);
@@ -251,21 +253,32 @@ void append(List L, int x) {
 
 
 void delete(List L) {
+    Node N = L->cursor;
     if (length(L) <= 0) {
         printf("List Error: calling delete() on empty list\n");
         exit(EXIT_FAILURE);
     }
     if (index(L) < 0) {
-        printf("List Error: calling delete() on already undefined cursor\n");
+        printf("List Error: calling delete() on undefined cursor\n");
         exit(EXIT_FAILURE);
     }
-    L->cursor->previous->next = L->cursor->next;
-    L->cursor->next->previous = L->cursor->previous;
-    // 
-    // Need keep them linked before freeing
-    freeNode(&(L->cursor));
+    if (L->cursor == L->front) {
+        L->front = L->cursor->next;
+        L->cursor->next->previous = NULL;
+    }
+    if (L->cursor == L->back) {
+        L->back = L->cursor->previous;
+        L->cursor->previous->next = NULL;
+    }
+    else {
+        L->cursor->previous->next = L->cursor->next;
+        L->cursor->next->previous = L->cursor->previous;
+    }
     L->length -= 1;
-    L->cursor = NULL;
+    //L->index = -1;
+    //freeNode(&(L->cursor));
+    freeNode(&N);
+    // This line causes a segfault: L->cursor = NULL;
 }
 
 
