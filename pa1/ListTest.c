@@ -24,9 +24,11 @@ int main(int argc, char *argv[]) {
     myIndex = index(A);
     printf("Index @ %d\n", myIndex);
     printList(stdout, A);
+    delete(A);
+    //printf("Cursor now at %d and equals %d\n", index(A), get(A));
+    printList(stdout, A);
+    printf("Freeing list now\n");
     freeList(&A);
-    printf("Segfualt here\n");
-    //delete(A);
-    printf("Cursor now at %d and equals %d\n", index(A), get(A));
+    //printList(stdout, A);
     return (EXIT_SUCCESS);
 }
