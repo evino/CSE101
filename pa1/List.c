@@ -94,6 +94,10 @@ int index(List L) {
         printf("List Error: calling index() on empty List\n");
         exit(EXIT_FAILURE);
     }
+    if (L->cursor == NULL) {
+        printf("List Error: calling index() on undefined cursor\n");
+        exit(EXIT_FAILURE);
+    }
     return (L->index);
 }
 
@@ -279,7 +283,8 @@ void delete(List L) {
         L->cursor->next->previous = L->cursor->previous;
     }
     L->length--;
-    //L->index = -1;
+    L->cursor = NULL;
+    L->index = -1;
     //freeNode(&(L->cursor));
     freeNode(&N);
     // This line causes a segfault: L->cursor = NULL;
@@ -294,9 +299,28 @@ void printList(FILE* out, List L) {
         printf("List Error: calling printList() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+    if (isEmpty(L)) {
+        printf("List Error: calling printList() on empty List\n");
+        exit(EXIT_FAILURE);
+    }
     for (N = L->front; N != NULL; N = N->next) {
         printf("%d ", N->data);
     }
     printf("\n");
     return;
+}
+
+// Returns a new List representing the same integer
+// sequence as L. The cursor in the new list is undefined,
+// regardless of the state of the cursor in L. The state
+// of L is unchanged.
+
+List copyList(List L) {
+    List myList = newList();
+    moveFront(L);
+    for (Node N = L->front; N != NULL; N = N->next) {
+        append(myList, N->data);
+    }
+    myList->cursor = NULL;
+    return myList;
 }
