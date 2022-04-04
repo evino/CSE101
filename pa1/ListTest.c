@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
     printList(stdout, A);
     printf("Segfaults at clear()\n");
     clear(A);
+    printf("Length: %d\n", length(A));
     printf("Freeing list now\n");
     freeList(&A);
     printList(stdout, A);
