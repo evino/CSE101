@@ -176,7 +176,7 @@ void clear(List L) {
     moveFront(L);
     Node N;
     Node temp;
-    for (N = L->cursor; N != L->back; moveNext(L)) {
+    for (N = L->front; N != NULL;) {
         printf("DB1\n");
         temp = N->next;
         //N = temp;
