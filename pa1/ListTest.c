@@ -5,33 +5,34 @@
 
 int main(int argc, char *argv[]) {
     List A = newList();
-    //List B = newList();
+    List B = newList();
     //List C = NULL;
     for(int i=23; i<=44; i++) {
         printf("Appending: %d\n", i);
         append(A, i);
     }
     moveFront(A);
-    int myIndex = index(A);
     moveNext(A);
     printf("Cursor element at index %d is: %d\n", index(A), get(A));
     moveNext(A);
     printf("Cursor element now: %d\n", get(A));
-    moveNext(A);
-    moveNext(A);
-    printf("Cursor ndex now at: %d\n", index(A));
-    //moveBack(A);
-    myIndex = index(A);
-    printf("Index @ %d\n", myIndex);
+    moveBack(A);
+    printf("Index @ %d\n", index(A));
     printList(stdout, A);
+    printf("Length before delete(): %d\n", length(A));
     delete(A);
-    //printf("Cursor now at %d and equals %d\n", index(A), get(A));
+    printf("After delete\n");
+    //printf("After index called: Cursor now at %d", index(A));
     printList(stdout, A);
-    printf("Segfaults at clear()\n");
+    B = copyList(A);
+    printf("About to print B\n");
+    printList(stdout, B);
+    //printf("B curssor is: %d\n", get(B));
+    printf("Length before clear: %d\n", length(A));
     clear(A);
-    printf("Length: %d\n", length(A));
-    printf("Freeing list now\n");
+    printf("Length after clear: %d\n", length(A));
     freeList(&A);
+    printList(stdout, B);
     printList(stdout, A);
     return (EXIT_SUCCESS);
 }
