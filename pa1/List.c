@@ -176,11 +176,15 @@ void clear(List L) {
     moveFront(L);
     Node N;
     Node temp;
-    for (L->cursor = L->front; L->cursor != L->back; moveNext(L)) {
+    for (N = L->cursor; N != L->back; moveNext(L)) {
+        printf("DB1\n");
         temp = N->next;
+        //N = temp;
         freeNode(&N);
         N = temp;
+        
     }
+    printf("DB2\n");
     L->front = NULL;
     L->back = NULL;
     L->cursor = NULL;
@@ -274,7 +278,7 @@ void delete(List L) {
         L->cursor->previous->next = L->cursor->next;
         L->cursor->next->previous = L->cursor->previous;
     }
-    L->length -= 1;
+    L->length--;
     //L->index = -1;
     //freeNode(&(L->cursor));
     freeNode(&N);
