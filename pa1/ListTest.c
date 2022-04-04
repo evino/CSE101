@@ -27,8 +27,10 @@ int main(int argc, char *argv[]) {
     delete(A);
     //printf("Cursor now at %d and equals %d\n", index(A), get(A));
     printList(stdout, A);
+    printf("Segfaults at clear()\n");
+    clear(A);
     printf("Freeing list now\n");
     freeList(&A);
-    //printList(stdout, A);
+    printList(stdout, A);
     return (EXIT_SUCCESS);
 }
