@@ -6,6 +6,23 @@
 int main(int argc, char *argv[]) {
     List A = newList();
     List B = newList();
+    for (int i = 1; i <= 20; i++) {
+        append(A, i);
+        prepend(B, i);
+    }
+    printf("List A: "); printList(stdout, A);
+    printf("\nList B: "); printList(stdout, B);
+    List C = newList();
+    C = copyList(A);
+    printf("\nList C: "); printList(stdout, C);
+
+
+    freeList(&A);
+    
+    return (EXIT_SUCCESS);
+}
+
+/*
     //List C = NULL;
     for(int i=23; i<=44; i++) {
         printf("Appending: %d\n", i);
@@ -51,3 +68,4 @@ int main(int argc, char *argv[]) {
     freeList(&B);
     return (EXIT_SUCCESS);
 }
+*/
