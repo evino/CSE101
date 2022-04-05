@@ -62,6 +62,10 @@ List newList(void) {
 }
 
 void freeList(List *pL) {
+    if (pL == NULL || *pL == NULL) {
+        printf("List Error: calling freeList() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     if(pL != NULL && *pL != NULL) {
         moveFront(*pL);
         while (!isEmpty(*pL)) {
@@ -76,6 +80,12 @@ void freeList(List *pL) {
 
 
 // Access functions ------------------------------
+
+void increment(List L) { // Helper function to increment
+    L->index += 1;
+    L->length += 1;
+    return;
+}
 
 int length(List L) {
     if (L == NULL) {
@@ -230,7 +240,7 @@ void moveBack(List L) {
     return;
 }
 
-
+// Might need error message
 void moveNext(List L) {
     if (L->cursor != NULL && L->cursor != L->back) {
         L->cursor = L->cursor->next;
@@ -258,6 +268,67 @@ void append(List L, int x) {
     L->length += 1;
     return;
 }
+
+
+void insertBefore(List L, int x) {
+    if (isEmpty(L)) {
+        printf("List Error: calling insertBefore() on empty list\n");
+        exit(EXIT_FAILURE);
+    }
+    if (L->index < 0) {
+        printf("List Error: calling insertBefore() on undefined cursor\n");
+        exit(EXIT_SUCCESS);
+    }
+    if (L == NULL) {
+        printf("List Error: calling insertBefore() on NULL List reference\n");
+    }
+
+    Node N = newNode(x);
+    if (L->cursor == L->front) {
+        N->previous = NULL;
+        N->next = L->cursor;
+        L->cursor->previous = N;
+        L->front = N;
+    } else {
+        N->previous = L->cursor->previous;
+        N->next = L->cursor;
+        L->cursor->previous->next = N;
+        L->cursor->previous = N;
+    }
+    increment(L);
+    //L->length++;
+    //L->index++;
+    return;
+}
+
+void insertAfter(List L, int x) {
+    if (isEmpty(L)) {
+        printf("List Error: calling insertAfter() on empty list\n");
+        exit(EXIT_FAILURE);
+    }
+    if (L->index < 0) {
+        printf("List Error: calling insertAfter() on undefined cursor\n");
+        exit(EXIT_SUCCESS);
+    }
+    if (L == NULL) {
+        printf("List Error: calling insertAfter() on NULL List reference\n");
+    }
+    Node N = newNode(x);
+    if (L->cursor == L->back) {
+        N->previous = L->cursor;
+        N->next = NULL;
+        L->cursor->next = N;
+        L->back = N;
+    } else {
+        N->previous = L->cursor;
+        N->next = L->cursor->next;
+        L->cursor->next->previous = N;
+        L->cursor->next = N;
+    }
+    increment(L);
+    return;
+}
+
 
 
 void delete(List L) {
