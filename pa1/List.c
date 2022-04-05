@@ -275,6 +275,10 @@ void moveNext(List L) {
 
 void prepend(List L, int x) {
     Node N = newNode(x);
+    if (L == NULL) {
+        printf("List Error: Calling prepend() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     if (!isEmpty(L)) {
         L->front->previous = N;
         N->next = L->front;
