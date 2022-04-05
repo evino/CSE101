@@ -224,6 +224,9 @@ void set(List L, int x) {
 }
 
 void moveFront(List L) {
+    if (L == NULL) {
+        printf("List Error: Calling moveFront() on NULL List reference\n");
+        exit(EXIT_FAILURE);
     if (!isEmpty(L)) {
         L->cursor = L->front;
     }
@@ -232,23 +235,45 @@ void moveFront(List L) {
 }
 
 void moveBack(List L) {
+    if (L == NULL) {
+        printf("List Error: Calling moveBack() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     if (!isEmpty(L)) {
         L->cursor = L->back;
     }
-    L->index -= 1;
     L->index = (L->length - 1);
     return;
 }
 
-// Might need error message
+void movePrevious(List L) {
+    if (L == NULL) {
+        printf("List Error: Calling movePrevious() on NULL List reference\n");
+    }
+    if (L->cursor != NULL && L->cursor != L->front) {
+        L->cursor = L->cursor->previous;
+        L->index--;
+    }
+    if (L->cursor != NULL && L->cursor == L->front) {
+        L->cursor = NULL;
+        L->index = -1;
+    }
+    return;
+}
+
 void moveNext(List L) {
+    if (L == NULL) {
+        printf("List Error: Calling moveNext() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     if (L->cursor != NULL && L->cursor != L->back) {
         L->cursor = L->cursor->next;
+        L->index++;
     }
     if (L->cursor != NULL && L->cursor == L->back) {
         L->cursor = NULL;
+        L->index = -1;
     }
-    L->index += 1;
     return;
 }
 
