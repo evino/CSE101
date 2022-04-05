@@ -381,19 +381,45 @@ void deleteFront(List L) {
         L->cursor = NULL;
         L->index = -1;
     }
-    if (L->length > 0) {
+    if (L->length > 1) {
        L->front = L->front->next;
-    }
+    } 
     else {
         L->front = L->back = NULL;
     }
     L->length--;
+    L->index--;
     freeNode(&N);
     //freeNode(&(L->front));
     return;
 }
 
-
+void deleteBack(List L) {
+    Node N = NULL;
+    if (L == NULL) {
+        printf("List Error: Calling deleteBack() on NULL List Reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (isEmpty(L)) {
+        printf("List Error: Calling deleteBack() on empty list\n");
+        exit(EXIT_FAILURE);
+    }
+    N = L->back;
+    if (L->cursor == L->back) {
+        L->cursor = NULL;
+        L->index = -1;
+    }
+    if (L->length > 1) {
+        L->back = L->back->previous;
+    }
+    else {
+        L->front = L->back = NULL;
+    }
+    L->length--;
+    //L->index--;
+    freeNode(&N);
+    return;
+}
 
 void delete(List L) {
     //Node N = L->cursor;
@@ -438,7 +464,7 @@ void printList(FILE* out, List L) {
         printf("List Error: calling printList() on empty List\n");
         exit(EXIT_FAILURE);
     }
-    for (N = L->front; N != NULL; N = N->next) {
+    for (N = L->front; N != L->back; N = N->next) {
         printf("%d ", N->data);
     }
     printf("\n");
