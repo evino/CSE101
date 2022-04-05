@@ -18,7 +18,8 @@ int main(int argc, char *argv[]) {
 
 
     freeList(&A);
-    
+    freeList(&B);
+    freeList(&C);
     return (EXIT_SUCCESS);
 }
 
