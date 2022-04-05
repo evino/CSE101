@@ -471,6 +471,7 @@ void printList(FILE* out, List L) {
     for (N = L->front; N != L->back; N = N->next) {
         printf("%d ", N->data);
     }
+    printf("%d ", N->data);
     printf("\n");
     return;
 }
