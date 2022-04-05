@@ -25,6 +25,9 @@ int main(int argc, char *argv[]) {
     //printf("After index called: Cursor now at %d", index(A));
     printList(stdout, A);
     B = copyList(A);
+    deleteFront(B);
+    deleteBack(B);
+    printf("DB1\n");
     moveFront(B);
     //moveBack(B);
     printf("List B:\n"); printList(stdout, B);
@@ -33,9 +36,10 @@ int main(int argc, char *argv[]) {
     printList(stdout, B);
     printf("Length of B is %d\n", length(B));
     //moveBack(B);
-    insertAfter(B, 69);
-    printf("Inserting after index %d...\n", index(A));
-    printList(stdout, B);
+    printf("Inserting after index %d...\n", index(B));
+    printf("Deleting front and back\n");
+   // deleteBack(B);
+    insertAfter(B, 69); printList(stdout, B);
     printf("Length of B now is %d\n", length(B));
     //printf("B curssor is: %d\n", get(B));
     printf("Length before clear: %d\n", length(A));
