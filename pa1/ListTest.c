@@ -48,5 +48,6 @@ int main(int argc, char *argv[]) {
     freeList(&A);
     printList(stdout, B);
     printList(stdout, A);
+    freeList(&B);
     return (EXIT_SUCCESS);
 }
