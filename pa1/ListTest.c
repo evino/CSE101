@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
     movePrev(C);
     movePrev(C);
     delete(C);
+    clear(A);
     printf("Length of C: %d\n", length(C));
     printf("\nList C: "); printList(stdout, C);
 
