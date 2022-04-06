@@ -81,12 +81,6 @@ void freeList(List *pL) {
 
 // Access functions ------------------------------
 
-void increment(List L) { // Helper function to increment
-    L->index += 1;
-    L->length += 1;
-    return;
-}
-
 int length(List L) {
     if (L == NULL) {
         printf("List Error: calling length() on NULL List reference\n");
@@ -100,11 +94,13 @@ int index(List L) {
         printf("List Error: calling index() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+    /*
     if (isEmpty(L)) {
         printf("List Error: calling index() on empty List\n");
         exit(EXIT_FAILURE);
     }
-    if (L->cursor == NULL) {
+    */
+    if (L->cursor == NULL || isEmpty(L)) {
         L->index = -1;
     }
     return (L->index);
@@ -289,6 +285,7 @@ void prepend(List L, int x) {
         L->back = N;
         L->front->previous = L->back->next = NULL;
     }
+    L->index++;
     L->length++;
     return;
 }
@@ -336,9 +333,8 @@ void insertBefore(List L, int x) {
         L->cursor->previous->next = N;
         L->cursor->previous = N;
     }
-    increment(L);
-    //L->length++;
-    //L->index++;
+    L->length++;
+    L->index++;
     return;
 }
 
@@ -366,7 +362,7 @@ void insertAfter(List L, int x) {
         L->cursor->next->previous = N;
         L->cursor->next = N;
     }
-    increment(L);
+    L->length++;
     return;
 }
 
