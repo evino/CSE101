@@ -427,14 +427,16 @@ void deleteBack(List L) {
 
 void delete(List L) {
     //Node N = L->cursor;
+    Node N = NULL;
     if (L->length <= 0) {
         printf("List Error: calling delete() on empty list\n");
         exit(EXIT_FAILURE);
     }
-    if (L->index < 0) {
+    if (L->index < 0 || L->cursor == NULL) {
         printf("List Error: calling delete() on undefined cursor\n");
         exit(EXIT_FAILURE);
     }
+    N = L->cursor;
     if (L->cursor == L->front) {
         L->front = L->cursor->next;
         L->cursor->next->previous = NULL;
@@ -450,8 +452,8 @@ void delete(List L) {
     L->length--;
     L->cursor = NULL;
     L->index = -1;
-    freeNode(&(L->cursor));
-    //freeNode(&N);
+    //freeNode(&(L->cursor));
+    freeNode(&N);
     // This line causes a segfault: L->cursor = NULL;
 }
 
