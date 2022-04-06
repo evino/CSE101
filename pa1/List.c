@@ -441,7 +441,7 @@ void delete(List L) {
         L->front = L->cursor->next;
         L->cursor->next->previous = NULL;
     }
-    if (L->cursor == L->back) {
+    else if (L->cursor == L->back) {
         L->back = L->cursor->previous;
         L->cursor->previous->next = NULL;
     }
@@ -455,6 +455,7 @@ void delete(List L) {
     //freeNode(&(L->cursor));
     freeNode(&N);
     // This line causes a segfault: L->cursor = NULL;
+    return;
 }
 
 
