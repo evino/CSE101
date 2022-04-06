@@ -14,6 +14,11 @@ int main(int argc, char *argv[]) {
     printf("\nList B: "); printList(stdout, B);
     List C = newList();
     C = copyList(A);
+    moveBack(C);
+    movePrev(C);
+    movePrev(C);
+    delete(C);
+    printf("Length of C: %d\n", length(C));
     printf("\nList C: "); printList(stdout, C);
 
 
