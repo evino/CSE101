@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     int lineCount = 0;
     FILE *in, *out;
     char **str;
+    char temp[MAX_LEN];
     // check command line for correct number of arguments
     if( argc != 3 ){
         fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Unable to open file %s for writing\n", argv[2]);
         exit(EXIT_FAILURE);
     }
+    
     str = malloc(MAX_LEN * sizeof(char*));
     while (fgets(line, MAX_LEN, in) != NULL) {
         lineCount++;
@@ -35,25 +37,44 @@ int main(int argc, char *argv[]) {
         str[lineCount] = line;
         //fprintf(out, "%s\n", str[lineCount]);
     }
-
+    
     List myList = newList();
     // ind is index of str array
-    for (int ind = 0; ind <= lineCount; ind++) {
- 
-        if (ind == 0) {
+    for (int ind = 0; ind < lineCount; ind++) {
+        for (int j = ind + 1; j < lineCount+1; j++) {
+            
+           //segfaults here
+            if (strcmp(str[ind], str[j]) > 0) {
+                strcpy(temp, str[ind]);
+                strcpy(str[ind], str[j]);
+                strcpy(str[j], temp);
+                append(myList, ind);
+            }
+            //printf("DB1\n");
+        
+        }
+        fprintf(out, "%s\n", str[ind]);
+    }
+            /*
+            if (ind == 0) {
             append(myList, ind);
             moveFront(myList);
         }
         if (ind >= 1 && (strcmp(str[ind], str[ind-1]) < 0)) {
             insertBefore(myList, ind);
+            movePrev(myList);
         }
         else if (ind >= 1 && (strcmp(str[ind], str[ind-1]) > 0)) {
             insertAfter(myList, ind);
+            moveNext(myList);
         }
-        moveNext(myList);
-    }
-
-
+        fprintf(out, "%s\n", str[ind]);
+        */
+        
+        
+    
+    
+    freeList(&myList);
     fclose(in);
     fclose(out);
     return (EXIT_SUCCESS);
