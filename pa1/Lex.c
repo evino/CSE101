@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     int lineCount = 0;
     FILE *in, *out;
     char **str;
-    char temp[MAX_LEN];
+//    char temp[MAX_LEN];
     // check command line for correct number of arguments
     if( argc != 3 ){
         fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
