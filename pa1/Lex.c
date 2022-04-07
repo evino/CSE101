@@ -33,8 +33,10 @@ int main(int argc, char *argv[]) {
        str[lineCount] = malloc((MAX_LEN + 1) * sizeof(char));
        //*(str + lineCount) = line;
        str[lineCount] = line;
-       fprintf(stdout, "%s\n", str[lineCount]);
+       fprintf(out, "%s\n", str[lineCount]);
    }
 
+   fclose(in);
+   fclose(out);
    return (EXIT_SUCCESS);
 }
