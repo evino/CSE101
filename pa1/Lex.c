@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     printf("DB2\n");
     str = malloc(lineCount * sizeof(char*));
     for (int i = 0; i < lineCount; i++) {
-        str[i] = malloc((MAX_LEN) * sizeof(char));
+        str[i] = (char*) malloc(MAX_LEN);
     }
     printf("DB3\n");
     /*
@@ -77,23 +77,26 @@ int main(int argc, char *argv[]) {
     //lexSort(str, myList, lineCount);
     int count = 0;
     append(myList, count);
-    moveFront(myList);
+    //moveFront(myList);
     for (count = 0; count < lineCount; count++) {
-        moveBack(myList);
-        while ((index(myList) !=  -1) && (strcmp(str[get(myList)], str[count]) < 0)) {
-            movePrev(myList);
-            if (index(myList) == 0 && (strcmp(str[get(myList)], str[count]) < 0)) {
-                prepend(myList, count);
-                break;
-            }
-            else if (strcmp(str[get(myList)], str[count]) >= 0) {
-                append(myList, count);
-                //insertAfter(myList, count);
-                break;
-            }
+        //moveBack(myList);
+        moveFront(myList);
+        while ((index(myList) !=  -1) && (strcmp(str[count], str[get(myList)]) > 0)) {
+            moveNext(myList);
         }
+            if (index(myList) == -1) {
+                moveBack(myList);
+                insertAfter(myList, count);
+                //append(myList, count);
+                //break;
+            }
+            else {
+                insertBefore(myList, count);
+                //insertAfter(myList, count);
+                //break;
+            }
     }
-    printList(out, myList);
+    //printList(out, myList);
 
 
     /*
@@ -143,6 +146,11 @@ int main(int argc, char *argv[]) {
         
 */    
     
+    moveFront(myList);
+    for (int j = 0; j <= lineCount; j++) {
+        fprintf(out, "%s", str[get(myList)]);
+        moveNext(myList);
+    }
     for (int i=0; i<lineCount; i++) {
         free(str[i]);
     }
