@@ -421,6 +421,10 @@ void deleteBack(List L) {
 void delete(List L) {
     //Node N = L->cursor;
     Node N = NULL;
+    if (L == NULL) {
+        printf("List Error: calling delete() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     if (L->length <= 0) {
         printf("List Error: calling delete() on empty list\n");
         exit(EXIT_FAILURE);
