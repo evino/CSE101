@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     printf("DB2\n");
     str = malloc(lineCount * sizeof(char*));
     for (int i = 0; i < lineCount; i++) {
-        str[i] = malloc((MAX_LEN+1) * sizeof(char));
+        str[i] = malloc((MAX_LEN) * sizeof(char));
     }
     printf("DB3\n");
     /*
@@ -78,15 +78,19 @@ int main(int argc, char *argv[]) {
     int count = 0;
     append(myList, count);
     moveFront(myList);
-    for (count = 1; count < lineCount; count++) {
+    for (count = 0; count < lineCount; count++) {
+        moveBack(myList);
         while ((index(myList) !=  -1) && (strcmp(str[get(myList)], str[count]) < 0)) {
             movePrev(myList);
-        }
-        if (index(myList) == -1) {
-            prepend(myList, count);
-        }
-        else {
-            insertAfter(myList, count);
+            if (index(myList) == 0 && (strcmp(str[get(myList)], str[count]) < 0)) {
+                prepend(myList, count);
+                break;
+            }
+            else if (strcmp(str[get(myList)], str[count]) >= 0) {
+                append(myList, count);
+                //insertAfter(myList, count);
+                break;
+            }
         }
     }
     printList(out, myList);
@@ -139,6 +143,10 @@ int main(int argc, char *argv[]) {
         
 */    
     
+    for (int i=0; i<lineCount; i++) {
+        free(str[i]);
+    }
+    free(str);
     freeList(&myList);
     fclose(in);
     fclose(out);
