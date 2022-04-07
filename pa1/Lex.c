@@ -1,24 +1,40 @@
 #include "List.h"
 #include <string.h>
 
+#define MAX_LEN 300
+
 int main(int argc, char *argv[]) {
+    char line[MAX_LEN];
+    int lineCount = 0;
     FILE *in, *out;
+    char **str;
     // check command line for correct number of arguments
    if( argc != 3 ){
-      printf("Usage: %s <input file> <output file>\n", argv[0]);
+      fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
       exit(EXIT_FAILURE);
    }
 
    // open files for reading and writing
    in = fopen(argv[1], "r");
       if( in==NULL ){
-      printf("Unable to open file %s for reading\n", argv[1]);
+      fprintf(stderr, "Unable to open file %s for reading\n", argv[1]);
       exit(EXIT_FAILURE);
    }
 
    out = fopen(argv[2], "w");
    if( out==NULL ){
-      printf("Unable to open file %s for writing\n", argv[2]);
+      fprintf(stderr, "Unable to open file %s for writing\n", argv[2]);
       exit(EXIT_FAILURE);
    }
+   str = malloc(MAX_LEN * sizeof(char*));
+   while (fgets(line, MAX_LEN, in) != NULL) {
+       lineCount++;
+       //str = (char *) realloc(str, sizeof(lineCount));
+       str[lineCount] = malloc((MAX_LEN + 1) * sizeof(char));
+       //*(str + lineCount) = line;
+       str[lineCount] = line;
+       fprintf(stdout, "%s\n", str[lineCount]);
+   }
 
+   return (EXIT_SUCCESS);
+}
