@@ -6,18 +6,20 @@
 int main(int argc, char *argv[]) {
     List A = newList();
     List B = newList();
+    List C = NULL;
     for (int i = 1; i <= 20; i++) {
         append(A, i);
         prepend(B, i);
     }
     printf("List A: "); printList(stdout, A);
     printf("\nList B: "); printList(stdout, B);
-    List C = newList();
+    //C = newList();
     C = copyList(A);
     moveBack(C);
     movePrev(C);
     movePrev(C);
     delete(C);
+    deleteFront(C);
     clear(A);
     printf("Length of C: %d\n", length(C));
     printf("\nList C: "); printList(stdout, C);
