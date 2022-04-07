@@ -3,6 +3,26 @@
 
 #define MAX_LEN 300
 
+/*
+void lexSort(char *str[], List L, int size) {
+   
+    int i = 0;
+    append(L, i);
+    moveFront(L);
+    for (i = 1; i < size; i++) {
+        while ((index(L) !=  -1) && (strcmp(str[size], str[i]) < 0)) {
+            movePrev(L);
+        }
+        if (index(L) == -1) {
+            prepend(L, i);
+        }
+        else {
+            insertAfter(L, i);
+        }
+    }
+}
+*/
+
 int main(int argc, char *argv[]) {
     char line[MAX_LEN];
     int lineCount = 0;
@@ -27,13 +47,57 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Unable to open file %s for writing\n", argv[2]);
         exit(EXIT_FAILURE);
     }
+
+    printf("DB1\n");
     
-    str = malloc(MAX_LEN * sizeof(char*));
+    while (fgets(line, MAX_LEN, in) != NULL) {
+        lineCount++;
+    }
+    rewind(in);
+    printf("DB2\n");
+    str = malloc(lineCount * sizeof(char*));
+    for (int i = 0; i < lineCount; i++) {
+        str[i] = malloc((MAX_LEN+1) * sizeof(char));
+    }
+    printf("DB3\n");
+    /*
+    while (fgets(line, MAX_LEN, in) != NULL) {
+        printf("DB2\n");
+        lineCount++;
+        printf("DB3\n");
+        str[lineCount] = malloc((MAX_LEN + 1) * sizeof(char));
+        *(str + lineCount) = line;
+        str[lineCount] = line;
+    }
+    */
+    printf("DB4\n");
+
+    List myList = newList();
+    printf("DB5\n");
+    //lexSort(str, myList, lineCount);
+    int count = 0;
+    append(myList, count);
+    moveFront(myList);
+    for (count = 1; count < lineCount; count++) {
+        while ((index(myList) !=  -1) && (strcmp(str[get(myList)], str[count]) < 0)) {
+            movePrev(myList);
+        }
+        if (index(myList) == -1) {
+            prepend(myList, count);
+        }
+        else {
+            insertAfter(myList, count);
+        }
+    }
+    printList(out, myList);
+
+
+    /*
     while (fgets(line, MAX_LEN, in) != NULL) {
         lineCount++;
         //str = (char *) realloc(str, sizeof(lineCount));
         str[lineCount] = malloc((MAX_LEN + 1) * sizeof(char));
-        //*(str + lineCount) = line;
+        *(str + lineCount) = line;
         str[lineCount] = line;
         //fprintf(out, "%s\n", str[lineCount]);
     }
@@ -44,8 +108,9 @@ int main(int argc, char *argv[]) {
         for (int j = ind + 1; j < lineCount+1; j++) {
             
            //segfaults here
-            if (strcmp(str[ind], str[j]) > 0) {
+            if (strcmp(str[ind], str[j+1]) > 0) {
                 strcpy(temp, str[ind]);
+                printf("DB2\n");
                 strcpy(str[ind], str[j]);
                 strcpy(str[j], temp);
                 append(myList, ind);
@@ -55,7 +120,7 @@ int main(int argc, char *argv[]) {
         }
         fprintf(out, "%s\n", str[ind]);
     }
-            /*
+            
             if (ind == 0) {
             append(myList, ind);
             moveFront(myList);
@@ -69,10 +134,10 @@ int main(int argc, char *argv[]) {
             moveNext(myList);
         }
         fprintf(out, "%s\n", str[ind]);
-        */
         
         
-    
+        
+*/    
     
     freeList(&myList);
     fclose(in);
