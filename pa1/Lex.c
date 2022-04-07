@@ -9,34 +9,52 @@ int main(int argc, char *argv[]) {
     FILE *in, *out;
     char **str;
     // check command line for correct number of arguments
-   if( argc != 3 ){
-      fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
-      exit(EXIT_FAILURE);
-   }
+    if( argc != 3 ){
+        fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
 
    // open files for reading and writing
-   in = fopen(argv[1], "r");
-      if( in==NULL ){
-      fprintf(stderr, "Unable to open file %s for reading\n", argv[1]);
-      exit(EXIT_FAILURE);
-   }
+    in = fopen(argv[1], "r");
+        if( in==NULL ){
+        fprintf(stderr, "Unable to open file %s for reading\n", argv[1]);
+        exit(EXIT_FAILURE);
+    }
 
-   out = fopen(argv[2], "w");
-   if( out==NULL ){
-      fprintf(stderr, "Unable to open file %s for writing\n", argv[2]);
-      exit(EXIT_FAILURE);
-   }
-   str = malloc(MAX_LEN * sizeof(char*));
-   while (fgets(line, MAX_LEN, in) != NULL) {
-       lineCount++;
-       //str = (char *) realloc(str, sizeof(lineCount));
-       str[lineCount] = malloc((MAX_LEN + 1) * sizeof(char));
-       //*(str + lineCount) = line;
-       str[lineCount] = line;
-       fprintf(out, "%s\n", str[lineCount]);
-   }
+    out = fopen(argv[2], "w");
+    if( out==NULL ){
+        fprintf(stderr, "Unable to open file %s for writing\n", argv[2]);
+        exit(EXIT_FAILURE);
+    }
+    str = malloc(MAX_LEN * sizeof(char*));
+    while (fgets(line, MAX_LEN, in) != NULL) {
+        lineCount++;
+        //str = (char *) realloc(str, sizeof(lineCount));
+        str[lineCount] = malloc((MAX_LEN + 1) * sizeof(char));
+        //*(str + lineCount) = line;
+        str[lineCount] = line;
+        //fprintf(out, "%s\n", str[lineCount]);
+    }
 
-   fclose(in);
-   fclose(out);
-   return (EXIT_SUCCESS);
+    List myList = newList();
+    // ind is index of str array
+    for (int ind = 0; ind <= lineCount; ind++) {
+ 
+        if (ind == 0) {
+            append(myList, ind);
+            moveFront(myList);
+        }
+        if (ind >= 1 && (strcmp(str[ind], str[ind-1]) < 0)) {
+            insertBefore(myList, ind);
+        }
+        else if (ind >= 1 && (strcmp(str[ind], str[ind-1]) > 0)) {
+            insertAfter(myList, ind);
+        }
+        moveNext(myList);
+    }
+
+
+    fclose(in);
+    fclose(out);
+    return (EXIT_SUCCESS);
 }
