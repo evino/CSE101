@@ -91,12 +91,6 @@ int index(List L) {
         printf("List Error: calling index() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
-    /*
-    if (isEmpty(L)) {
-        printf("List Error: calling index() on empty List\n");
-        exit(EXIT_FAILURE);
-    }
-    */
     if (L->cursor == NULL || isEmpty(L)) {
         L->index = -1;
     }
@@ -143,12 +137,7 @@ int get(List L) {
         printf("List Error: calling get() with undefined cursor\n");
         exit(EXIT_FAILURE);
     }
-    
-    if (L->length > 0 && L->cursor != NULL) {
-       // return L->cursor->data;
-        cursorData = (L->cursor->data);
-    }
-    return cursorData;
+    return L->cursor->data;
 }
 
 bool equals(List A, List B) {
@@ -173,18 +162,14 @@ bool equals(List A, List B) {
 }
 
 bool isEmpty(List L) {
-    if (L == NULL) {  // Prints in red just for fun :)
-        printf("\033[1;31m");
+    if (L == NULL) {
         printf("List Error: calling isEmpty() on NULL List reference\n");
-        printf("\033[0m");
         exit(EXIT_FAILURE);
     }
        
     return (L->length == 0);
 }
 
-// Not fully sure if this works. My logic is that I can just delete/free the list
-// from memory, then just 'create' a new list.
 void clear(List L) {
     if (L == NULL) {
         printf("Calling clear() on NULL List reference\n");
@@ -195,7 +180,6 @@ void clear(List L) {
     Node temp;
     for (N = L->front; N != NULL;) {
         temp = N->next;
-        //N = temp;
         freeNode(&N);
         N = temp;
         
@@ -402,7 +386,6 @@ void deleteFront(List L) {
     L->length--;
     L->index--;
     freeNode(&N);
-    //freeNode(&(L->front));
     return;
 }
 
@@ -428,13 +411,11 @@ void deleteBack(List L) {
         L->front = L->back = NULL;
     }
     L->length--;
-    //L->index--;
     freeNode(&N);
     return;
 }
 
 void delete(List L) {
-    //Node N = L->cursor;
     Node N = NULL;
     if (L == NULL) {
         printf("List Error: calling delete() on NULL List reference\n");
@@ -464,9 +445,7 @@ void delete(List L) {
     L->length--;
     L->cursor = NULL;
     L->index = -1;
-    //freeNode(&(L->cursor));
     freeNode(&N);
-    // This line causes a segfault: L->cursor = NULL;
     return;
 }
 
