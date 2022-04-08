@@ -64,10 +64,13 @@ int main(int argc, char *argv[]) {
     printf("DB4\n");
 
     List myList = newList();
+
     printf("DB5\n");
     //lexSort(str, myList, lineCount);
     int count = 0;
     append(myList, count);
+    
+    Node *iterator = newNode(count);
     //moveFront(myList);
     for (count = 1; count < lineCount; count++) {
         //moveBack(myList);
