@@ -129,19 +129,26 @@ int back(List L) {
 
 
 int get(List L) {
+    int cursorData;
     if (L == NULL) {
         printf("List Error: calling get() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+   /*
     if (L->length <= 0) {
         printf("List Error: calling get() on empty List\n");
         exit(EXIT_FAILURE);
     }
+    
     if (L->index < 0 || L->cursor == NULL) {
         printf("List Error: calling get() with undefined cursor\n");
         exit(EXIT_FAILURE);
     }
-    return (L->cursor->data);
+    */
+    if (L->length > 0 && L->cursor != NULL) {
+        cursorData = (L->cursor->data);
+    }
+    return cursorData;
 }
 
 bool equals(List A, List B) {
