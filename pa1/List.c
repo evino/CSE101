@@ -186,6 +186,10 @@ bool isEmpty(List L) {
 // Not fully sure if this works. My logic is that I can just delete/free the list
 // from memory, then just 'create' a new list.
 void clear(List L) {
+    if (L == NULL) {
+        printf("Calling clear() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     moveFront(L);
     Node N;
     Node temp;
@@ -296,6 +300,10 @@ void prepend(List L, int x) {
 
 void append(List L, int x) {
     Node N = newNode(x);
+    if (L == NULL) {
+        printf("List Error: Calling append() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     if (!isEmpty(L)) {
         L->back->next = N;
         N->previous = L->back;
@@ -489,6 +497,10 @@ void printList(FILE* out, List L) {
 // of L is unchanged.
 
 List copyList(List L) {
+    if (L == NULL) {
+        printf("List Error: calling copyList() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
     List myList = newList();
     moveFront(L);
     for (Node N = L->front; N != NULL; N = N->next) {
