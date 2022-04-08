@@ -148,7 +148,7 @@ int get(List L) {
        // return L->cursor->data;
         cursorData = (L->cursor->data);
     }
-    //return cursorData;
+    return cursorData;
 }
 
 bool equals(List A, List B) {
