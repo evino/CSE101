@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     char line[MAX_LEN];
     int lineCount = 0;
     FILE *in, *out;
-    char **str;
+//    char **str;
 //    char temp[MAX_LEN];
     // check command line for correct number of arguments
     if( argc != 3 ){
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
         lineCount++;
     }
     rewind(in);
-    str = malloc(lineCount * sizeof(char *));
+    char **str = malloc(lineCount * sizeof(char *));
     for (int i = 0; i < lineCount; i++) {
         str[i] = malloc(lineCount * sizeof(char));
         //str[i] = line;
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
         fprintf(out, "%s", str[get(myList)]);
         moveNext(myList);
     }
-    for (int i=0; i <= lineCount; i++) {
+    for (int i=0; i < lineCount; i++) {
         free(str[i]);
     }
     free(str);
