@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
             //break;
         }
     }
-    printList(stdout, myList);
+//    printList(stdout, myList);
 
 
     /*
