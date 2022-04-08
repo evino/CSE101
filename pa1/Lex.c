@@ -3,25 +3,6 @@
 
 #define MAX_LEN 300
 
-/*
-void lexSort(char *str[], List L, int size) {
-   
-    int i = 0;
-    append(L, i);
-    moveFront(L);
-    for (i = 1; i < size; i++) {
-        while ((index(L) !=  -1) && (strcmp(str[size], str[i]) < 0)) {
-            movePrev(L);
-        }
-        if (index(L) == -1) {
-            prepend(L, i);
-        }
-        else {
-            insertAfter(L, i);
-        }
-    }
-}
-*/
 
 int main(int argc, char *argv[]) {
     char line[MAX_LEN];
@@ -55,10 +36,20 @@ int main(int argc, char *argv[]) {
     }
     rewind(in);
     printf("DB2\n");
-    str = malloc(lineCount * sizeof(char*));
+    str = malloc(lineCount * sizeof(char *));
     for (int i = 0; i < lineCount; i++) {
-        str[i] = (char*) malloc(MAX_LEN);
+        str[i] = malloc(lineCount * sizeof(char));
+        //str[i] = line;
+        //str[i] = (char*) malloc(MAX_LEN);
     }
+
+    rewind(in);
+    int strIndex = 0;
+    while (fgets(line, MAX_LEN, in) != NULL) {
+        str[strIndex] = line;
+        strIndex++;
+    }
+
     printf("DB3\n");
     /*
     while (fgets(line, MAX_LEN, in) != NULL) {
@@ -78,25 +69,25 @@ int main(int argc, char *argv[]) {
     int count = 0;
     append(myList, count);
     //moveFront(myList);
-    for (count = 0; count < lineCount; count++) {
+    for (count = 1; count < lineCount; count++) {
         //moveBack(myList);
         moveFront(myList);
         while ((index(myList) !=  -1) && (strcmp(str[count], str[get(myList)]) > 0)) {
             moveNext(myList);
         }
-            if (index(myList) == -1) {
-                moveBack(myList);
-                insertAfter(myList, count);
-                //append(myList, count);
-                //break;
-            }
-            else {
-                insertBefore(myList, count);
-                //insertAfter(myList, count);
-                //break;
-            }
+        if (index(myList) == -1) {
+            moveBack(myList);
+            insertAfter(myList, count);
+            //append(myList, count);
+            //break;
+        }
+        else {
+            insertBefore(myList, count);
+            //insertAfter(myList, count);
+            //break;
+        }
     }
-    //printList(out, myList);
+    printList(stdout, myList);
 
 
     /*
@@ -147,11 +138,12 @@ int main(int argc, char *argv[]) {
 */    
     
     moveFront(myList);
+    //printf("%s", str[get(myList)]);
     for (int j = 0; j <= lineCount; j++) {
         fprintf(out, "%s", str[get(myList)]);
         moveNext(myList);
     }
-    for (int i=0; i<lineCount; i++) {
+    for (int i=0; i <= lineCount; i++) {
         free(str[i]);
     }
     free(str);
