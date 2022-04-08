@@ -133,7 +133,7 @@ int get(List L) {
         printf("List Error: calling get() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
-   /*
+   
     if (L->length <= 0) {
         printf("List Error: calling get() on empty List\n");
         exit(EXIT_FAILURE);
@@ -143,10 +143,10 @@ int get(List L) {
         printf("List Error: calling get() with undefined cursor\n");
         exit(EXIT_FAILURE);
     }
-    */
+    
     if (L->length > 0 && L->cursor != NULL) {
-        return L->cursor->data;
-        //cursorData = (L->cursor->data);
+       // return L->cursor->data;
+        cursorData = (L->cursor->data);
     }
     //return cursorData;
 }
