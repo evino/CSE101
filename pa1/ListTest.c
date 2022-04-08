@@ -1,3 +1,11 @@
+/*
+ * Evin Odisho
+ * edodisho
+ * ListTest.c
+ * pa1
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -13,11 +21,14 @@ int main(int argc, char *argv[]) {
     }
     printf("List A: "); printList(stdout, A);
     printf("\nList B: "); printList(stdout, B);
-    //C = newList();
+    printf("Copying List A into C.\n");
     C = copyList(A);
+    printf("List C: "); printList(stdout, C);
     moveBack(C);
+    printf("List C cursor now at %d and it's data is: %d\n", index(C), get(C));
     movePrev(C);
-    movePrev(C);
+    printf("Moving cursor to its previous one.\n");
+    printf("List C cursor now at %d and it's data is: %d\n", index(C), get(C));
     delete(C);
     deleteFront(C);
     clear(A);
