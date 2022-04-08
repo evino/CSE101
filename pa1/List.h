@@ -13,6 +13,7 @@ List.h
 
 // Exported type --------------------------------------------------------------
 typedef struct ListObj* List;
+typedef struct NodeObj* Node;
 
 // Constructors-Destructors ---------------------------------------------------
 List newList(void); // Creates and returns a new empty List.
