@@ -29,13 +29,10 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    printf("DB1\n");
-    
     while (fgets(line, MAX_LEN, in) != NULL) {
         lineCount++;
     }
     rewind(in);
-    printf("DB2\n");
     str = malloc(lineCount * sizeof(char *));
     for (int i = 0; i < lineCount; i++) {
         str[i] = malloc(lineCount * sizeof(char));
@@ -43,14 +40,13 @@ int main(int argc, char *argv[]) {
         //str[i] = (char*) malloc(MAX_LEN);
     }
 
-    rewind(in);
+    //rewind(in);
     int strIndex = 0;
     while (fgets(line, MAX_LEN, in) != NULL) {
-        str[strIndex] = line;
+        //str[strIndex] = line;
+        strcpy(str[strIndex], line);
         strIndex++;
     }
-
-    printf("DB3\n");
     /*
     while (fgets(line, MAX_LEN, in) != NULL) {
         printf("DB2\n");
@@ -61,16 +57,12 @@ int main(int argc, char *argv[]) {
         str[lineCount] = line;
     }
     */
-    printf("DB4\n");
 
     List myList = newList();
-
-    printf("DB5\n");
-    //lexSort(str, myList, lineCount);
+    
     int count = 0;
     append(myList, count);
     
-    Node *iterator = newNode(count);
     //moveFront(myList);
     for (count = 1; count < lineCount; count++) {
         //moveBack(myList);
@@ -142,7 +134,7 @@ int main(int argc, char *argv[]) {
     
     moveFront(myList);
     //printf("%s", str[get(myList)]);
-    for (int j = 0; j <= lineCount; j++) {
+    for (int j = 0; j < lineCount; j++) {
         fprintf(out, "%s", str[get(myList)]);
         moveNext(myList);
     }
