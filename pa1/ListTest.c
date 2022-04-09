@@ -20,21 +20,41 @@ int main(int argc, char *argv[]) {
         prepend(B, i);
     }
     printf("List A: "); printList(stdout, A);
-    printf("\nList B: "); printList(stdout, B);
+    printf("List B: "); printList(stdout, B);
     printf("Copying List A into C.\n");
     C = copyList(A);
     printf("List C: "); printList(stdout, C);
+    printf("Is List C equal to List A? ");
+    printf("%s\n", equals(C,A)?"true":"false");
     moveBack(C);
-    printf("List C cursor now at %d and it's data is: %d\n", index(C), get(C));
+    printf("Calling moveBack(). List C cursor now at index %d and it's data is: %d\n", index(C), get(C));
     movePrev(C);
     printf("Moving cursor to its previous one.\n");
-    printf("List C cursor now at %d and it's data is: %d\n", index(C), get(C));
+    printf("List C cursor now at index %d and it's data is: %d\n", index(C), get(C));
     delete(C);
+    printf("Deleting C's cursor.\n");
     deleteFront(C);
+    printf("Deleting C's front node.\n");
+    printf("List C now is: "); printList(stdout, C);
+    printf("C's length is: %d\n", length(C));
+    moveFront(C);
+    moveNext(C);
+    printf("Moving C's cursor to front, then moving it to next node.\n");
+    printf("List C cursor now at index %d and it's data is: %d\n", index(C), get(C));
+    printf("Now overwriting C's cursor data with 101, and inserting 100 and 102 before and after cursor...\n");
+    set(C, 101);
+    insertBefore(C, 100);
+    insertAfter(C, 102);
+    printf("List C now is: "); printList(stdout, C);
+    printf("Is List C still equal to List A? ");
+    printf("%s\n", equals(C,A)?"true":"false");
+    printf("CLearing List A now...\n");
     clear(A);
     printf("Length of C: %d\n", length(C));
-    printf("\nList C: "); printList(stdout, C);
-
+    printf("List C now is: "); printList(stdout, C);
+    printf("Now clearing Lists B & C.\n");
+    clear(B);
+    clear(C);
 
     freeList(&A);
     freeList(&B);
@@ -42,50 +62,3 @@ int main(int argc, char *argv[]) {
     return (EXIT_SUCCESS);
 }
 
-/*
-    //List C = NULL;
-    for(int i=23; i<=44; i++) {
-        printf("Appending: %d\n", i);
-        append(A, i);
-    }
-    moveFront(A);
-    moveNext(A);
-    printf("Cursor element at index %d is: %d\n", index(A), get(A));
-    moveNext(A);
-    printf("Cursor element now: %d\n", get(A));
-    moveBack(A);
-    printf("Index @ %d\n", index(A));
-    printList(stdout, A);
-    printf("Length before delete(): %d\n", length(A));
-    delete(A);
-    printf("After delete\n");
-    //printf("After index called: Cursor now at %d", index(A));
-    printList(stdout, A);
-    B = copyList(A);
-    deleteFront(B);
-    deleteBack(B);
-    printf("DB1\n");
-    moveFront(B);
-    //moveBack(B);
-    printf("List B:\n"); printList(stdout, B);
-    insertBefore(B, 1);
-    printf("Now called insertBefore on B...\n");
-    printList(stdout, B);
-    printf("Length of B is %d\n", length(B));
-    //moveBack(B);
-    printf("Inserting after index %d...\n", index(B));
-    printf("Deleting front and back\n");
-   // deleteBack(B);
-    insertAfter(B, 69); printList(stdout, B);
-    printf("Length of B now is %d\n", length(B));
-    //printf("B curssor is: %d\n", get(B));
-    printf("Length before clear: %d\n", length(A));
-    clear(A);
-    printf("Length after clear: %d\n", length(A));
-    freeList(&A);
-    printList(stdout, B);
-    printList(stdout, A);
-    freeList(&B);
-    return (EXIT_SUCCESS);
-}
-*/
