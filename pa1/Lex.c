@@ -39,21 +39,20 @@ int main(int argc, char *argv[]) {
     while (fgets(line, MAX_LEN, in) != NULL) {
         lineCount++;
     }
-    rewind(in);
 
     char **str = malloc(lineCount * sizeof(char *));
     for (int i = 0; i < lineCount; i++) {
-        str[i] = malloc(lineCount * sizeof(char));
+        str[i] = malloc(MAX_LEN * sizeof(char));
     }
     
     int strIndex = 0;
+    rewind(in);
     while (fgets(line, MAX_LEN, in) != NULL) {
         strcpy(str[strIndex], line);
         strIndex++;
     }
 
     List myList = newList();
-    
     int count = 0;
     append(myList, count);
     
