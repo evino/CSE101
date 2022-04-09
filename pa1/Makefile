@@ -1,5 +1,8 @@
 #------------------------------------------------------------------------------
 # Makefile for CSE 101 Programming Assignment 1
+# Evin Odisho
+# edodisho
+# pa1
 #
 # make                   makes Lex
 # make ListClient        makes ListClient
