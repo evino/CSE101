@@ -64,9 +64,7 @@ void freeList(List *pL) {
         exit(EXIT_FAILURE);
     }
     if(pL != NULL && *pL != NULL) {
-        //moveFront(*pL);
         while (!isEmpty(*pL)) {
-            //moveNext(*pL);
             deleteFront(*pL);
         }
         free(*pL);
@@ -283,11 +281,11 @@ void prepend(List L, int x) {
 }
 
 void append(List L, int x) {
-    Node N = newNode(x);
     if (L == NULL) {
         printf("List Error: Calling append() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+    Node N = newNode(x);
     if (!isEmpty(L)) {
         L->back->next = N;
         N->previous = L->back;
