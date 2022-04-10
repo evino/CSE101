@@ -5,6 +5,7 @@
  * Graph.h
 */
 
+#include "List.h"
 #include <stdio.h>
 #pragma once
 
