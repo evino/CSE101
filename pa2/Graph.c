@@ -14,7 +14,7 @@ typedef struct GraphObj {
     int *parArr;
     int *distArr;
     int order;
-    int edgeCount;
+    int size;
     int *vertLabel;
 } GraphObj;
 
@@ -22,18 +22,18 @@ Graph newGraph(int n) {
     Graph G;
     
     G = malloc(sizeof(GraphObj));
-    G->listArr = malloc((n + 1) * sizeof(List));
-    G->colors = malloc(n * sizeof(char));
-    G->parArr = malloc(n * sizeof(int));
-    G->distArr = malloc(n * sizeof(int));
-    G->vertLabel = malloc(n * sizeof(int));
+    G->listArr = malloc((n + 1) * sizeof(ListObj));
+    G->colors = malloc((n + 1) * sizeof(char));
+    G->parArr = malloc((n + 1) * sizeof(int));
+    G->distArr = malloc((n + 1) * sizeof(int));
+    G->vertLabel = malloc((n + 1) * sizeof(int));
 
     G->listArr = NULL;
     G->colors = NULL;
     G->order = n;
-    G->edgeCount = 0;
+    G->size = 0;
     *(G->parArr) = NIL;
-    *(G->distArr) = NIL;
+    *(G->distArr) = INF;
     *(G->vertLabel) = NIL;
     return G;
 }
@@ -47,4 +47,22 @@ void freeGraph(Graph *pG) {
         free(*pG);
         *pG = NULL;
     }
+}
+
+
+int getOrder(Graph G) {
+    if (G == NULL) {
+        printf("Graph Error: Calling getOrder() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+    return (G->order);
+}
+
+int getSize(Graph G) {
+    if (G == NULL) {
+        printf("Graph Error: Calling getOrder() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    return (G->size);
 }
