@@ -9,6 +9,12 @@
 #include <stdio.h>
 #pragma once
 
+#define INF -999
+#define NIL -9
+
+/*** Exported Type **/
+typedef struct GraphObj* Graph;
+
 /*** Constructors-Destructors ***/
 Graph newGraph(int n);
 void freeGraph(Graph* pG);
