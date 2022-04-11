@@ -1,10 +1,10 @@
 #include "Graph.h"
 
-#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
     int n = 5;
-    newGraph(n);
+    Graph G = newGraph(n);
+    freeGraph(&G);
     printf("Success\n");
-    return (EXIT_SUCCESS);
+    return 0;
 }
