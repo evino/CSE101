@@ -22,22 +22,22 @@ Graph newGraph(int n) {
     Graph G;
     
     G = malloc(sizeof(GraphObj));
-    listArr = malloc(n * sizeof(List));
-    colors = malloc(n * sizeof(char));
-    parArr = malloc(n * sizeof(int));
-    distArr = malloc(n * sizeof(int));
-    order = calloc(n, sizeof(int));
+    G->listArr = malloc((n + 1) * sizeof(List));
+    G->colors = malloc(n * sizeof(char));
+    G->parArr = malloc(n * sizeof(int));
+    G->distArr = malloc(n * sizeof(int));
+    G->order = calloc(n, sizeof(int));
     //order = malloc(n * sizeof(int));
     //edgeCount = malloc(n * sizeof(int));
-    edgeCount = calloc(n, sizeof(int));
-    vertLabel = malloc(n * sizeof(int));
+    G->edgeCount = calloc(n, sizeof(int));
+    G->vertLabel = malloc(n * sizeof(int));
 
-    listArr = NULL;
-    colors = NULL;
-    parArr = NIL;
-    distArr = NIL;
+    G->listArr = NULL;
+    G->colors = NULL;
+    *(G->parArr) = NIL;
+    *(G->distArr) = NIL;
     //order[] = 0;
     //edgeCount[] = 0;
-    vertLabe = NIL;
+    *(G->vertLabel) = NIL;
     return G;
 }

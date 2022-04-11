@@ -9,8 +9,8 @@
 #include <stdio.h>
 #pragma once
 
-#define INF -999
-#define NIL -9
+#define INF (-999)
+#define NIL (-9)
 
 /*** Exported Type **/
 typedef struct GraphObj* Graph;
