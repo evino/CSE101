@@ -10,7 +10,7 @@
 #pragma once
 
 #define INF (-999)
-#define NIL (-9)
+#define NIL (-1)
 
 /*** Exported Type **/
 typedef struct GraphObj* Graph;
