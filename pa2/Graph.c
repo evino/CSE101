@@ -13,8 +13,8 @@ typedef struct GraphObj {
     char *colors;
     int *parArr;
     int *distArr;
-    int *order;
-    int *edgeCount;
+    int order;
+    int edgeCount;
     int *vertLabel;
 } GraphObj;
 
@@ -26,18 +26,25 @@ Graph newGraph(int n) {
     G->colors = malloc(n * sizeof(char));
     G->parArr = malloc(n * sizeof(int));
     G->distArr = malloc(n * sizeof(int));
-    G->order = calloc(n, sizeof(int));
-    //order = malloc(n * sizeof(int));
-    //edgeCount = malloc(n * sizeof(int));
-    G->edgeCount = calloc(n, sizeof(int));
     G->vertLabel = malloc(n * sizeof(int));
 
     G->listArr = NULL;
     G->colors = NULL;
+    G->order = n;
+    G->edgeCount = 0;
     *(G->parArr) = NIL;
     *(G->distArr) = NIL;
-    //order[] = 0;
-    //edgeCount[] = 0;
     *(G->vertLabel) = NIL;
     return G;
+}
+
+void freeGraph(Graph *pG) {
+    if (pG != NULL || *pG != NULL) {
+        printf("Graph Error: Calling freeGraph() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (pG != NULL && *pG != NULL) {
+        free(*pG);
+        *pG = NULL;
+    }
 }
