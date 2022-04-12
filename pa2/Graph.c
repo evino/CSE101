@@ -21,7 +21,7 @@ typedef struct GraphObj {
 
 Graph newGraph(int n) {
     Graph G;
-    
+    List L = newList();
     G = malloc(sizeof(GraphObj));
     G->listArr = malloc((n + 1) * sizeof(List));
     G->colors = malloc((n + 1) * sizeof(char));
@@ -68,7 +68,7 @@ int getSize(Graph G) {
     
     return (G->size);
 }
-
+/*
 int getSource(Graph G) {
     if (G == NULL) {
         printf("Graph Error: Calling getSource() on NULL Graph Reference\n");
@@ -81,5 +81,8 @@ int getSource(Graph G) {
         sourceRet = NIL;
     }
     return sourceRet;
+    
 }
+*/
+
 
