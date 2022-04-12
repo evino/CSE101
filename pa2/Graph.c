@@ -34,13 +34,25 @@ Graph newGraph(int n) {
     G->order = n;
     G->size = 0;
     G->source = NIL;
-    *(G->parArr) = NIL;
-    *(G->distArr) = INF;
-    *(G->vertLabel) = NIL;
+    for (int i = 1; i < n + 1; i++) {
+        G->parArr[i] = NIL;
+    }
+
+    for (int i = 1; i < n + 1; i++) {
+        G->distArr[i] = INF;
+    }
+    
+    for (int i = 1; i < n + 1; i++) {
+        G->vertLabel[i] = NIL;
+    }
+    //*(G->parArr) = NIL;
+    //*(G->distArr) = INF;
+    //*(G->vertLabel) = NIL;
     return G;
 }
 
 void freeGraph(Graph *pG) {
+    List pL;
     if (pG != NULL || *pG != NULL) {
         printf("Graph Error: Calling freeGraph() on NULL Graph reference\n");
         exit(EXIT_FAILURE);
@@ -49,6 +61,16 @@ void freeGraph(Graph *pG) {
         free(*pG);
         *pG = NULL;
     }
+    int n = getOrder(*pG);
+    free((*pG)->parArr);
+    free((*pG)->distArr);
+    free((*pG)->vertLabel);
+    for (int i = 1; i < n + 1; i++) {
+        pL = (*pG)->listArr[i];
+        freeList(&pL);
+    }
+    free((*pG)->listArr);
+
 }
 
 
