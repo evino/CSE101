@@ -130,7 +130,7 @@ void addArc(Graph G, int u, int v) {
     for (int i = 2; i <= G->order; i++) {
         moveFront(G->listArr[u]);
         while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
-            moveNext(listArr[u]);
+            moveNext(G->listArr[u]);
         }
         if (index(G->listArr[u]) == -1) {
             moveBack(G->listArr[u]);
