@@ -30,9 +30,10 @@ Graph newGraph(int n) {
     G->size = 0;
     G->source = NIL;
     for (int i = 1; i < n + 1; i++) {
+        printf("At index %d\n", i);
+        printf("DB1\n");
         G->listArr[i] = newList();
         G->parArr[i] = NIL;
-        printf("DB1\n");
         G->distArr[i] = INF;
         printf("DB2\n");
     }
@@ -110,6 +111,7 @@ void makeNull(Graph G) {
 }
 
 void addEdge(Graph G, int u, int v) {
+    //Can use addArc here, just in two different directions.
 }
 
 void addArc(Graph G, int u, int v) {
@@ -122,9 +124,21 @@ void addArc(Graph G, int u, int v) {
         exit(EXIT_FAILURE);
     }
     // Do insertion sort here
-    if (G->listArr[1] == NULL) {
-        append(G->listArr[1], v);
+    if (length(G->listArr[u]) == 0) {
+        append(G->listArr[u], v);
     }
+    for (int i = 2; i <= G->order; i++) {
+        moveFront(G->listArr[u]);
+        while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
+            moveNext(listArr[u]);
+        }
+        if (index(G->listArr[u]) == -1) {
+            moveBack(G->listArr[u]);
+            insertAfter(G->listArr[u], v);
+        } else {
+            insertBefore(G->listArr[u], v);
+        }
+    }
+
     return;
 }
-
