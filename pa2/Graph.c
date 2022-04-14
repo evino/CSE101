@@ -130,7 +130,7 @@ void addArc(Graph G, int u, int v) {
     if (length(G->listArr[u]) == 0) {
         append(G->listArr[u], v);
     }
-    for (int i = 2; i <= G->order; i++) {
+    for (int i = 2; i <= getOrder(G); i++) {
         moveFront(G->listArr[u]);
         while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
             moveNext(G->listArr[u]);
@@ -142,6 +142,22 @@ void addArc(Graph G, int u, int v) {
             insertBefore(G->listArr[u], v);
         }
     }
+
+    return;
+}
+
+void BFS(Graph G, int s) {
+    for (int x = 1; x < (getOrder(G) - s); x++) {
+        G->colors[x] = 'w';
+        G->distArr[x] = INF;
+        G->parArr[x] = NIL;
+    }
+    G->colors[s] = 'g';
+    G->distArr[s] = 0;
+    G->parArr[s] = NIL;
+    List Q = newList();
+    append(Q, s);
+
 
     return;
 }
