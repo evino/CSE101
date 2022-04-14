@@ -47,19 +47,19 @@ void freeGraph(Graph *pG) {
         exit(EXIT_FAILURE);
     }
     if (pG != NULL && *pG != NULL) {
-        free(*pG);
-        *pG = NULL;
-    }
     int n = getOrder(*pG);
-    free((*pG)->parArr);
-    free((*pG)->distArr);
     for (int i = 1; i < n + 1; i++) {
         pL = (*pG)->listArr[i];
         freeList(&pL);
     }
     free((*pG)->listArr);
-
-}
+    free((*pG)->colors);
+    free((*pG)->parArr);
+    free((*pG)->distArr);
+    free(*pG);
+    *pG = NULL;
+     }
+    }
 
 
 int getOrder(Graph G) {
@@ -108,6 +108,14 @@ int getDist(Graph G, int u) {
 }
 
 void getPath(List L, Graph G, int u) {
+    if (L == NULL) {
+        printf("Calling getPath() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (G == NULL) {
+        printf("Calling getPath() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
     if (1 > u && u > getOrder(G)) {
         printf("Graph Error: Calling getPath() with out of bounds arguements\n");
         exit(EXIT_FAILURE);
@@ -119,7 +127,8 @@ void getPath(List L, Graph G, int u) {
     if (u == getSource(G)) {
         append(L, getSource(G));
     } else if (G->parArr[u] == NIL) {
-        printf("%d is not reachable from %d\n", u, getSource(G));
+        append(L, NIL);
+        //printf("%d is not reachable from %d\n", u, getSource(G));
     } else {
         getPath(L, G, G->parArr[u]);
         append(L, u);
@@ -183,51 +192,69 @@ void addArc(Graph G, int u, int v) {
         printf("DB: Doing first append\n");
         append(G->listArr[u], v);
     }
-    //for (int i = 2; i <= getOrder(G); i++) {
-    //printf("INDEX %d\n", i);
-        moveFront(G->listArr[u]);
-        //while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
-        while (index(G->listArr[u]) != -1 && (v > get(G->listArr[u]))) {
-        //while (index(G->listArr[u]) != -1 && (v > u)) {
-            moveNext(G->listArr[u]);
-        }
-        if (index(G->listArr[u]) == -1) {
+    moveFront(G->listArr[u]);
+    if (v == (get(G->listArr[u]))) {
+        return;
+    }
+    while (index(G->listArr[u]) != -1 && (v > get(G->listArr[u]))) {
+        moveNext(G->listArr[u]);
+    }
+    
+    
+    if (index(G->listArr[u]) == -1) {
             moveBack(G->listArr[u]);
             insertAfter(G->listArr[u], v);
-        } else {
-            insertBefore(G->listArr[u], v);
-        }
-    //}
+    } else {
+        insertBefore(G->listArr[u], v);
+    }
 
     return;
 }
 
 void BFS(Graph G, int s) {
+    if (G == NULL) {
+        printf("Graph Error: Calling BFS() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
     int x;
     G->source = s;
-    for (x = 1; x < (getOrder(G) - s); x++) {
-        G->colors[x] = 'w';
-        G->distArr[x] = INF;
-        G->parArr[x] = NIL;
+    for (x = 1; x < (getOrder(G) + 1); x++) {
+        if (x != s) {
+            G->colors[x] = 'w';
+            G->distArr[x] = INF;
+            G->parArr[x] = NIL;
+        }
     }
     G->colors[s] = 'g';
     G->distArr[s] = 0;
     G->parArr[s] = NIL;
     List Q = newList();
-    append(Q, s);
+    //append(Q, s);
+    prepend(Q, s);
     while (!isEmpty(Q)) {
-        moveFront(Q);
+        moveBack(Q);
+        //moveFront(Q);
         x = get(Q);
-        deleteFront(Q);
-        for (int y = 1; y < getOrder(G); y++) {
-            if (G->colors[y] == 'w') {
-                G->colors[y] = 'g';
-                G->distArr[y] = (G->distArr[x] + 1);
-                G->parArr[y] = x;
-                append(Q, y);
+        //printf("%s\n","debug 3");
+        //printf("%d\n",x);
+        deleteBack(Q);
+        if (G->listArr[x] != NULL) {
+        moveFront(G->listArr[x]);
+        //deleteFront(Q);
+            int y;
+            //for (int i = 1; i < length(G->listArr[x]); i++) {
+            while (index(G->listArr[x]) != -1) {
+                y = get(G->listArr[x]);
+                if (G->colors[y] == 'w') {
+                    G->colors[y] = 'g';
+                    G->distArr[y] = (G->distArr[x] + 1);
+                    G->parArr[y] = x;
+                    prepend(Q, y);
+                }
+                moveNext(G->listArr[x]);
             }
+            G->colors[x] = 'b';
         }
-        G->colors[x] = 'b';
     }
     return;
 }
