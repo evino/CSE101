@@ -178,6 +178,7 @@ void addArc(Graph G, int u, int v) {
         exit(EXIT_FAILURE);
     }
     // Do insertion sort here
+    
     if (isEmpty(G->listArr[u])) {
         printf("DB: Doing first append\n");
         append(G->listArr[u], v);
@@ -186,15 +187,14 @@ void addArc(Graph G, int u, int v) {
     //printf("INDEX %d\n", i);
         moveFront(G->listArr[u]);
         //while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
-        while (index(G->listArr[u]) != -1 && (u > get(G->listArr[u]))) {
+        while (index(G->listArr[u]) != -1 && (v > get(G->listArr[u]))) {
+        //while (index(G->listArr[u]) != -1 && (v > u)) {
             moveNext(G->listArr[u]);
         }
         if (index(G->listArr[u]) == -1) {
             moveBack(G->listArr[u]);
-            printf("DB: Insert after\n");
             insertAfter(G->listArr[u], v);
         } else {
-            printf("DB: Insert b4\n");
             insertBefore(G->listArr[u], v);
         }
     //}
