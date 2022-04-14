@@ -150,6 +150,8 @@ int getSource(Graph G) {
 
 /*** Manipulation procedures ***/
 
+
+// Need help on this one. Will I delete each node in listArr[]?
 void makeNull(Graph G) {
     if (G == NULL) {
         printf("Graph Error: Calling makeNull() on NULL Graph reference\n");
@@ -162,6 +164,7 @@ void addEdge(Graph G, int u, int v) {
     //Can use addArc here, just in two different directions.
     addArc(G, u, v);
     addArc(G, v, u);
+    (G->size)++;
     return;
 }
 
@@ -175,21 +178,26 @@ void addArc(Graph G, int u, int v) {
         exit(EXIT_FAILURE);
     }
     // Do insertion sort here
-    if (length(G->listArr[u]) == 0) {
+    if (isEmpty(G->listArr[u])) {
+        printf("DB: Doing first append\n");
         append(G->listArr[u], v);
     }
-    for (int i = 2; i <= getOrder(G); i++) {
+    //for (int i = 2; i <= getOrder(G); i++) {
+    //printf("INDEX %d\n", i);
         moveFront(G->listArr[u]);
-        while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
+        //while (index(G->listArr[u]) != -1 && (i > get(G->listArr[u]))) {
+        while (index(G->listArr[u]) != -1 && (u > get(G->listArr[u]))) {
             moveNext(G->listArr[u]);
         }
         if (index(G->listArr[u]) == -1) {
             moveBack(G->listArr[u]);
+            printf("DB: Insert after\n");
             insertAfter(G->listArr[u], v);
         } else {
+            printf("DB: Insert b4\n");
             insertBefore(G->listArr[u], v);
         }
-    }
+    //}
 
     return;
 }
@@ -227,8 +235,10 @@ void BFS(Graph G, int s) {
 
 // Prints out adjacency list
 void printGraph(FILE *out, Graph G) {
-    for (int i = 1; i < getOrder(G); i++) {
+    for (int i = 1; i <= getOrder(G); i++) {
+        fprintf(out, "%d: ", i);
         printList(out, G->listArr[i]);
+        fprintf(out, "\n");
     }
     return;
 }
