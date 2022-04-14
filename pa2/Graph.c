@@ -81,6 +81,18 @@ int getSize(Graph G) {
     
     return (G->size);
 }
+
+int getSource(Graph G) {
+    // Check if BFS Called
+    if (G->distArr[1] == INF) {
+        G->source = NIL;
+    }
+    return (G->source);
+}
+
+
+
+
 /*
 int getSource(Graph G) {
     if (G == NULL) {
@@ -147,7 +159,9 @@ void addArc(Graph G, int u, int v) {
 }
 
 void BFS(Graph G, int s) {
-    for (int x = 1; x < (getOrder(G) - s); x++) {
+    int x;
+    G->source = s;
+    for (x = 1; x < (getOrder(G) - s); x++) {
         G->colors[x] = 'w';
         G->distArr[x] = INF;
         G->parArr[x] = NIL;
@@ -157,7 +171,28 @@ void BFS(Graph G, int s) {
     G->parArr[s] = NIL;
     List Q = newList();
     append(Q, s);
+    while (!isEmpty(Q)) {
+        moveFront(Q);
+        x = get(Q);
+        deleteFront(Q);
+        for (int y = 1; y < getOrder(G); y++) {
+            if (G->colors[y] == 'w') {
+                G->colors[y] = 'g';
+                G->distArr[y] = (G->distArr[x] + 1);
+                G->parArr[y] = x;
+                append(Q, y);
+            }
+        }
+        G->colors[x] = 'b';
+    }
+    return;
+}
 
 
+// Prints out adjacency list
+void printGraph(FILE *out, Graph G) {
+    for (int i = 1; i < getOrder(G); i++) {
+        printList(out, G->listArr[i]);
+    }
     return;
 }
