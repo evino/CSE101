@@ -112,6 +112,9 @@ void makeNull(Graph G) {
 
 void addEdge(Graph G, int u, int v) {
     //Can use addArc here, just in two different directions.
+    addArc(G, u, v);
+    addArc(G, v, u);
+    return;
 }
 
 void addArc(Graph G, int u, int v) {
