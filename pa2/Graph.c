@@ -30,12 +30,9 @@ Graph newGraph(int n) {
     G->size = 0;
     G->source = NIL;
     for (int i = 1; i < n + 1; i++) {
-        printf("At index %d\n", i);
-        printf("DB1\n");
         G->listArr[i] = newList();
         G->parArr[i] = NIL;
         G->distArr[i] = INF;
-        printf("DB2\n");
     }
     //*(G->parArr) = NIL;
     //*(G->distArr) = INF;
@@ -45,7 +42,7 @@ Graph newGraph(int n) {
 
 void freeGraph(Graph *pG) {
     List pL;
-    if (pG != NULL || *pG != NULL) {
+    if (pG == NULL || *pG == NULL) {
         printf("Graph Error: Calling freeGraph() on NULL Graph reference\n");
         exit(EXIT_FAILURE);
     }
@@ -75,7 +72,7 @@ int getOrder(Graph G) {
 
 int getSize(Graph G) {
     if (G == NULL) {
-        printf("Graph Error: Calling getOrder() on NULL Graph reference\n");
+        printf("Graph Error: Calling getSize() on NULL Graph reference\n");
         exit(EXIT_FAILURE);
     }
     
@@ -90,7 +87,46 @@ int getSource(Graph G) {
     return (G->source);
 }
 
+int getParent(Graph G, int u) {
+    if (1 > u && u > getOrder(G)) {
+        printf("Graph Error: Calling getParent() with out of bounds arguements\n");
+        exit(EXIT_FAILURE);
+    }
+    if (G->distArr[u] == INF) {
+        return NIL;
+    }
+    return (G->parArr[u]);
+}
 
+
+int getDist(Graph G, int u) {
+    if (1 > u && u > getOrder(G)) {
+        printf("Graph Error: Calling getDist() with out of bounds arguements\n");
+        exit(EXIT_FAILURE);
+    }
+    return (G->distArr[u]);
+}
+
+void getPath(List L, Graph G, int u) {
+    if (1 > u && u > getOrder(G)) {
+        printf("Graph Error: Calling getPath() with out of bounds arguements\n");
+        exit(EXIT_FAILURE);
+    }
+    if (getSource(G) == NIL) {
+        printf("Graph Error: Calling getPath() before BFS()\n");
+        exit(EXIT_FAILURE);
+    }
+    if (u == getSource(G)) {
+        append(L, getSource(G));
+    } else if (G->parArr[u] == NIL) {
+        printf("%d is not reachable from %d\n", u, getSource(G));
+    } else {
+        getPath(L, G, G->parArr[u]);
+        append(L, u);
+    }
+    
+    return;
+}
 
 
 /*
