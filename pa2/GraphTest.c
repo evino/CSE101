@@ -2,15 +2,21 @@
 
 
 int main(int argc, char *argv[]) {
-    int n = 5;
-    int u = 3;
-    int v = 2;
+    int i, s, d, n = 35;
     printf("Making new graph\n");
     Graph G = newGraph(n);
-    printf("Order is %d\n", getOrder(G));
-    addEdge(G, u, v);
-    printGraph(stdout, G);
+    /*
+    for(i=1; i<n; i++){
+        if( i%7!=0 ) addEdge(G, i, i+1);
+        if( i<=28  ) addEdge(G, i, i+7);
+    }
+    */
+    addEdge(G, 9, 31);
+    addEdge(G, 17, 13);
+    addEdge(G, 14, 33);
+    addArc(G, 15, 12);
+    addArc(G, 12, 15);
+    printf("Size of G is %d\n", getSize(G));
     freeGraph(&G);
-    printf("Success\n");
     return 0;
 }
