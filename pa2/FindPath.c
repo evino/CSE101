@@ -13,7 +13,10 @@
 int main(int argc, char *argv[]) {
     
     FILE *in, *out;
-    int vertNum;
+    int n = 0;
+    Graph G = NULL;
+    int u, v;
+    char line[MAX_LEN];
 
     if( argc != 3 ) {
         fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
@@ -32,8 +35,31 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    fscanf(in, "%d", &vertNum);
-    printf("Num of vertex is: %d\n", vertNum);
+    fscanf(in, "%d", &n);
+    printf("Num of vertex is: %d\n", n);
+    
+    int lineCount = 0;
+    G = newGraph(n);
+    
+    while (fgets(line, MAX_LEN, in) != NULL) {
+        lineCount++;
+        if (lineCount > 0) {
+            fscanf(in, "%d %d", &u, &v);
+            addEdge(G, u, v);
+            //atoi(u
+        }
+    }
+    lineCount--;
+
+    printf("Line count is %d\n", lineCount);
+
+    /*rewind(in);
+    while (u != 0 && v != 0) {
+        fscanf(in, "%d %d", &u, &v);
+        addEdge(G, u, v);
+    }
+ */
+    printGraph(stdout, G);
 
     return 0;
 }
