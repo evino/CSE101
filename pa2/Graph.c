@@ -78,9 +78,11 @@ int getSize(Graph G) {
 
 int getSource(Graph G) {
     // Check if BFS Called
+    /*
     if (G->distArr[1] == INF) {
         G->source = NIL;
     }
+    */
     return (G->source);
 }
 
@@ -151,8 +153,8 @@ void addEdge(Graph G, int u, int v) {
     //Can use addArc here, just in two different directions.
     addArc(G, u, v);
     addArc(G, v, u);
-    G->size += 1;
-    
+    //G->size += 1;
+    G->size--;
     return;
 }
 
