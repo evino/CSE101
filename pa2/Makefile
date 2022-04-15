@@ -29,6 +29,9 @@ GraphClient : GraphClient.o $(BASE_OBJECTS)
 GraphTest : GraphTest.o $(BASE_OBJECTS)
 	$(LINK) GraphTest GraphTest.o $(BASE_OBJECTS)
 
+advGraphTest : advGraphTest.o $(BASE_OBJECTS)
+	$(LINK) advGraphTest advGraphTest.o $(BASE_OBJECTS)
+
 FindPath.o : FindPath.c $(HEADERS)
 	$(COMPILE) FindPath.c
 
@@ -39,7 +42,7 @@ $(BASE_OBJECTS) : $(BASE_SOURCES) $(HEADERS)
 	$(COMPILE) $(BASE_SOURCES)
 
 clean :
-	$(REMOVE) FindPath GraphClient GraphTest FindPath.o GraphClient.o GraphTest.o $(BASE_OBJECTS)
+	$(REMOVE) FindPath GraphClient GraphTest advGraphTest FindPath.o GraphClient.o GraphTest.o advGraphTest.o $(BASE_OBJECTS)
 
 checkFind : FindPath
 	$(MEMCHECK) FindPath in7 junk7
