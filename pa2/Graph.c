@@ -241,6 +241,7 @@ void BFS(Graph G, int s) {
             G->colors[x] = 'b';
         }
     }
+    freeList(&Q);
     return;
 }
 
