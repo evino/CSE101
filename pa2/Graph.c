@@ -34,9 +34,6 @@ Graph newGraph(int n) {
         G->parArr[i] = NIL;
         G->distArr[i] = INF;
     }
-    //*(G->parArr) = NIL;
-    //*(G->distArr) = INF;
-    //*(G->vertLabel) = NIL;
     return G;
 }
 
@@ -138,25 +135,6 @@ void getPath(List L, Graph G, int u) {
 }
 
 
-/*
-int getSource(Graph G) {
-    if (G == NULL) {
-        printf("Graph Error: Calling getSource() on NULL Graph Reference\n");
-        exit(EXIT_FAILURE);
-    }
-    int sourceRet;
-    if (G->listArr[1] == NIL) {
-        sourceRet = G->source;
-    } else if(G->listArr[1] != NIL) {
-        sourceRet = NIL;
-    }
-    return sourceRet;
-    
-}
-*/
-
-
-
 /*** Manipulation procedures ***/
 
 
@@ -173,7 +151,8 @@ void addEdge(Graph G, int u, int v) {
     //Can use addArc here, just in two different directions.
     addArc(G, u, v);
     addArc(G, v, u);
-    (G->size)++;
+    G->size += 1;
+    
     return;
 }
 
@@ -189,9 +168,10 @@ void addArc(Graph G, int u, int v) {
     // Do insertion sort here
     
     if (isEmpty(G->listArr[u])) {
-        printf("DB: Doing first append\n");
         append(G->listArr[u], v);
     }
+    G->size++;
+
     moveFront(G->listArr[u]);
     if (v == (get(G->listArr[u]))) {
         return;
@@ -208,6 +188,9 @@ void addArc(Graph G, int u, int v) {
         insertBefore(G->listArr[u], v);
     }
 
+    //maybe needed?
+    
+    
     return;
 }
 
