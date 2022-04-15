@@ -7,7 +7,13 @@
 
 
 #include "Graph.h"
-#define MAX_LEN 300
+#define MAX_LEN 10
+#define BUFF 2
+
+int extract(int line[]) {
+    
+
+
 
 
 int main(int argc, char *argv[]) {
@@ -17,6 +23,8 @@ int main(int argc, char *argv[]) {
     Graph G = NULL;
     int u, v;
     char line[MAX_LEN];
+    char x1[2];
+    char y1[2];
 
     if( argc != 3 ) {
         fprintf(stderr, "Usage: %s <input file> <output file>\n", argv[0]);
@@ -40,16 +48,24 @@ int main(int argc, char *argv[]) {
     
     int lineCount = 0;
     G = newGraph(n);
-    
-    while (fgets(line, MAX_LEN, in) != NULL) {
+
+    while (fgets(line, BUFF, in) != NULL) {
         lineCount++;
-        if (lineCount > 0) {
-            fscanf(in, "%d %d", &u, &v);
-            addEdge(G, u, v);
-            //atoi(u
-        }
     }
     lineCount--;
+    
+    while (fgets(line, MAX_LEN, in) != NULL) {
+        if (lineCount > 0) {
+            //fscanf(in, "%d %d", &u, &v);
+            //fgets(x1, BUFF, in);
+            //addEdge(G, u, v);
+            //printf("%s\n", x1);
+            printf("Line is %d\n", atoi(line));
+        }
+    }
+
+    for (int i = 1; i < lineCount; i++) {
+
 
     printf("Line count is %d\n", lineCount);
 
@@ -62,4 +78,5 @@ int main(int argc, char *argv[]) {
     printGraph(stdout, G);
 
     return 0;
+}
 }
