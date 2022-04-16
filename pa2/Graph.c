@@ -125,15 +125,17 @@ void getPath(List L, Graph G, int u) {
     }
     if (u == getSource(G)) {
         append(L, getSource(G));
+        //printf("%d ", getSource(G));
     } else if (G->parArr[u] == NIL) {
         append(L, NIL);
-        //printf("%d is not reachable from %d\n", u, getSource(G));
+        //printf("No %d-%d path exists\n", u, getSource(G));
     } else {
         getPath(L, G, G->parArr[u]);
         append(L, u);
+        //printf("%d ", G->parArr[u]);
     }
-
-    printList(L);
+    
+    //printList(stdout, L);
     return;
 }
 
