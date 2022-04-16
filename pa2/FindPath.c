@@ -13,7 +13,7 @@
 
 int main(int argc, char *argv[]) {
     
-    FILE *in, *out;
+    FILE *in, *out, *in2;
     int n;
     int u, v;
     Graph G = NULL;
@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "Unable to open file %s for reading\n", argv[1]);
     exit(EXIT_FAILURE);
     }
+    in2 = in;
     
     out = fopen(argv[2], "w");
     if( out==NULL ){
@@ -40,7 +41,7 @@ int main(int argc, char *argv[]) {
     u = 1;
     v = 1;
     //while (fscanf(in, "%[^\n]", 10) != EOF) {
-    while ((v != 0 && v != 0)) {
+    while ((u != 0 && v != 0)) {
         if (i == 0) {
             fscanf(in, "%d", &n);
             G = newGraph(n);
@@ -56,6 +57,30 @@ int main(int argc, char *argv[]) {
     }
 
     printGraph(stdout, G);
+
+    //rewind(in);
+    i = 0;
+    u = 1;
+    v = 1;
+    int source;
+    int dest;
+    while ((u != 0 && v != 0)) {
+        if (i == 0) {
+            fscanf(in2, "%d", &n);
+            printf("DB1\n");
+        } else {
+            fscanf(in2, "%d %d", &u, &v);
+            printf("U is %d and v is %d\n", u, v);
+            if (u == 0 && v == 0) {
+                break;
+            }
+            dest = v;
+            BFS(G, u);
+            source = getSource(G);
+            fprintf(stdout, "The distance from %d to %d is %d\n", source, dest, getDist(G, dest));
+        }
+        i++;
+    }
 
 
     //make sure to freeList
