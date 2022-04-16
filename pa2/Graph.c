@@ -132,7 +132,8 @@ void getPath(List L, Graph G, int u) {
         getPath(L, G, G->parArr[u]);
         append(L, u);
     }
-    
+
+    printList(L);
     return;
 }
 
