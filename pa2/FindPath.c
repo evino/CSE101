@@ -73,8 +73,13 @@ int main(int argc, char *argv[]) {
             BFS(G, source);
             //source = getSource(G);
             fprintf(stdout, "The distance from %d to %d is %d\n", source, dest, getDist(G, dest));
-            fprintf(stdout, "A shortest %d-%d path is: ", source, dest); getPath(L, G, dest);
-            printList(stdout, L);
+            getPath(L, G, dest);
+            moveBack(L);
+            if (get(L) == -1) {
+                fprintf(stdout, "No %d-%d path exists\n", source, dest);
+            } else {
+                printList(stdout, L);
+            }
             //fprintf(stdout, "A shortest %d-%d path is: "; getPath(L, G, dest));
         }
         j++;
