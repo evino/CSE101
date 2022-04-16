@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "Unable to open file %s for reading\n", argv[1]);
     exit(EXIT_FAILURE);
     }
-    in2 = in;
+    in2 = fopen(argv[1], "r");
     
     out = fopen(argv[2], "w");
     if( out==NULL ){
@@ -59,27 +59,25 @@ int main(int argc, char *argv[]) {
     printGraph(stdout, G);
 
     //rewind(in);
-    i = 0;
-    u = 1;
-    v = 1;
-    int source;
-    int dest;
-    while ((u != 0 && v != 0)) {
-        if (i == 0) {
-            fscanf(in2, "%d", &n);
-            printf("DB1\n");
-        } else {
-            fscanf(in2, "%d %d", &u, &v);
-            printf("U is %d and v is %d\n", u, v);
-            if (u == 0 && v == 0) {
+    
+
+    int j = 0;
+    int source = 1;
+    int dest = 1;
+    int vertNum = 0;
+    while ((source != 0 && dest != 0)) {
+        if (j > 0) {
+            fscanf(in, "%d %d", &source, &dest);
+            printf("U is %d and v is %d\n", source, dest);
+            if (source == 0 && dest == 0) {
                 break;
             }
-            dest = v;
-            BFS(G, u);
+            BFS(G, source);
             source = getSource(G);
-            fprintf(stdout, "The distance from %d to %d is %d\n", source, dest, getDist(G, dest));
+            fprintf(stdout, "The distance from %d to %d is %d\n", dest, source, getDist(G, dest));
         }
-        i++;
+        printf("Inc J here\n");
+        j++;
     }
 
 
