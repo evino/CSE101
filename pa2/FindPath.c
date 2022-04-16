@@ -72,15 +72,24 @@ int main(int argc, char *argv[]) {
             }
             BFS(G, source);
             //source = getSource(G);
-            fprintf(stdout, "The distance from %d to %d is %d\n", source, dest, getDist(G, dest));
+            if (getDist(G, dest) == -999) {
+                fprintf(stdout, "\nThe distance from %d to %d is infinity\n", source, dest);
+            } else {
+                fprintf(stdout, "\nThe distance from %d to %d is %d\n", source, dest, getDist(G, dest));
+            }
+            if (!isEmpty(L)) {
+                clear(L);
+            }
+            
             getPath(L, G, dest);
             moveBack(L);
             if (get(L) == -1) {
-                fprintf(stdout, "No %d-%d path exists\n", source, dest);
+                fprintf(stdout, "No %d-%d path exists", source, dest);
             } else {
-                printList(stdout, L);
+                fprintf(stdout, "A shortest %d-%d path is: ", source, dest); printList(stdout, L);
             }
             //fprintf(stdout, "A shortest %d-%d path is: "; getPath(L, G, dest));
+
         }
         j++;
     }
