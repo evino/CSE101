@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
         i++;
     }
 
-    printGraph(stdout, G);
+    printGraph(out, G);
 
     //rewind(in);
     
@@ -72,11 +72,11 @@ int main(int argc, char *argv[]) {
             }
             BFS(G, source);
             //source = getSource(G);
-            fprintf(stdout, "\n");
+            fprintf(out, "\n");
             if (getDist(G, dest) == -999) {
-                fprintf(stdout, "The distance from %d to %d is infinity\n", source, dest);
+                fprintf(out, "The distance from %d to %d is infinity\n", source, dest);
             } else {
-                fprintf(stdout, "The distance from %d to %d is %d\n", source, dest, getDist(G, dest));
+                fprintf(out, "The distance from %d to %d is %d\n", source, dest, getDist(G, dest));
             }
             if (!isEmpty(L)) {
                 clear(L);
@@ -86,9 +86,9 @@ int main(int argc, char *argv[]) {
             getPath(L, G, dest);
             moveBack(L);
             if (get(L) == -1) {
-                fprintf(stdout, "No %d-%d path exists\n", source, dest);
+                fprintf(out, "No %d-%d path exists\n", source, dest);
             } else {
-                fprintf(stdout, "A shortest %d-%d path is: ", source, dest); printList(stdout, L);
+                fprintf(out, "A shortest %d-%d path is: ", source, dest); printList(out, L);
             }
             //fprintf(stdout, "A shortest %d-%d path is: "; getPath(L, G, dest));
 
@@ -96,8 +96,8 @@ int main(int argc, char *argv[]) {
         j++;
     }
 
-
-    //make sure to freeList
+    freeList(&L);
+    freeGraph(&G);
     fclose(in);
     fclose(out);
     return 0;
