@@ -139,19 +139,29 @@ int get(List L) {
 }
 
 bool equals(List A, List B) {
-    bool eq = false;
-    Node N = NULL;
-    Node M = NULL;
-
+    //Node N = NULL;
+    //Node M = NULL;
+    
     if (A == NULL || B == NULL) {
         printf("List Error: calling equals() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
 
+    Node N;
+    Node M;
+    bool eq;
+
     eq = (A->length == B->length);
-    N = A->front;
-    M = B->front;
-    while (eq && N != NULL) {
+    //N = A->front;
+    //M = B->front;
+
+    
+    moveFront(A);
+    moveFront(B);
+    N = A->cursor;
+    M = B->cursor;
+
+    while (eq && (N != NULL && M != NULL)) {
         eq = (N->data == M->data);
         N =  N->next;
         M = M->next;
