@@ -128,7 +128,7 @@ void getPath(List L, Graph G, int u) {
         //printf("%d ", getSource(G));
     } else if (G->parArr[u] == NIL) {
         append(L, NIL);
-        //printf("No %d-%d path exists\n", u, getSource(G));
+        return;
     } else {
         getPath(L, G, G->parArr[u]);
         append(L, u);
