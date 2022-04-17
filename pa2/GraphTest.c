@@ -46,17 +46,54 @@ int main(int argc, char* argv[]){
    moveFront(E);
    
    //DEBUG:
-   List test = newList();
-   test = copyList(E);
-   append(E, 99);
-   printList(stdout, test);
-   deleteBack(E);
-   printList(stdout, E);
-   printf("DB1\n");
-   if (equals(E, test))
-        printf("List E and test list are equal\n");
-    printf("DB2");
+   
+   printf("\n");
+   List test1 = newList();
+   List test2 = newList();
+   prepend(test1, 1);
+   prepend(test2, 1);
+   prepend(test1, 2);
+   prepend(test2, 2);
+   printList(stdout, test1);
+       printList(stdout, test2);
+   if (equals(test1, test2)) {
+       printf("Equal for now\n");
+   }
+   deleteBack(test1);
+   if (equals(test1, test2)) {
+        return 1;
+    }
+   deleteBack(test2);
+   printf("List 1: "); printList(stdout, test1);
+   printf("List 2: "); printList(stdout, test2);
+   if (equals(test1, test2) == true) {
+        printf("The lists are equals, as they should be!\n");
+    }
 
+
+
+    /*
+    List A1 = newList();
+    List B1 = newList();
+    List C1 = newList();
+    prepend(A1, 1);
+    prepend(B1, 1);
+    prepend(A1, 2);
+    prepend(B1, 2);
+    deleteBack(A1);
+    if (equals(A1, B1))
+        printf("A B equal\n");
+    deleteBack(B1);
+    if (!equals(A1, B1))
+        printf("A b not equal\n");
+    append(A1, 3);
+    append(B1, 3);
+    deleteBack(A1);
+    deleteBack(B1);
+    if (!equals(A1, B1)) 
+        printf("Test 3, not equal\n");
+    }
+*/
 
 
    moveNext(E);
