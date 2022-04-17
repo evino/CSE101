@@ -8,10 +8,12 @@
 #include"Graph.h"
 
 int main(int argc, char* argv[]){
-   int i, s, max, min, d, n=35;
+   int i, p, s, max, min, d, n=35;
    List  C = newList(); // central vertices 
    List  P = newList(); // peripheral vertices 
    List  E = newList(); // eccentricities 
+   List pathList = newList();
+
    Graph G = NULL;
 
    // Build graph G 
@@ -22,7 +24,10 @@ int main(int argc, char* argv[]){
    }
    addEdge(G, 9, 31);
    addEdge(G, 17, 13);
-   addEdge(G, 14, 33);
+   //addEdge(G, 14, 33);
+   // OR
+   addArc(G, 14, 33);
+   addArc(G, 33, 14);
 
    // Print adjacency list representation of G
    printGraph(stdout, G);
@@ -71,7 +76,6 @@ int main(int argc, char* argv[]){
     }
 
 
-
     /*
     List A1 = newList();
     List B1 = newList();
@@ -115,6 +119,12 @@ int main(int argc, char* argv[]){
       }
       moveNext(E);
    }
+
+
+    List A = newList();
+
+
+    
 
    // Print results 
    printf("\n");
