@@ -1,7 +1,11 @@
+// Evin Odisho
+// edodisho
+// pa2
+// GraphTest.c
 //
-// GraphClient.c
 //
-//
+
+// GraphTest built on top of GraphClient
 
 #include<stdio.h>
 #include<stdlib.h>

@@ -77,12 +77,6 @@ int getSize(Graph G) {
 }
 
 int getSource(Graph G) {
-    // Check if BFS Called
-    /*
-    if (G->distArr[1] == INF) {
-        G->source = NIL;
-    }
-    */
     return (G->source);
 }
 
@@ -125,25 +119,20 @@ void getPath(List L, Graph G, int u) {
     }
     if (u == getSource(G)) {
         append(L, getSource(G));
-        //printf("%d ", getSource(G));
     } else if (G->parArr[u] == NIL) {
         append(L, NIL);
         return;
     } else {
         getPath(L, G, G->parArr[u]);
         append(L, u);
-        //printf("%d ", G->parArr[u]);
     }
     
-    //printList(stdout, L);
     return;
 }
 
 
 /*** Manipulation procedures ***/
 
-
-// Need help on this one. Will I delete each node in listArr[]?
 void makeNull(Graph G) {
     if (G == NULL) {
         printf("Graph Error: Calling makeNull() on NULL Graph reference\n");
@@ -156,7 +145,6 @@ void addEdge(Graph G, int u, int v) {
     //Can use addArc here, just in two different directions.
     addArc(G, u, v);
     addArc(G, v, u);
-    //G->size += 1;
     G->size--;
     return;
 }
@@ -170,7 +158,6 @@ void addArc(Graph G, int u, int v) {
         printf("Graph Error: Calling addArc with out of range v arguement.\n");
         exit(EXIT_FAILURE);
     }
-    // Do insertion sort here
     
     if (isEmpty(G->listArr[u])) {
         append(G->listArr[u], v);
@@ -193,9 +180,6 @@ void addArc(Graph G, int u, int v) {
         insertBefore(G->listArr[u], v);
     }
 
-    //maybe needed?
-    
-    
     return;
 }
 
@@ -217,20 +201,14 @@ void BFS(Graph G, int s) {
     G->distArr[s] = 0;
     G->parArr[s] = NIL;
     List Q = newList();
-    //append(Q, s);
     prepend(Q, s);
     while (!isEmpty(Q)) {
         moveBack(Q);
-        //moveFront(Q);
         x = get(Q);
-        //printf("%s\n","debug 3");
-        //printf("%d\n",x);
         deleteBack(Q);
         if (G->listArr[x] != NULL) {
         moveFront(G->listArr[x]);
-        //deleteFront(Q);
             int y;
-            //for (int i = 1; i < length(G->listArr[x]); i++) {
             while (index(G->listArr[x]) != -1) {
                 y = get(G->listArr[x]);
                 if (G->colors[y] == 'w') {
@@ -249,12 +227,10 @@ void BFS(Graph G, int s) {
 }
 
 
-// Prints out adjacency list
 void printGraph(FILE *out, Graph G) {
     for (int i = 1; i <= getOrder(G); i++) {
         fprintf(out, "%d: ", i);
         printList(out, G->listArr[i]);
-        //fprintf(out, "\n");
     }
     return;
 }
