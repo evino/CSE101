@@ -139,32 +139,25 @@ int get(List L) {
 }
 
 bool equals(List A, List B) {
-    //Node N = NULL;
-    //Node M = NULL;
-    
+    bool eq = false;
+    Node N = NULL;
+    Node M = NULL;
+
     if (A == NULL || B == NULL) {
         printf("List Error: calling equals() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
 
-    Node N;
-    Node M;
-    bool eq;
-
     eq = (A->length == B->length);
-    //N = A->front;
-    //M = B->front;
-
-    
-    moveFront(A);
-    moveFront(B);
-    N = A->cursor;
-    M = B->cursor;
-
+    N = A->front;
+    M = B->front;
     while (eq && (N != NULL && M != NULL)) {
         eq = (N->data == M->data);
-        N =  N->next;
+        //printf("Before, N is %d and M is %d\n", N->data, M->data);
+        N = N->next;
         M = M->next;
+        printf("second prt\n");
+        //printf("After, N is %d and M is %d\n", N->data, M->data);
     }
     return eq;
 }
@@ -413,6 +406,7 @@ void deleteBack(List L) {
         L->index = -1;
     }
     if (L->length > 1) {
+        L->back->previous->next = NULL;
         L->back = L->back->previous;
     }
     else {
