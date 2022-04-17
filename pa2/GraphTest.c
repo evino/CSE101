@@ -28,7 +28,11 @@ int main(int argc, char* argv[]){
    // OR
    addArc(G, 14, 33);
    addArc(G, 33, 14);
-
+   
+   printf("Size of Graph G is %d\n",getSize(G));
+   printf("Order of Graph G is %d\n", getOrder(G));
+   
+   
    // Print adjacency list representation of G
    printGraph(stdout, G);
 
@@ -122,8 +126,47 @@ int main(int argc, char* argv[]){
 
 
     List A = newList();
-
-
+    addEdge(A, 64, 4);
+    addEdge(A, 64, 3);
+    addEdge(A, 42, 2);
+    addEdge(A, 2, 64);
+    addEdge(A, 4, 2);
+    addEdge(A, 3, 42);
+    BFS(A, 3);
+    getPath(L, A, 64);
+    printf("Shortest Path is: "); printList(L);
+    printf("Most recent source is: %d", getSource(G));
+    append(C, 3);
+    append(C, 64);
+    if (!equals(L, C))
+      return 1;
+    moveFront(L);
+    BFS(A, 2);
+    getPath(L, A, 2);
+    append(C, 2);
+    printf("Shortest Path now is: "); printList(L);
+    printf("Most recent source now is: %d", getSource(G));
+    printf("2's parent is %d\n", getParent(G, 2));
+    if (!equals(L, C))
+      return 2;
+    getPath(L, A, 99);
+    printf("Shortest Path now is: "); printList(L);
+    printf("Most recent source now is: %d", getSource(G));
+    if (equals(L, C))
+      return 3;
+    clear(L);
+    clear(C);
+    append(C, NIL);
+    BFS(A, 99);
+    getPath(L, A, 2);
+    printf("Shortest Path now is: "); printList(L);
+    printf("Most recent source now is: %d", getSource(G));
+    if (!equals(C, L))
+      return 4;
+       
+    
+    
+    
     
 
    // Print results 
