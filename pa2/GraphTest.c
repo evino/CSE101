@@ -54,30 +54,31 @@ int main(int argc, char* argv[]){
    min = max = front(E);
    moveFront(E);
    
-   //DEBUG:
    
-   printf("\n");
-   List test1 = newList();
-   List test2 = newList();
-   prepend(test1, 1);
-   prepend(test2, 1);
-   prepend(test1, 2);
-   prepend(test2, 2);
-   printList(stdout, test1);
-       printList(stdout, test2);
-   if (equals(test1, test2)) {
-       printf("Equal for now\n");
-   }
-   deleteBack(test1);
-   if (equals(test1, test2)) {
-        return 1;
-    }
-   deleteBack(test2);
-   printf("List 1: "); printList(stdout, test1);
-   printf("List 2: "); printList(stdout, test2);
-   if (equals(test1, test2) == true) {
-        printf("The lists are equals, as they should be!\n");
-    }
+//    //DEBUG:
+//    
+//    printf("\n");
+//    List test1 = newList();
+//    List test2 = newList();
+//    prepend(test1, 1);
+//    prepend(test2, 1);
+//    prepend(test1, 2);
+//    prepend(test2, 2);
+//    printList(stdout, test1);
+//        printList(stdout, test2);
+//    if (equals(test1, test2)) {
+//        printf("Equal for now\n");
+//    }
+//    deleteBack(test1);
+//    if (equals(test1, test2)) {
+//         return 1;
+//     }
+//    deleteBack(test2);
+//    printf("List 1: "); printList(stdout, test1);
+//    printf("List 2: "); printList(stdout, test2);
+//    if (equals(test1, test2) == true) {
+//         printf("The lists are equals, as they should be!\n");
+//     }
 
 
     /*
@@ -125,7 +126,7 @@ int main(int argc, char* argv[]){
    }
 
 
-    List A = newList();
+    Graph A = newGraph(100);
     addEdge(A, 64, 4);
     addEdge(A, 64, 3);
     addEdge(A, 42, 2);
@@ -133,37 +134,53 @@ int main(int argc, char* argv[]){
     addEdge(A, 4, 2);
     addEdge(A, 3, 42);
     BFS(A, 3);
-    getPath(L, A, 64);
-    printf("Shortest Path is: "); printList(L);
-    printf("Most recent source is: %d", getSource(G));
+    getPath(pathList, A, 64);
+    moveBack(pathList);
+    if(get(pathList) == -1) {
+    	printf("No shortest path exists\n");
+    } else {
+    	printf("Shortest Path is: "); printList(stdout, pathList);
+    }
+    if (getSource(A) == -1) {
+    	printf("\nMost recent source now is NIL\n");
+    } else {
+    	printf("\nMost recent source now is: %d\n", getSource(A));
+    }
     append(C, 3);
     append(C, 64);
-    if (!equals(L, C))
-      return 1;
-    moveFront(L);
+    moveFront(pathList);
     BFS(A, 2);
-    getPath(L, A, 2);
+    getPath(pathList, A, 2);
     append(C, 2);
-    printf("Shortest Path now is: "); printList(L);
-    printf("Most recent source now is: %d", getSource(G));
-    printf("2's parent is %d\n", getParent(G, 2));
-    if (!equals(L, C))
-      return 2;
-    getPath(L, A, 99);
-    printf("Shortest Path now is: "); printList(L);
-    printf("Most recent source now is: %d", getSource(G));
-    if (equals(L, C))
-      return 3;
-    clear(L);
+    moveBack(pathList);
+    if(get(pathList) == -1) {
+    	printf("No shortest path exists\n");
+    } else {
+    	printf("Shortest Path is: "); printList(stdout, pathList);
+    }
+    if (getSource(A) == -1) {
+    	printf("\nMost recent source now is NIL\n");
+    } else {
+    	printf("\nMost recent source now is: %d\n", getSource(A));
+    }
+    if (getParent(A, 2) == -1) {
+    	printf("2's parent is NIL\n");
+    } else {
+    	printf("2's parent is %d\n", getParent(A, 2));
+    }
+    
+    getPath(pathList, A, 99);
+    moveBack(pathList);
+    printf("Shortest Path is: "); printList(stdout, pathList);
+	if (getSource(A) == -1) {
+    	printf("\nMost recent source now is NIL\n");
+    } else {
+    	printf("\nMost recent source now is: %d\n", getSource(A));
+    }
+    clear(pathList);
     clear(C);
     append(C, NIL);
     BFS(A, 99);
-    getPath(L, A, 2);
-    printf("Shortest Path now is: "); printList(L);
-    printf("Most recent source now is: %d", getSource(G));
-    if (!equals(C, L))
-      return 4;
-       
     
     
     
@@ -180,11 +197,13 @@ int main(int argc, char* argv[]){
    printList(stdout, P);
    printf("\n");
 
-   // Free objects 
+   // Free objects
+   freeList(&pathList); 
    freeList(&C);
    freeList(&P);
    freeList(&E);
    freeGraph(&G);
+   freeGraph(&A);
 
    return(0);
 }
