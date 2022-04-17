@@ -153,11 +153,8 @@ bool equals(List A, List B) {
     M = B->front;
     while (eq && (N != NULL && M != NULL)) {
         eq = (N->data == M->data);
-        //printf("Before, N is %d and M is %d\n", N->data, M->data);
         N = N->next;
         M = M->next;
-        printf("second prt\n");
-        //printf("After, N is %d and M is %d\n", N->data, M->data);
     }
     return eq;
 }
