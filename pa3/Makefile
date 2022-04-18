@@ -1,51 +1,52 @@
 #------------------------------------------------------------------------------
-# Makefile for CSE 101 Programming Assignment 3
 # Evin Odisho
 # edodisho
 # pa3
+#------------------------------------------------------------------------------
+#  Makefile for CSE 101 Programming Assignment 3
 #
-# make                   makes FindComponents
-# make GraphClient       makes GraphClient
-# make GraphTest		 makes GraphTest
-# make clean             removes all binaries
-# make checkClient       checks GraphClient for memory errors
-# make checkFindComp     checks FindComponents for memory errors
+#  make                     makes FindComponents
+#  make GraphClient         makes GraphClient
+#  make GraphTest			makes GraphTest
+#  make clean               removes binaries
+#  make checkFind           tests FindComponents for memory leaks on in7
+#  make checkClient         tests GraphClient for memory leaks
 #------------------------------------------------------------------------------
 
-FindComponents : FindComponents.o Graph.c
-	gcc -std=c17 -Wall -o FindComponents FindComponents.o Graph.o
+BASE_SOURCES   = Graph.c List.c
+BASE_OBJECTS   = Graph.o List.o
+HEADERS        = Graph.h List.h
+COMPILE        = gcc -std=c17 -Wall -c
+LINK           = gcc -std=c17 -Wall -o
+REMOVE         = rm -f
+MEMCHECK       = valgrind --leak-check=full
 
-FindComponents.o : FindComponents.c Graph.c
+FindComponents : FindComponents.o $(BASE_OBJECTS)
+	$(LINK) FindComponents FindComponents.o $(BASE_OBJECTS)
 
+GraphClient : GraphClient.o $(BASE_OBJECTS)
+	$(LINK) GraphClient GraphClient.o $(BASE_OBJECTS)
 
-Lex : Lex.o List.o
-	gcc -std=c17 -Wall -o Lex Lex.o List.o
+GraphTest : GraphTest.o $(BASE_OBJECTS)
+	$(LINK) GraphTest GraphTest.o $(BASE_OBJECTS)
 
-Lex.o : Lex.c List.h
-	gcc -std=c17 -Wall -c -g Lex.c
+FindComponents.o : FindComponents.c $(HEADERS)
+	$(COMPILE) FindComponents.c
 
-ListClient: ListClient.o List.o
-	gcc -std=c17 -Wall -o ListClient ListClient.o List.o
+GraphClient.o : GraphClient.c $(HEADERS)
+	$(COMPILE) GraphClient.c
 
-ListClient.o : ListClient.c List.h
-	gcc -std=c17 -Wall -c -g ListClient.c
-
-ListTest: ListTest.o List.o
-	gcc -std=c17 -Wall -o ListTest ListTest.o List.o
-
-ListTest.o : ListTest.c List.h
-	gcc -std=c17 -Wall -c -g ListTest.c
-
-List.o : List.c List.h
-	gcc -std=c17 -Wall -c -g List.c
+$(BASE_OBJECTS) : $(BASE_SOURCES) $(HEADERS)
+	$(COMPILE) $(BASE_SOURCES)
 
 clean :
-	rm -f Lex ListClient Lex.o ListClient.o List.o ListTest ListTest.o
+	$(REMOVE) FindComponents GraphClient GraphTest advGraphTest FindComponents.o GraphClient.o GraphTest.o advGraphTest.o $(BASE_OBJECTS)
 
-checkClient : 
-	valgrind --leak-check=full ListClient
+checkFind : FindComponents
+	$(MEMCHECK) FindComponents in7 junk7
 
-checkLex :
-	valgrind --leak-check=full Lex in3 blah3
+checkClient : GraphClient
+	$(MEMCHECK) GraphClient
 
-
+checkTest : GraphTest
+	$(MEMCHECK) GraphTest
