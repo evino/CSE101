@@ -106,10 +106,6 @@ int getFinish(Graph G, int u) {
         printf("Graph Error: Calling getFinish() with NULL Graph Reference\n");
         exit(EXIT_FAILURE);
     }
-    if (u == NULL) {
-        printf("Graph Error: Calling getFinish() with NULL Vertex Reference\n");
-        exit(EXIT_FAILURE);
-    }
     if (!(1 <= u && u <= getOrder(G))) {
         printf("Graph Error: Calling getFinish() with out of bounds vertex arguement.\n");
         exit(EXIT_FAILURE);
@@ -170,25 +166,25 @@ void DFS(Graph G, List s) {
         printf("Graph Error: Calling DFS() on NULL Graph reference\n");
         exit(EXIT_FAILURE);
     }
-    if (S == NULL) {
+    if (s == NULL) {
         printf("Graph Error: Calling DFS() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
 
     for (int x = 1; x < (getOrder(G) + 1); x++) {
-        colors[x] = 'w';
-        parArr[x] = NIL;
+        G->colors[x] = 'w';
+        G->parArr[x] = NIL;
     }
     int time = 0;
     for (int x = 1; x < (getOrder(G) + 1); x++) {
-        if (colors[x] == 'w') {
+        if (G->colors[x] == 'w') {
             Visit(&x);
         }
     }
     return;
 }
 
-
+/*
 void BFS(Graph G, int s) {
     if (G == NULL) {
         printf("Graph Error: Calling BFS() on NULL Graph reference\n");
@@ -232,6 +228,7 @@ void BFS(Graph G, int s) {
     return;
 }
 
+*/
 
 void printGraph(FILE *out, Graph G) {
     for (int i = 1; i <= getOrder(G); i++) {
