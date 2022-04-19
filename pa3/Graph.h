@@ -9,7 +9,7 @@
 #include <stdio.h>
 #pragma once
 
-#define INF (-999)
+#define UNDEF (-999)
 #define NIL (-1)
 
 /*** Exported Type **/
