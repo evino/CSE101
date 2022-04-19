@@ -163,6 +163,10 @@ void addArc(Graph G, int u, int v) {
 
 
 void Visit(Graph G, List s, int x, int *time) {
+    if (G == NULL) {
+        printf("Graph Error: Calling Visit() on NUll Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
     G->discArr[x] = *time += 1;
     G->colors[x] = 'g';
     for (int y = 1; y <= length(s); y++) {
@@ -202,8 +206,12 @@ void DFS(Graph G, List s) {
 // Other functions
 
 Graph transpose(Graph G) {
-    Graph T = NULL;
-    T = newGraph(getOrder(G));
+    //Graph T = NULL;
+    if (G == NULL) {
+        printf("Graph Error: Calling transpose() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+    Graph T = newGraph(getOrder(G));
     for (int i = 1; i <= getOrder(G); i++) {
         moveFront(G->listArr[i]);
         while(index(G->listArr[i]) != -1) {
@@ -214,6 +222,21 @@ Graph transpose(Graph G) {
     return T;
 }
 
+Graph copyGraph(Graph G) {
+    if (G == NULL) {
+        printf("Graph Error: Calling copyGraph() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+    Graph N = newGraph(getOrder(G));
+    for (int i = 1; i <= getOrder(G); i++) {
+        moveFront(G->listArr[i]);
+        while (index(G->listArr[i]) != -1) {
+            addEdge(N, i, get(G->listArr[i]));
+            moveNext(G->listArr[i]);
+        }
+    }
+    return N;
+}
 
 
 /*
@@ -263,6 +286,11 @@ void BFS(Graph G, int s) {
 */
 
 void printGraph(FILE *out, Graph G) {
+    if (G == NULL) {
+        printf("Graph Error: Calling printGraph() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 1; i <= getOrder(G); i++) {
         fprintf(out, "%d: ", i);
         printList(out, G->listArr[i]);
