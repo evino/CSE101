@@ -199,6 +199,21 @@ void DFS(Graph G, List s) {
     return;
 }
 
+// Other functions
+
+Graph transpose(Graph G) {
+    Graph T = NULL;
+    T = newGraph(getOrder(G));
+    for (int i = 1; i <= getOrder(G); i++) {
+        moveFront(G->listArr[i]);
+        while(index(G->listArr[i]) != -1) {
+            addArc(T, G->listArr[i], i);
+            moveNext(G->listArr[i]);
+        }
+    }
+    return T;
+}
+
 
 
 /*
