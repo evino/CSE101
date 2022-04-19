@@ -174,7 +174,9 @@ void Visit(Graph G, List s, int x, int *time) {
             G->parArr[y] = x;
             Visit(G, s, x, time);
         }
+        //Need to push to stack inside Visit()
     }
+    prepend(s, 
     G->colors[x] = 'b';
     G->finishArr[x] = *time += 1;
     return;
