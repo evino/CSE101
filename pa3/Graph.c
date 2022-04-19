@@ -12,10 +12,10 @@ typedef struct GraphObj {
     List *listArr;
     char *colors;
     int *parArr;
-    int *distArr;
+    int *discArr;
+    int *finishArr;
     int order;
     int size;
-    int source;
 } GraphObj;
 
 Graph newGraph(int n) {
@@ -24,15 +24,16 @@ Graph newGraph(int n) {
     G->listArr = malloc((n + 1) * sizeof(List));
     G->colors = malloc((n + 1) * sizeof(char));
     G->parArr = malloc((n + 1) * sizeof(int));
-    G->distArr = malloc((n + 1) * sizeof(int));
+    G->discArr = malloc((n + 1) * sizeof(int));
+    G->finishArr = malloc((n + 1) * sizeof(int));
 
     G->order = n;
     G->size = 0;
-    G->source = NIL;
     for (int i = 1; i < n + 1; i++) {
         G->listArr[i] = newList();
         G->parArr[i] = NIL;
-        G->distArr[i] = INF;
+        G->discArr[i] = UNDEF;
+        G->finishArr[i] = UNDEF;
     }
     return G;
 }
@@ -52,7 +53,8 @@ void freeGraph(Graph *pG) {
     free((*pG)->listArr);
     free((*pG)->colors);
     free((*pG)->parArr);
-    free((*pG)->distArr);
+    free((*pG)->discArr);
+    free((*pG)->finishArr);
     free(*pG);
     *pG = NULL;
      }
@@ -77,16 +79,45 @@ int getSize(Graph G) {
 }
 
 
-int getParent(Graph G, int u) {
-    if (1 > u && u > getOrder(G)) {
+int getParent(Graph G, int u) {  /* Pre: 1<=u<=n=getOrder(G) */
+    //if (1 > u && u > getOrder(G)) {
+    if (!(1 <= u && u <= getOrder(G))) {
         printf("Graph Error: Calling getParent() with out of bounds arguements\n");
         exit(EXIT_FAILURE);
     }
-    if (G->distArr[u] == INF) {
+    if (G->discArr[u] == UNDEF) {
         return NIL;
     }
     return (G->parArr[u]);
 }
+
+int getDiscover(Graph G, int u) { /* Pre: 1<=u<=n=getOrder(G) */
+    //if (1 > u && u > getOrder(G)) {
+    if (!(1 <= u && u <= getOrder(G))) {
+        printf("Graph Error: Calling getDiscover() with out of bounds vertex arguement.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    return (G->discArr[u]);
+}
+
+int getFinish(Graph G, int u) {
+    if (G == NULL) {
+        printf("Graph Error: Calling getFinish() with NULL Graph Reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (u == NULL) {
+        printf("Graph Error: Calling getFinish() with NULL Vertex Reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!(1 <= u && u <= getOrder(G))) {
+        printf("Graph Error: Calling getFinish() with out of bounds vertex arguement.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    return (G->finishArr[u]);
+}
+
 
 
 /*** Manipulation procedures ***/
@@ -133,6 +164,30 @@ void addArc(Graph G, int u, int v) {
 
     return;
 }
+
+void DFS(Graph G, List s) {
+    if (G == NULL) {
+        printf("Graph Error: Calling DFS() on NULL Graph reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (S == NULL) {
+        printf("Graph Error: Calling DFS() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int x = 1; x < (getOrder(G) + 1); x++) {
+        colors[x] = 'w';
+        parArr[x] = NIL;
+    }
+    int time = 0;
+    for (int x = 1; x < (getOrder(G) + 1); x++) {
+        if (colors[x] == 'w') {
+            Visit(&x);
+        }
+    }
+    return;
+}
+
 
 void BFS(Graph G, int s) {
     if (G == NULL) {
