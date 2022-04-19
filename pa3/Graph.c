@@ -293,7 +293,6 @@ void printGraph(FILE *out, Graph G) {
 
     for (int i = 1; i <= getOrder(G); i++) {
         fprintf(out, "%d: ", i);
-        printf("DB1\n");
         printList(out, G->listArr[i]);
     }
     return;
