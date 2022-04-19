@@ -293,7 +293,11 @@ void printGraph(FILE *out, Graph G) {
 
     for (int i = 1; i <= getOrder(G); i++) {
         fprintf(out, "%d: ", i);
-        printList(out, G->listArr[i]);
+        if (!isEmpty(G->listArr[i])) {
+            printList(out, G->listArr[i]);
+        } else {
+            fprintf(out, "\n");
+        }
     }
     return;
 }
