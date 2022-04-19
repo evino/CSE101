@@ -457,10 +457,12 @@ void printList(FILE* out, List L) {
         printf("List Error: calling printList() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+/*
     if (isEmpty(L)) {
         printf("List Error: calling printList() on empty List\n");
         exit(EXIT_FAILURE);
     }
+    */
     for (N = L->front; N != L->back; N = N->next) {
         fprintf(out, "%d ", N->data);
     }
