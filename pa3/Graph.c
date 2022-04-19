@@ -207,7 +207,7 @@ Graph transpose(Graph G) {
     for (int i = 1; i <= getOrder(G); i++) {
         moveFront(G->listArr[i]);
         while(index(G->listArr[i]) != -1) {
-            addArc(T, G->listArr[i], i);
+            addArc(T, get(G->listArr[i]), i);
             moveNext(G->listArr[i]);
         }
     }
