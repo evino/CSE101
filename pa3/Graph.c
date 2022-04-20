@@ -162,23 +162,23 @@ void addArc(Graph G, int u, int v) {
 }
 
 
-void Visit(Graph G, List s, int x, int *time) {
+void Visit(Graph G, List *s, int *x, int *time) {
     if (G == NULL) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
-    G->discArr[x] = *time += 1;
-    G->colors[x] = 'g';
-    for (int y = 1; y <= length(s); y++) {
+    G->discArr[*x] = *time += 1;
+    G->colors[*x] = 'g';
+    for (int y = 1; y <= length(*s); y++) {
         if (G->colors[y] == 'w') {
-            G->parArr[y] = x;
+            G->parArr[y] = *x;
             Visit(G, s, x, time);
         }
         //Need to push to stack inside Visit()
     }
-    prepend(s, 
-    G->colors[x] = 'b';
-    G->finishArr[x] = *time += 1;
+    G->colors[*x] = 'b';
+    insertAfter(*s, *x);
+    G->finishArr[*x] = *time += 1;
     return;
 }
 
@@ -199,7 +199,7 @@ void DFS(Graph G, List s) {
     int time = 0;
     for (int x = 1; x < (getOrder(G) + 1); x++) {
         if (G->colors[x] == 'w') {
-            Visit(G, s, x, &time);
+            Visit(G, &s, &x, &time);
         }
     }
     return;
