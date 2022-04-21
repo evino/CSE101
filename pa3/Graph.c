@@ -172,13 +172,15 @@ void Visit(Graph G, List *s, int *x, int *time) {
     for (int y = 1; y <= length(*s); y++) {
         if (G->colors[y] == 'w') {
             G->parArr[y] = *x;
-            Visit(G, s, x, time);
+            Visit(G, &s, x, time);
+            printf("Inside of visit func\n");
+
         }
         //Need to push to stack inside Visit()
     }
     G->colors[*x] = 'b';
     insertAfter(*s, *x);
-    G->finishArr[*x] = *time += 1;
+    G->finishArr[*x] = *time++;
     return;
 }
 
@@ -199,7 +201,9 @@ void DFS(Graph G, List s) {
     int time = 0;
     for (int x = 1; x < (getOrder(G) + 1); x++) {
         if (G->colors[x] == 'w') {
+            printf("About to call Visit() inside DFS\n");
             Visit(G, &s, &x, &time);
+            printf("After calling Visit() inside DFS function\n");
         }
     }
     return;
