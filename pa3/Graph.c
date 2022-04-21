@@ -172,14 +172,16 @@ void Visit(Graph G, List *s, int *x, int *time) {
     for (int y = 1; y <= length(*s); y++) {
         if (G->colors[y] == 'w') {
             G->parArr[y] = *x;
-            Visit(G, &s, x, time);
+            Visit(G, s, &y, time);
             printf("Inside of visit func\n");
 
         }
         //Need to push to stack inside Visit()
     }
     G->colors[*x] = 'b';
+    moveBack(*s);
     insertAfter(*s, *x);
+    printf("was able to push to stack\n");
     G->finishArr[*x] = *time++;
     return;
 }
