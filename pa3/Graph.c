@@ -136,7 +136,7 @@ void addArc(Graph G, int u, int v) {
         printf("Graph Error: Calling addArc with out of range v arguement.\n");
         exit(EXIT_FAILURE);
     }
-    
+
     if (isEmpty(G->listArr[u])) {
         append(G->listArr[u], v);
         G->size++;
@@ -144,20 +144,19 @@ void addArc(Graph G, int u, int v) {
     }
 
     moveFront(G->listArr[u]);
-    printf("Cursor at: %d\n", index(G->listArr[u]));
-    while (index(G->listArr[u]) != -1 && length(G->listArr[u]) > 1) {
+    while (index(G->listArr[u]) != -1) {
         if (v == get(G->listArr[u])) {
             //set(G->listArr[u], v);
             return;
         }
         moveNext(G->listArr[u]);
     }
-
+    
+    
     moveFront(G->listArr[u]);
     while (index(G->listArr[u]) != -1 && (v > get(G->listArr[u]))) {
         moveNext(G->listArr[u]);
     }
-    printf("Cursor now at: %d\n", index(G->listArr[u]));
     if (index(G->listArr[u]) == -1) {
             moveBack(G->listArr[u]);
             insertAfter(G->listArr[u], v);
@@ -176,7 +175,7 @@ void Visit(Graph G, List *s, int *x, int *time) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
-    G->discArr[*x] = *time += 1;
+    G->discArr[*x] = ++(*time);
     G->colors[*x] = 'g';
     for (int y = 1; y <= length(*s); y++) {
         if (G->colors[y] == 'w') {
@@ -213,6 +212,8 @@ void DFS(Graph G, List s) {
     for (int x = 1; x < (getOrder(G) + 1); x++) {
         if (G->colors[x] == 'w') {
             //printf("About to call Visit() inside DFS\n");
+
+            // can only keep s and x as call by val and use get() for x
             Visit(G, &s, &x, &time);
             //printf("After calling Visit() inside DFS function\n");
         }
