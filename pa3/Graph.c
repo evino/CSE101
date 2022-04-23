@@ -140,12 +140,17 @@ void addArc(Graph G, int u, int v) {
     if (isEmpty(G->listArr[u])) {
         append(G->listArr[u], v);
     }
-    G->size++;
+    moveFront(G->listArr[u]);
+
+    while (index(G->listArr[u]) != -1 && length(G->listArr[u]) > 1) {
+        if (v == get(G->listArr[u])) {
+            printf("%d already in list at index %d\n", v, index(G->listArr[u]));
+            return;
+        }
+        moveNext(G->listArr[u]);
+    }
 
     moveFront(G->listArr[u]);
-    if (v == (get(G->listArr[u]))) {
-        return;
-    }
     while (index(G->listArr[u]) != -1 && (v > get(G->listArr[u]))) {
         moveNext(G->listArr[u]);
     }
@@ -157,6 +162,7 @@ void addArc(Graph G, int u, int v) {
     } else {
         insertBefore(G->listArr[u], v);
     }
+    G->size++;
 
     return;
 }
@@ -173,7 +179,7 @@ void Visit(Graph G, List *s, int *x, int *time) {
         if (G->colors[y] == 'w') {
             G->parArr[y] = *x;
             Visit(G, s, &y, time);
-            printf("Inside of visit func\n");
+            //printf("Inside of visit func\n");
 
         }
         //Need to push to stack inside Visit()
@@ -181,7 +187,7 @@ void Visit(Graph G, List *s, int *x, int *time) {
     G->colors[*x] = 'b';
     moveBack(*s);
     insertAfter(*s, *x);
-    printf("was able to push to stack\n");
+    //printf("was able to push to stack\n");
     G->finishArr[*x] = *time++;
     return;
 }
@@ -203,9 +209,9 @@ void DFS(Graph G, List s) {
     int time = 0;
     for (int x = 1; x < (getOrder(G) + 1); x++) {
         if (G->colors[x] == 'w') {
-            printf("About to call Visit() inside DFS\n");
+            //printf("About to call Visit() inside DFS\n");
             Visit(G, &s, &x, &time);
-            printf("After calling Visit() inside DFS function\n");
+            //printf("After calling Visit() inside DFS function\n");
         }
     }
     return;
