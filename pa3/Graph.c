@@ -139,14 +139,15 @@ void addArc(Graph G, int u, int v) {
     
     if (isEmpty(G->listArr[u])) {
         append(G->listArr[u], v);
+        G->size++;
         return;
     }
-    
 
     moveFront(G->listArr[u]);
     printf("Cursor at: %d\n", index(G->listArr[u]));
     while (index(G->listArr[u]) != -1 && length(G->listArr[u]) > 1) {
         if (v == get(G->listArr[u])) {
+            //set(G->listArr[u], v);
             return;
         }
         moveNext(G->listArr[u]);
@@ -157,11 +158,12 @@ void addArc(Graph G, int u, int v) {
         moveNext(G->listArr[u]);
     }
     printf("Cursor now at: %d\n", index(G->listArr[u]));
-    if (index(G->listArr[u]) == -1 && length(G->listArr[u]) > 1) {
+    if (index(G->listArr[u]) == -1) {
             moveBack(G->listArr[u]);
             insertAfter(G->listArr[u], v);
     } else {
-        insertBefore(G->listArr[u], v);
+        //if (length(G->listArr[u]) > 1)
+            insertBefore(G->listArr[u], v);
     }
     G->size++;
 
