@@ -175,43 +175,29 @@ void Visit(Graph G, List s, int x, int *time) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
-    //printf("X is %d\n", x);
     G->discArr[x] = ++(*time);
     G->colors[x] = 'g';
-    //printf("Db2\n");
 
     if (isEmpty(G->listArr[x])) {
         return;
     }
 
-    //printf("Cursor at %d\n", index(G->listArr[x]));
-    
-    //printf("DB list\n");
     moveFront(G->listArr[x]);
-    //printf("Right before moveFront of value %d\n", x);
     while (index(G->listArr[x]) != -1) {
-        //printf("Calling get on: %d\n", get(G->listArr[x]));
         if (G->colors[get(G->listArr[x])] == 'w') {
             G->parArr[get(G->listArr[x])] = x;
-            //printf("XX is %d\n", x);
             Visit(G, s, get(G->listArr[x]), time);
         }
-        //printf("!!!!!!!!!calling moveNext()\n");
+        if (G->colors[get(G->listArr[x])] == 'g')  {
+            G->colors[get(G->listArr[x])] = 'b';
+            prepend(s, get(G->listArr[x]));
+            G->finishArr[get(G->listArr[x])] = ++(*time);
+        }
         moveNext(G->listArr[x]);
-        //printf("After moveNext()!!!!!!!!!\n");
-        //prepend(s, x);
     }
-    //printf("DB3\n");
-    //printf("get() DB!!!!!!\n");
-    //G->colors[get(G->listArr[x])] = 'b';
-    //moveBack(s);
-    //printf("was able to push to stack\n");
     G->finishArr[x] = ++(*time);
     G->colors[x] = 'b';
-    printf("X is %d\n", x);
     prepend(s, x);
-    printf("Printing list s\n");
-    printList(stdout, s);
     return;
 }
 
@@ -232,27 +218,20 @@ void DFS(Graph G, List s) {
     moveFront(s);
 
     int x;
+    int time;
     
     // Initialization
     for (x = 1; x < (getOrder(G) + 1); x++) {
         G->colors[x] = 'w';
         G->parArr[x] = NIL;
     }
-    int time = 0;
-    clear(s); // Needed, otherwise prints duplicates in stack
+    time = 0;
     moveFront(stackCopy);
-    //int i = 1;
-    //printf("stackCopy is"); printList(stdout, stackCopy);
+    clear(s); // Needed, otherwise prints duplicates in stack
     while (index(stackCopy) != -1) {
-    //printf("Current colors is %c and index is %d\n", G->colors[get(stackCopy)], index(stackCopy));
         if (G->colors[get(stackCopy)] == 'w') {
-            //printf("Iteration %d\n", i);
-            //printf("DB1\n");
-            //i++;
-            printf("Getting %d\n", get(stackCopy));
             Visit(G, s, get(stackCopy), &time);
         }
-        //printf("stackCopy cursor at: %d\n", get(stackCopy));
         moveNext(stackCopy);
     }
     freeList(&stackCopy);
