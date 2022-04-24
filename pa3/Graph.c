@@ -205,7 +205,8 @@ void Visit(Graph G, List s, int x, int *time) {
     }
     printf("DB3\n");
     printf("get() DB!!!!!!\n");
-    G->colors[get(G->listArr[x])] = 'b';
+    //G->colors[get(G->listArr[x])] = 'b';
+    G->colors[x] = 'b';
     //moveBack(s);
     ++(*time);
     //printf("was able to push to stack\n");
