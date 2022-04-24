@@ -170,15 +170,29 @@ void addArc(Graph G, int u, int v) {
 }
 
 
-void Visit(Graph G, List *s, int x, int *time) {
+void Visit(Graph G, List s, int x, int *time) {
     if (G == NULL) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
     G->discArr[x] = ++(*time);
     G->colors[x] = 'g';
+    printf("Db2\n");
+    printf("Cursor at %d\n", index(G->listArr[x]));
     moveFront(G->listArr[x]);
-    while (index(G->listArr[x]) != -1) {
+    if (!isEmpty(G->listArr[x])) {
+        printf("Right before moveFront\n");
+        while (index(G->listArr[x]) != -1) {
+            if (G->colors[get(G->listArr[x])] == 'w') {
+                G->parArr[get(G->listArr[x])] = x;
+                Visit(G, s, get(G->listArr[x]), time);
+            }
+            moveNext(G->listArr[x]);
+            //prepend(s, x);
+        }
+    }
+    printf("DB3\n");
+    /*while (index(G->listArr[x]) != -1) {
         if (G->colors[get(G->listArr[x])] == 'w') {
             G->parArr[get(G->listArr[x])] = x;
             Visit(G, s, get(G->listArr[x]), time);
@@ -188,11 +202,12 @@ void Visit(Graph G, List *s, int x, int *time) {
         //Need to push to stack inside Visit()
         moveNext(G->listArr[x]);
     }
-    G->colors[x] = 'b';
-    moveBack(*s);
-    insertAfter(*s, x);
+    */
+    G->colors[get(G->listArr[x])] = 'b';
+    //moveBack(s);
+    ++(*time);
     //printf("was able to push to stack\n");
-    G->finishArr[x] = *time++;
+    G->finishArr[x] = *time;
     return;
 }
 
@@ -205,6 +220,7 @@ void DFS(Graph G, List s) {
         printf("Graph Error: Calling DFS() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+    List stackCopy = copyList(s);
     moveFront(s);
     //for (int i = index(s); i != -1; i++) {
         //G->colors[get(s)] = 'w';
@@ -216,14 +232,14 @@ void DFS(Graph G, List s) {
         G->parArr[x] = NIL;
     }
     int time = 0;
-    
-    moveFront(s);
-    while (index(s) != -1) {
-        if (G->colors[get(s)] == 'w') {
+    clear(s);
+    moveFront(stackCopy);
+    while (index(stackCopy) != -1) {
+        if (G->colors[get(stackCopy)] == 'w') {
             printf("DB1\n");
-            Visit(G, &s, x, &time);
+            Visit(G, s, get(stackCopy), &time);
         }
-        moveNext(s);
+        moveNext(stackCopy);
     }
 
     /*
@@ -237,6 +253,7 @@ void DFS(Graph G, List s) {
         }
     }
     */
+    freeList(&stackCopy);
     return;
 }
 
