@@ -66,7 +66,8 @@ int main(int argc, char *argv[]) {
     DFS(G, L);
     DFS(T, L);
 
-
+    fprintf(out, "List of Strongly connected components are: ");
+    printList(out, L);
 
     freeList(&L);
     freeGraph(&G);
