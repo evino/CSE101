@@ -170,27 +170,29 @@ void addArc(Graph G, int u, int v) {
 }
 
 
-void Visit(Graph G, List *s, int *x, int *time) {
+void Visit(Graph G, List *s, int x, int *time) {
     if (G == NULL) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
-    G->discArr[*x] = ++(*time);
-    G->colors[*x] = 'g';
-    for (int y = 1; y <= length(*s); y++) {
-        if (G->colors[y] == 'w') {
-            G->parArr[y] = *x;
-            Visit(G, s, &y, time);
+    G->discArr[x] = ++(*time);
+    G->colors[x] = 'g';
+    moveFront(G->listArr[x]);
+    while (index(G->listArr[x]) != -1) {
+        if (G->colors[get(G->listArr[x])] == 'w') {
+            G->parArr[get(G->listArr[x])] = x;
+            Visit(G, s, get(G->listArr[x]), time);
             //printf("Inside of visit func\n");
 
         }
         //Need to push to stack inside Visit()
+        moveNext(G->listArr[x]);
     }
-    G->colors[*x] = 'b';
+    G->colors[x] = 'b';
     moveBack(*s);
-    insertAfter(*s, *x);
+    insertAfter(*s, x);
     //printf("was able to push to stack\n");
-    G->finishArr[*x] = *time++;
+    G->finishArr[x] = *time++;
     return;
 }
 
@@ -204,17 +206,28 @@ void DFS(Graph G, List s) {
         exit(EXIT_FAILURE);
     }
     moveFront(s);
-    for (int i = index(s); i != -1; i++) {
-        G->colors[get(s)] = 'w';
-        G->parArr[get(s)] = NIL;
+    //for (int i = index(s); i != -1; i++) {
+        //G->colors[get(s)] = 'w';
+        //G->parArr[get(s)] = NIL;
+    //}
+    int x;
+    for (x = 1; x < (getOrder(G) + 1); x++) {
+        G->colors[x] = 'w';
+        G->parArr[x] = NIL;
+    }
+    int time = 0;
+    
+    moveFront(s);
+    while (index(s) != -1) {
+        if (G->colors[get(s)] == 'w') {
+            printf("DB1\n");
+            Visit(G, &s, x, &time);
+        }
+        moveNext(s);
     }
 
-    //for (int x = 1; x < (getOrder(G) + 1); x++) {
-        //G->colors[x] = 'w';
-        //G->parArr[x] = NIL;
-    //}
-    int time = 0;
-    for (int x = 1; x < (getOrder(G) + 1); x++) {
+    /*
+     for (int x = 1; x < (getOrder(G) + 1); x++) {
         if (G->colors[x] == 'w') {
             //printf("About to call Visit() inside DFS\n");
 
@@ -223,6 +236,7 @@ void DFS(Graph G, List s) {
             //printf("After calling Visit() inside DFS function\n");
         }
     }
+    */
     return;
 }
 
