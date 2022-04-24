@@ -175,42 +175,41 @@ void Visit(Graph G, List s, int x, int *time) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
-    printf("X is %d\n", x);
+    //printf("X is %d\n", x);
     G->discArr[x] = ++(*time);
     G->colors[x] = 'g';
-    printf("Db2\n");
+    //printf("Db2\n");
 
-    printf("Cursor at %d\n", index(G->listArr[x]));
-    if (!isEmpty(G->listArr[x])) {
-        printf("DB list\n");
-        moveFront(G->listArr[x]);
-        printf("Right before moveFront of value %d\n", x);
-        while (index(G->listArr[x]) != -1) {
-            printf("Calling get on: %d\n", get(G->listArr[x]));
-            if (G->colors[get(G->listArr[x])] == 'w') {
-                G->parArr[get(G->listArr[x])] = x;
-                printf("XX is %d\n", x);
-                if (x != 5) 
-                Visit(G, s, get(G->listArr[x]), time);
-            }
-            printf("!!!!!!!!!calling moveNext()\n");
-            moveNext(G->listArr[x]);
-            printf("After moveNext()!!!!!!!!!\n");
-            //prepend(s, x);
-        }
-    }
-    else {
-        printf("Bottom hit, x is %d\n", x);
+    if (isEmpty(G->listArr[x])) {
         return;
     }
-    printf("DB3\n");
-    printf("get() DB!!!!!!\n");
+
+    //printf("Cursor at %d\n", index(G->listArr[x]));
+    
+    //printf("DB list\n");
+    moveFront(G->listArr[x]);
+    //printf("Right before moveFront of value %d\n", x);
+    while (index(G->listArr[x]) != -1) {
+        //printf("Calling get on: %d\n", get(G->listArr[x]));
+        if (G->colors[get(G->listArr[x])] == 'w') {
+            G->parArr[get(G->listArr[x])] = x;
+            //printf("XX is %d\n", x);
+            Visit(G, s, get(G->listArr[x]), time);
+        }
+        //printf("!!!!!!!!!calling moveNext()\n");
+        moveNext(G->listArr[x]);
+        //printf("After moveNext()!!!!!!!!!\n");
+        //prepend(s, x);
+    }
+    //printf("DB3\n");
+    //printf("get() DB!!!!!!\n");
     //G->colors[get(G->listArr[x])] = 'b';
-    G->colors[x] = 'b';
     //moveBack(s);
-    ++(*time);
     //printf("was able to push to stack\n");
-    G->finishArr[x] = *time;
+    G->finishArr[x] = ++(*time);
+    G->colors[x] = 'b';
+    printf("X is %d\n", x);
+    prepend(s, x);
     return;
 }
 
@@ -225,43 +224,32 @@ void DFS(Graph G, List s) {
     }
     List stackCopy = copyList(s);
     moveFront(s);
-    //for (int i = index(s); i != -1; i++) {
-        //G->colors[get(s)] = 'w';
-        //G->parArr[get(s)] = NIL;
-    //}
+    moveFront(s);
+
     int x;
+    
+    // Initialization
     for (x = 1; x < (getOrder(G) + 1); x++) {
         G->colors[x] = 'w';
         G->parArr[x] = NIL;
     }
     int time = 0;
     clear(s);
+
     moveFront(stackCopy);
-    int i = 1;
-    printf("stackCopy is"); printList(stdout, stackCopy);
+    //int i = 1;
+    //printf("stackCopy is"); printList(stdout, stackCopy);
     while (index(stackCopy) != -1) {
-        printf("Current colors is %c and index is %d\n", G->colors[get(stackCopy)], index(stackCopy));
+    //printf("Current colors is %c and index is %d\n", G->colors[get(stackCopy)], index(stackCopy));
         if (G->colors[get(stackCopy)] == 'w') {
-            printf("Iteration %d\n", i);
-            printf("DB1\n");
-            i++;
+            //printf("Iteration %d\n", i);
+            //printf("DB1\n");
+            //i++;
             Visit(G, s, get(stackCopy), &time);
         }
-        printf("stackCopy cursor at: %d\n", get(stackCopy));
+        //printf("stackCopy cursor at: %d\n", get(stackCopy));
         moveNext(stackCopy);
     }
-
-    /*
-     for (int x = 1; x < (getOrder(G) + 1); x++) {
-        if (G->colors[x] == 'w') {
-            //printf("About to call Visit() inside DFS\n");
-
-            // can only keep s and x as call by val and use get() for x
-            Visit(G, &s, &x, &time);
-            //printf("After calling Visit() inside DFS function\n");
-        }
-    }
-    */
     freeList(&stackCopy);
     return;
 }
