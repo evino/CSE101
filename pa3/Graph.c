@@ -210,6 +210,8 @@ void Visit(Graph G, List s, int x, int *time) {
     G->colors[x] = 'b';
     printf("X is %d\n", x);
     prepend(s, x);
+    printf("Printing list s\n");
+    printList(stdout, s);
     return;
 }
 
@@ -222,8 +224,11 @@ void DFS(Graph G, List s) {
         printf("Graph Error: Calling DFS() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
+    if (isEmpty(s)) {
+        printf("Graph Error: Calling DFS() with empty List\n");
+        exit(EXIT_FAILURE);
+    }
     List stackCopy = copyList(s);
-    moveFront(s);
     moveFront(s);
 
     int x;
@@ -234,8 +239,7 @@ void DFS(Graph G, List s) {
         G->parArr[x] = NIL;
     }
     int time = 0;
-    clear(s);
-
+    clear(s); // Needed, otherwise prints duplicates in stack
     moveFront(stackCopy);
     //int i = 1;
     //printf("stackCopy is"); printList(stdout, stackCopy);
@@ -245,6 +249,7 @@ void DFS(Graph G, List s) {
             //printf("Iteration %d\n", i);
             //printf("DB1\n");
             //i++;
+            printf("Getting %d\n", get(stackCopy));
             Visit(G, s, get(stackCopy), &time);
         }
         //printf("stackCopy cursor at: %d\n", get(stackCopy));
