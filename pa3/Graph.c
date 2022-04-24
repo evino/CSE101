@@ -203,11 +203,16 @@ void DFS(Graph G, List s) {
         printf("Graph Error: Calling DFS() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
-
-    for (int x = 1; x < (getOrder(G) + 1); x++) {
-        G->colors[x] = 'w';
-        G->parArr[x] = NIL;
+    moveFront(s);
+    for (int i = index(s); i != -1; i++) {
+        G->colors[get(s)] = 'w';
+        G->parArr[get(s)] = NIL;
     }
+
+    //for (int x = 1; x < (getOrder(G) + 1); x++) {
+        //G->colors[x] = 'w';
+        //G->parArr[x] = NIL;
+    //}
     int time = 0;
     for (int x = 1; x < (getOrder(G) + 1); x++) {
         if (G->colors[x] == 'w') {
