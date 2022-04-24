@@ -175,34 +175,34 @@ void Visit(Graph G, List s, int x, int *time) {
         printf("Graph Error: Calling Visit() on NUll Graph reference\n");
         exit(EXIT_FAILURE);
     }
+    printf("X is %d\n", x);
     G->discArr[x] = ++(*time);
     G->colors[x] = 'g';
     printf("Db2\n");
+
     printf("Cursor at %d\n", index(G->listArr[x]));
-    moveFront(G->listArr[x]);
     if (!isEmpty(G->listArr[x])) {
-        printf("Right before moveFront\n");
+        printf("DB list\n");
+        moveFront(G->listArr[x]);
+        printf("Right before moveFront of value %d\n", x);
         while (index(G->listArr[x]) != -1) {
+            printf("Calling get on: %d\n", get(G->listArr[x]));
             if (G->colors[get(G->listArr[x])] == 'w') {
                 G->parArr[get(G->listArr[x])] = x;
+                printf("XX is %d\n", x);
+                if (x != 5) 
                 Visit(G, s, get(G->listArr[x]), time);
             }
+            printf("!!!!!!!!!calling moveNext()\n");
             moveNext(G->listArr[x]);
             //prepend(s, x);
         }
     }
-    printf("DB3\n");
-    /*while (index(G->listArr[x]) != -1) {
-        if (G->colors[get(G->listArr[x])] == 'w') {
-            G->parArr[get(G->listArr[x])] = x;
-            Visit(G, s, get(G->listArr[x]), time);
-            //printf("Inside of visit func\n");
-
-        }
-        //Need to push to stack inside Visit()
-        moveNext(G->listArr[x]);
+    else {
+        printf("Bottom hit, x is %d\n", x);
+        return;
     }
-    */
+    printf("DB3\n");
     G->colors[get(G->listArr[x])] = 'b';
     //moveBack(s);
     ++(*time);
@@ -234,11 +234,17 @@ void DFS(Graph G, List s) {
     int time = 0;
     clear(s);
     moveFront(stackCopy);
+    int i = 1;
+    printf("stackCopy is"); printList(stdout, stackCopy);
     while (index(stackCopy) != -1) {
+        printf("Current colors is %c and index is %d\n", G->colors[get(stackCopy)], index(stackCopy));
         if (G->colors[get(stackCopy)] == 'w') {
+            printf("Iteration %d\n", i);
             printf("DB1\n");
+            i++;
             Visit(G, s, get(stackCopy), &time);
         }
+        printf("stackCopy cursor at: %d\n", get(stackCopy));
         moveNext(stackCopy);
     }
 
