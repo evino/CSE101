@@ -1,4 +1,7 @@
 //-----------------------------------------------------------------------------
+// Evin Odish
+// edodisho
+// pa3
 // GraphTest.c
 // My test client for the Graph ADT
 //-----------------------------------------------------------------------------
@@ -37,9 +40,12 @@ int main(int argc, char* argv[]){
     for(i=1; i<=n; i++){
         fprintf(stdout, "%d: %2d %2d %2d\n", i, getDiscover(G, i), getFinish(G, i), getParent(G, i));
     }
+
     fprintf(stdout, "\n");
     printList(stdout, S);
+    printf("DB seg\n");
     fprintf(stdout, "\n");
+    
 
     T = transpose(G);
     C = copyGraph(G);
@@ -64,6 +70,23 @@ int main(int argc, char* argv[]){
     printList(stdout, S);
     fprintf(stdout, "\n");
 
+    
+    // Debug for DB_getSize in ModelGraphTest.c from pa3.sh
+    // Failing test 2, think it has to do with doing addArc with
+    // same vertices. Need to add case to handle this issue.
+    // The correct size for this test graph is 5
+    Graph testGraph = newGraph(60);
+    printf("Size of test right now is %d\n", getSize(testGraph));
+    addArc(testGraph, 54, 1);
+    addArc(testGraph, 54, 2);
+    addArc(testGraph, 54, 2);
+    addArc(testGraph, 54, 3);
+    addArc(testGraph, 1, 54);
+    addArc(testGraph, 1, 54);
+    addArc(testGraph, 1, 54);
+    printf("After adding arcs, size of test graph is %d\n", getSize(testGraph));
+
+    //Dealloc
     freeList(&S);
     freeGraph(&G);
     freeGraph(&T);
