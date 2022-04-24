@@ -195,6 +195,7 @@ void Visit(Graph G, List s, int x, int *time) {
             }
             printf("!!!!!!!!!calling moveNext()\n");
             moveNext(G->listArr[x]);
+            printf("After moveNext()!!!!!!!!!\n");
             //prepend(s, x);
         }
     }
@@ -203,6 +204,7 @@ void Visit(Graph G, List s, int x, int *time) {
         return;
     }
     printf("DB3\n");
+    printf("get() DB!!!!!!\n");
     G->colors[get(G->listArr[x])] = 'b';
     //moveBack(s);
     ++(*time);
