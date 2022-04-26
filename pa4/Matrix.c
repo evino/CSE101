@@ -16,7 +16,7 @@ typedef struct EntryObj {
 } EntryObj;
 
 typedef struct MatrixObj {
-    List *entryList;
+    List *listArr;
     int size;
     int NNZ;
   //  void *Entry;
@@ -24,7 +24,7 @@ typedef struct MatrixObj {
 
 // Entry constructor
 Entry newEntry(void*) {
-    Entry E = malloc(sizeof(void*));
+    Entry E = malloc(sizeof(EntryObj));
     E->column = NULL;
     E->value = NULL;
     return E;
@@ -32,9 +32,14 @@ Entry newEntry(void*) {
 
 Matrix newMatrix(int n) {
     Matrix M;
-    M->entryList = malloc((n + 1) * sizeof(List));
+    M = malloc(sizeof(MatrixObj));
+    M->listArr = malloc((n + 1) * sizeof(List));
     M->size = n;
     M->NNZ = 0;
+
+    for (int i = 1; i < n + 1; i++) {
+        M->listArr[i] = newList();
+    }
     return M;
 }
 
