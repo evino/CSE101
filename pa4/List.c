@@ -424,3 +424,4 @@ void delete(List L) {
     freeNode(&N);
     return;
 }
+
