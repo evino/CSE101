@@ -48,9 +48,10 @@ void freeMatrix(Matrix *pM) {
     if (pM != NULL && *pM != NULL) {
         int s = size(*pM);
         for (int i = 1; i <= s; i++) {
-            pL = (*pM)->entryList[i];
+            pL = (*pM)->listArr[i];
             freeList(&pL);
         }
+        free((*pM)->listArr;
         free(*pM);
         *pM = NULL;
     }
