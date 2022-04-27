@@ -23,10 +23,10 @@ typedef struct MatrixObj {
 } MatrixObj;
 
 // Entry constructor
-Entry newEntry(void*) {
+Entry newEntry(int col, int val) {
     Entry E = malloc(sizeof(EntryObj));
-    E->column = 0;
-    E->value = 0;
+    E->column = col;
+    E->value = val;
     return E;
 }
 
@@ -85,8 +85,11 @@ void changeEntry(Matrix M, int i, int j, double x) {
     }
     if (!(1 <= j && j <= M->size)) {
         printf("Matrix Error: Calling changEntry() on out of bounds column\n");
+        exit(EXIT_FAILURE);
     }
-    return;
+    Entry E = newEntry(i, x);
+
+
 }
 
 void printMatrix(FILE *out, Matrix M) {
@@ -97,9 +100,9 @@ void printMatrix(FILE *out, Matrix M) {
     Entry E;
     for (int i = 1; i <= M->size; i++) {
         moveFront(M->listArr[i]);
+        fprintf(out, "%d: ", i);
         while (index(M->listArr[i]) != -1) {
             E = get(M->listArr[i]);
-            fprintf(out, "%d: ", i);
             fprintf(out, "(%d, %lf)\n", E->column, E->value);
             moveNext(M->listArr[i]);
         }
