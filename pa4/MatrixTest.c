@@ -72,6 +72,8 @@ int main(){
     printMatrix(stdout, A);
     */
 
+    printf("Printing Matrix A\n");
+    printMatrix(stdout, A);
 
     freeMatrix(&A);
     freeMatrix(&B);
