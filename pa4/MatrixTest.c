@@ -74,6 +74,7 @@ int main(){
 
     printf("Printing Matrix A\n");
     printMatrix(stdout, A);
+    printf("About to call free");
 
     freeMatrix(&A);
     freeMatrix(&B);
