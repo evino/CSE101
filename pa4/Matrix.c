@@ -46,7 +46,8 @@ Matrix newMatrix(int n) {
 void freeMatrix(Matrix *pM) {
     List pL;
     if (pM != NULL && *pM != NULL) {
-        int s = size(*pM);
+        //int s = size(*pM);
+        int s = (*pM)->size;
         for (int i = 1; i <= s; i++) {
             pL = (*pM)->listArr[i];
             freeList(&pL);
