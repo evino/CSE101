@@ -31,6 +31,10 @@ Entry newEntry(void*) {
 }
 
 Matrix newMatrix(int n) {
+    if (n <= 0) {
+        printf("Matrix Error: Invalid Matrix size\n");
+        exit(EXIT_FAILURE);
+    }
     Matrix M;
     M = malloc(sizeof(MatrixObj));
     M->listArr = malloc((n + 1) * sizeof(List));
@@ -67,3 +71,19 @@ void freeEntry (Entry *pE) {
     return;
 }
 
+void printMatrix(FILE *out, Matrix M) {
+    int iteration;
+    for (int i = 1; i <= M->size; i++) {
+        moveFront(M->listArr[i]);
+        iteration = 1;
+        while (get(M->listArr[i]) != 0) {
+            if (iteration == 1) {
+                printf("%d: ", i);
+            }
+            fprintf(out, "%d, %lf)\n", i, E->column, E->value);
+            moveNext(M->listArr[i]);
+            iteration++;
+        }
+    }
+    return;
+}
