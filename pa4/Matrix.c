@@ -71,18 +71,37 @@ void freeEntry (Entry *pE) {
     return;
 }
 
+
+// Manipulation procedures
+
+void changeEntry(Matrix M, int i, int j, double x) {
+    if (M == NULL) {
+        printf("Matrix Error: Calling changeEntry() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!(1 <= i && i<= M->size)) {
+        printf("Matrix Error: Calling changeEntry() on out of bounds row\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!(1 <= j && j <= M->size)) {
+        printf("Matrix Error: Calling changEntry() on out of bounds column\n");
+    }
+    return;
+}
+
 void printMatrix(FILE *out, Matrix M) {
-    int iteration;
+    if (M == NULL) {
+        printf("Matrix Error: Calling printMatrix() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    Entry E;
     for (int i = 1; i <= M->size; i++) {
         moveFront(M->listArr[i]);
-        iteration = 1;
-        while (get(M->listArr[i]) != 0) {
-            if (iteration == 1) {
-                printf("%d: ", i);
-            }
-            fprintf(out, "%d, %lf)\n", i, E->column, E->value);
+        while (index(M->listArr[i]) != -1) {
+            E = get(M->listArr[i]);
+            fprintf(out, "%d: ", i);
+            fprintf(out, "(%d, %lf)\n", E->column, E->value);
             moveNext(M->listArr[i]);
-            iteration++;
         }
     }
     return;
