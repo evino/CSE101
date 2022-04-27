@@ -88,7 +88,9 @@ void changeEntry(Matrix M, int i, int j, double x) {
         exit(EXIT_FAILURE);
     }
     Entry E = newEntry(i, x);
-
+    if (length(M->listArr[i]) == 0) {
+        append(M->listArr[i], E);
+    }
 
 }
 
