@@ -25,8 +25,8 @@ typedef struct MatrixObj {
 // Entry constructor
 Entry newEntry(void*) {
     Entry E = malloc(sizeof(EntryObj));
-    E->column = NULL;
-    E->value = NULL;
+    E->column = 0;
+    E->value = 0;
     return E;
 }
 
@@ -51,7 +51,7 @@ void freeMatrix(Matrix *pM) {
             pL = (*pM)->listArr[i];
             freeList(&pL);
         }
-        free((*pM)->listArr;
+        free((*pM)->listArr);
         free(*pM);
         *pM = NULL;
     }
