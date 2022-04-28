@@ -14,7 +14,6 @@ int main(){
     //Matrix C, D, E, F, G, H;
     printf("Matrices made\n");
 
-    /*
     changeEntry(A, 1,1,1); changeEntry(B, 1,1,1);
     changeEntry(A, 1,2,2); changeEntry(B, 1,2,0);
     changeEntry(A, 1,3,3); changeEntry(B, 1,3,1);
@@ -24,6 +23,9 @@ int main(){
     changeEntry(A, 3,1,7); changeEntry(B, 3,1,1);
     changeEntry(A, 3,2,8); changeEntry(B, 3,2,1);
     changeEntry(A, 3,3,9); changeEntry(B, 3,3,1);
+    
+    printf("Changed entries\n");
+    /*
 
     printf("%d\n", NNZ(A));
     printMatrix(stdout, A);
