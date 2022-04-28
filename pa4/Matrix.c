@@ -113,6 +113,39 @@ void changeEntry(Matrix M, int i, int j, double x) {
     return;
 }
 
+// Matrix Arithmetic operations
+// copy()
+// Returns a reference to a new Matrix object having the same entries as A.
+Matrix copy(Matrix A) {
+    Matrix M = newMatrix(A->size);
+    for (int i = 1; i <= A->size; i++) {
+        moveFront(A->listArr[i]);
+        while (index(A->listArr[i]) != -1) {
+            append(M->listArr[i], get(A->listArr[i]));
+            moveNext(A->listArr[i]);
+        }
+    }
+
+    return M;
+}
+
+Matrix transpose(Matrix A) {
+    Matrix M = newMatrix(A->size);
+    Entry E;
+    int j;
+    for (int i = 1; i <= A->size; i++) {
+        moveFront(A->listArr[i]);
+        while (index(A->listArr[i]) != -1) {
+            E = get(A->listArr[i]);
+            j = E->column;
+            changeEntry(M, j, i, E->value);
+            moveNext(A->listArr[i]);
+        }
+    }
+
+    return M;
+}
+
 void printMatrix(FILE *out, Matrix M) {
     if (M == NULL) {
         printf("Matrix Error: Calling printMatrix() on NULL Matrix reference\n");
