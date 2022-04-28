@@ -74,8 +74,17 @@ int main(){
     printMatrix(stdout, A);
     */
 
+    Matrix C;
+    C = copy(A);
     printf("Printing Matrix A\n");
     printMatrix(stdout, A);
+    printMatrix(stdout, B);
+    printMatrix(stdout, C);
+
+    Matrix T;
+    T = transpose(A);
+    printf("Transpose of A:\n");
+    printMatrix(stdout, T);
     printf("About to call free");
 
     freeMatrix(&A);
