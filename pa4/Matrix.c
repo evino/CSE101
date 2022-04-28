@@ -87,15 +87,30 @@ void changeEntry(Matrix M, int i, int j, double x) {
         printf("Matrix Error: Calling changEntry() on out of bounds column\n");
         exit(EXIT_FAILURE);
     }
-    Entry E = newEntry(i, x);
-    if (length(M->listArr[i]) == 0) {
-        if (x == 0) {
+
+    moveFront(M->listArr[i]);
+    while (index(M->listArr[i]) != -1) {
+        Entry *current = (Entry *) get(M->listArr[i]);
+        if ((*current)->column == j) {
+            if (x == 0) {
+                delete(M->listArr[i]);
+                (M->NNZ)--;
+            } else {
+                (*current)->value = x;
+            }
+            return;
+        } else if ((*current)->column > j) {
+            insertBefore(M->listArr[i], x);
+            (M->NNZ)++;
             return;
         }
-        append(M->listArr[i], E);
+        moveNext;
+    }
+    if (x != 0) {
+        append(newEntry(j, x));
     }
 
-
+    return;
 }
 
 void printMatrix(FILE *out, Matrix M) {
