@@ -93,21 +93,23 @@ void changeEntry(Matrix M, int i, int j, double x) {
     while (index(M->listArr[i]) != -1) {
         printf("DB1.5\n");
 
-        Entry *current = (Entry*) get(M->listArr[i]);
+        //Entry *current = (Entry*) get(M->listArr[i]);
+        Entry E = get(M->listArr[i]);
         printf("After making curent!!!!!!!\n");
-        printf("Current column is %d\n", (*current)->column);
-        if ((*current)->column == j) {
+        printf("Current col is %d\n", E->column);
+        //printf("Current column is %d\n", (*current)->column);
+        if (E->column == j) {
             if (x == 0) {
                 delete(M->listArr[i]);
                 (M->NNZ)--;
             } else {
                 printf("About to set current val\n");
-                (*current)->value = x;
-                printf("Current value is %lf\n", (*current)->value);
+                E->value = x;
+                printf("Current value is %lf\n", E->value);
             }
             printf("DB2\n");
             return;
-        } else if ((*current)->column > j) {
+        } else if (E->column > j) {
             printf("about to insert before\n");
             insertBefore(M->listArr[i], newEntry(j, x));
             (M->NNZ)++;
