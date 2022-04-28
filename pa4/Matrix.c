@@ -89,8 +89,12 @@ void changeEntry(Matrix M, int i, int j, double x) {
     }
     Entry E = newEntry(i, x);
     if (length(M->listArr[i]) == 0) {
+        if (x == 0) {
+            return;
+        }
         append(M->listArr[i], E);
     }
+
 
 }
 
@@ -102,7 +106,10 @@ void printMatrix(FILE *out, Matrix M) {
     Entry E;
     for (int i = 1; i <= M->size; i++) {
         moveFront(M->listArr[i]);
-        fprintf(out, "%d: ", i);
+
+        if (length(M->listArr[i]) > 0) {
+            fprintf(out, "%d: ", i);
+        }
         while (index(M->listArr[i]) != -1) {
             E = get(M->listArr[i]);
             fprintf(out, "(%d, %lf)\n", E->column, E->value);
