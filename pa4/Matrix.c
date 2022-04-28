@@ -89,25 +89,36 @@ void changeEntry(Matrix M, int i, int j, double x) {
     }
 
     moveFront(M->listArr[i]);
+    printf("DB1\n");
     while (index(M->listArr[i]) != -1) {
-        Entry *current = (Entry *) get(M->listArr[i]);
+        printf("DB1.5\n");
+
+        Entry *current = (Entry*) get(M->listArr[i]);
+        printf("After making curent!!!!!!!\n");
+        printf("Current column is %d\n", (*current)->column);
         if ((*current)->column == j) {
             if (x == 0) {
                 delete(M->listArr[i]);
                 (M->NNZ)--;
             } else {
+                printf("About to set current val\n");
                 (*current)->value = x;
+                printf("Current value is %lf\n", (*current)->value);
             }
+            printf("DB2\n");
             return;
         } else if ((*current)->column > j) {
-            insertBefore(M->listArr[i], x);
+            printf("about to insert before\n");
+            insertBefore(M->listArr[i], newEntry(j, x));
             (M->NNZ)++;
+            printf("DB3\n");
             return;
         }
-        moveNext;
+        printf("DB4\n");
+        moveNext(M->listArr[i]);
     }
     if (x != 0) {
-        append(newEntry(j, x));
+        append(M->listArr[i], newEntry(j, x));
     }
 
     return;
