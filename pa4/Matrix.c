@@ -242,21 +242,40 @@ Matrix product(Matrix A, Matrix B) {
         printf("Matrix Error: Calling product() on NULL Matrix reference\n");
         exit(EXIT_FAILURE);
     }
+
     Matrix M = newMatrix(A->size);
     Matrix T = transpose(B);
     Entry getA, getT;
-    double val;
+    double val = 0.0;
     for (int i = 1; i <= M->size; i++) {
         moveFront(M->listArr[i]);
-        while (index(M->listArr[i]) != -1) {
+        if (isEmpty(A->listArr[i]) || isEmpty(T->listArr[i])) {
+            i++;
+            continue;
+        }
+        while (index(M->listArr[i])) {
             getA = get(A->listArr[i]);
             getT = get(T->listArr[i]);
-            val = (getA->value) * (getT->value);
+            if (getA->column < getT->column) {
+                moveNext(A->listArr[i]);
+            } else if (getA->column > getT->column) {
+                moveNext(T->listArr[i]);
+            } else {
+                val += (getA->value) * (getT->value);
+
+                moveNext(A->listArr[i]);
+                moveNext(T->listArr[i]);
+                moveNext(M->listArr[i]);
+            }
+        }
+        if (val != 0) {
+            printf("Should be doing an append here\n");
             append(M->listArr[i],newEntry(i, val));
-            moveNext(M->listArr[i]);
+            (M->NNZ)++;
         }
     }
 
+    // Rememver to free
     return M;
 }
 
