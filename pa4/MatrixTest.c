@@ -96,6 +96,11 @@ int main(){
     printf("Scalar S:\n");
     printMatrix(stdout, S);
 
+    printf("Going to multiply A and B\n");
+    Matrix P = product(A,B);
+    printMatrix(stdout, P);
+    printf("Matrix P should have been printed\n");
+
     printf("About to call free");
 
     freeMatrix(&A);
