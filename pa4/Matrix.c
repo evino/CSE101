@@ -113,6 +113,26 @@ void changeEntry(Matrix M, int i, int j, double x) {
     return;
 }
 
+
+void makeZero(Matrix M) {
+    Entry E;
+    for (int i =1 ; i <= M->size; i++) {
+        moveFront(M->listArr[i]);
+        while (index(M->listArr[i]) != -1) {
+            E = get(M->listArr[i]);
+            freeEntry(&E);
+            moveNext(M->listArr[i]);
+        }
+
+        // clear to remove garbage in list??
+        clear(M->listArr[i]);
+    }
+    M->NNZ = 0;
+    return;
+}
+
+
+
 // Matrix Arithmetic operations
 // copy()
 // Returns a reference to a new Matrix object having the same entries as A.
