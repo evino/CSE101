@@ -188,3 +188,29 @@ void printMatrix(FILE *out, Matrix M) {
     }
     return;
 }
+
+
+Matrix scalarMult(double x, Matrix A) {
+    Matrix M;
+    M = copy(A);
+    if (A == NULL) {
+        printf("Matrix Error: Calling scalarMult() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (x == 0.0) {
+        makeZero(M);
+    } else {
+        Entry E;
+        for (int i = 1; i <= M->size; i++) {
+            moveFront(M->listArr[i]);
+            while (index(M->listArr[i]) != -1) {
+                E = get(M->listArr[i]);
+                E->value = (E->value * x);
+                moveNext(M->listArr[i]);
+            }
+        }
+    }
+
+    return M;
+}
+
