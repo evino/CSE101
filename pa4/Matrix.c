@@ -237,6 +237,42 @@ Matrix scalarMult(double x, Matrix A) {
 }
 
 
+double vectorDot(List P, List Q) {
+    if (P == NULL || Q == NULL) {
+        printf("Matrix Error: Calling vectorDot() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
+    double val = 0.0;
+    moveFront(P);
+    moveFront(Q);
+    Entry getP;
+    Entry getQ;
+    
+    if (isEmpty(P) || isEmpty(Q)) {
+        return val;
+    }
+
+    while (index(P) != -1 && index(Q) != -1) {
+        getP = get(P);
+        getQ = get(Q);
+        if (getP->value == 0 && getQ->value) {
+            moveNext(P);
+            moveNext(Q);
+        } else if (getP->column < getQ->column) {
+            moveNext(P);
+        } else if (getP->column > getQ->column) {
+            moveNext(Q);
+        } else {
+            val += getP->value * getQ->value;
+            moveNext(Q);
+            moveNext(P);
+        }
+    }
+
+    return val;
+}
+
+
 Matrix product(Matrix A, Matrix B) {
     if (A == NULL || B == NULL) {
         printf("Matrix Error: Calling product() on NULL Matrix reference\n");
@@ -246,6 +282,18 @@ Matrix product(Matrix A, Matrix B) {
     Matrix M = newMatrix(A->size);
     Matrix T = transpose(B);
     Entry getA, getT;
+    double val;
+    for (int i = 1; i <= size(A); i++) {
+        for (int j = 1; j <= size(A); i++) {
+            val = vectorDot(A->listArr[i], T->listArr[j]);
+            append(M->listArr[i], newEntry(j, val));
+        }
+    }
+    return M;
+
+
+
+    /*
     double val = 0.0;
     for (int i = 1; i <= M->size; i++) {
         moveFront(M->listArr[i]);
@@ -274,9 +322,10 @@ Matrix product(Matrix A, Matrix B) {
             (M->NNZ)++;
         }
     }
+    */
 
     // Rememver to free
-    return M;
+ //   return M;
 }
 
 Matrix sum(Matrix A, Matrix B) {
