@@ -235,7 +235,5 @@ Matrix product(Matrix A, Matrix B) {
         }
     }
 
-    freeEntry(&getA);
-    freeEntry(&getT);
     return M;
 }
