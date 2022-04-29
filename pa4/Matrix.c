@@ -23,7 +23,7 @@ typedef struct MatrixObj {
 } MatrixObj;
 
 // Entry constructor
-Entry newEntry(int col, int val) {
+Entry newEntry(int col, double val) {
     Entry E = malloc(sizeof(EntryObj));
     E->column = col;
     E->value = val;
@@ -214,3 +214,28 @@ Matrix scalarMult(double x, Matrix A) {
     return M;
 }
 
+
+Matrix product(Matrix A, Matrix B) {
+    if (A == NULL || B == NULL) {
+        printf("Matrix Error: Calling product() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    Matrix M = newMatrix(A->size);
+    Matrix T = transpose(B);
+    Entry getA, getT;
+    double val;
+    for (int i = 1; i <= M->size; i++) {
+        moveFront(M->listArr[i]);
+        while (index(M->listArr[i]) != -1) {
+            getA = get(A->listArr[i]);
+            getT = get(T->listArr[i]);
+            val = (getA->value) * (getT->value);
+            append(M->listArr[i],newEntry(i, val));
+            moveNext(M->listArr[i]);
+        }
+    }
+
+    freeEntry(&getA);
+    freeEntry(&getT);
+    return M;
+}
