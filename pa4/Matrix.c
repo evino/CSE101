@@ -63,13 +63,34 @@ void freeMatrix(Matrix *pM) {
     return;
 }
 
-void freeEntry (Entry *pE) {
+void freeEntry(Entry *pE) {
     if (pE != NULL && *pE != NULL) {
         free(*pE);
         *pE = NULL;
     }
     return;
 }
+
+
+// Access functions
+
+int size(Matrix M) {
+    if (M == NULL) {
+        printf("Matrix Error: Calling size() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    return (M->size);
+}
+
+int NNZ(Matrix M) {
+    if (M == NULL) {
+        printf("Matrix Error: Calling NN() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    return (M->NNZ);
+}
+
+
 
 
 // Manipulation procedures
@@ -108,6 +129,7 @@ void changeEntry(Matrix M, int i, int j, double x) {
     }
     if (x != 0) {
         append(M->listArr[i], newEntry(j, x));
+        (M->NNZ)++;
     }
 
     return;
@@ -236,4 +258,16 @@ Matrix product(Matrix A, Matrix B) {
     }
 
     return M;
+}
+
+Matrix sum(Matrix A, Matrix B) {
+    return A;
+}
+
+Matrix diff(Matrix A, Matrix B) {
+    return A;
+}
+
+int equals(Matrix A, Matrix B) {
+    return 1;
 }
