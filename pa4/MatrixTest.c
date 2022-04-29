@@ -85,10 +85,24 @@ int main(){
     T = transpose(A);
     printf("Transpose of A:\n");
     printMatrix(stdout, T);
+
+    printf("Calling makeZero on B\n");
+    makeZero(B);
+    printMatrix(stdout, B);
+
+    Matrix S;
+    
+    S = scalarMult(3, A);
+    printf("Scalar S:\n");
+    printMatrix(stdout, S);
+
     printf("About to call free");
 
     freeMatrix(&A);
     freeMatrix(&B);
+    freeMatrix(&C);
+    freeMatrix(&T);
+    freeMatrix(&S);
 
     printf("Matrices A & B freed\n");
 
