@@ -255,6 +255,19 @@ double vectorDot(List P, List Q) {
     while (index(P) != -1 && index(Q) != -1) {
         getP = get(P);
         getQ = get(Q);
+        
+        
+        if (getP->column == getQ->value) {
+            val += getP->value * getQ->value;
+            moveNext(Q);
+            moveNext(P);
+        } else if (getP->column < getQ->column) {
+            moveNext(P);
+        } else if (getP->column > getQ->column) {
+            moveNext(Q);
+        }
+    }
+        /*
         if (getP->value == 0 && getQ->value) {
             moveNext(P);
             moveNext(Q);
@@ -267,7 +280,8 @@ double vectorDot(List P, List Q) {
             moveNext(Q);
             moveNext(P);
         }
-    }
+        */
+
 
     return val;
 }
