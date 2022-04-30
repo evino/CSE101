@@ -108,6 +108,8 @@ void changeEntry(Matrix M, int i, int j, double x) {
         printf("Matrix Error: Calling changEntry() on out of bounds column\n");
         exit(EXIT_FAILURE);
     }
+
+    // This condition was added
     if (length(M->listArr[i]) == 0) {
         if (x != 0) {
             append(M->listArr[i], newEntry(j, x));
@@ -120,21 +122,21 @@ void changeEntry(Matrix M, int i, int j, double x) {
             if (E->column == j) {
                 if (x == 0) {
                     delete(M->listArr[i]);
-                    (M->NNZ)--;
+                    M->NNZ--;
                 } else {
                     E->value = x;
                 }
                 return;
             } else if (E->column > j) {
                 insertBefore(M->listArr[i], newEntry(j, x));
-                (M->NNZ)++;
+                M->NNZ++;
                 return;
             }
             moveNext(M->listArr[i]);
         }
         if (x != 0) {
             append(M->listArr[i], newEntry(j, x));
-            //(M->NNZ)++;
+            M->NNZ++;
         } else if (x == 0) {
             return;
         }
@@ -397,6 +399,9 @@ Matrix product(Matrix A, Matrix B) {
     // Rememver to free
  //   return M;
 
+Matrix sum(Matrix A, Matrix B) {
+    return A;
+}
 
 Matrix diff(Matrix A, Matrix B) {
     return A;
