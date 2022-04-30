@@ -8,7 +8,8 @@
 #include"Matrix.h"
 
 int main(){
-    int n=100000;
+    int n = 50;
+    //int n=100000;
     Matrix A = newMatrix(n);
     Matrix B = newMatrix(n);
     //Matrix C, D, E, F, G, H;
@@ -97,7 +98,7 @@ int main(){
     printMatrix(stdout, S);
 
     printf("Going to multiply A and B\n");
-    Matrix P = product(A,B);
+    Matrix P = product(A,C);
     printMatrix(stdout, P);
     printf("Matrix P should have been printed\n");
 
