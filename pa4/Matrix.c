@@ -293,18 +293,25 @@ Matrix product(Matrix A, Matrix B) {
         exit(EXIT_FAILURE);
     }
 
-    Matrix M = newMatrix(A->size);
-    Matrix T = transpose(B);
-    Entry getA, getT;
-    double val;
+    Matrix M = newMatrix(size(A));
+    Matrix T;
+    T = transpose(B);
+    double val = 0.0;
+    
     for (int i = 1; i <= size(A); i++) {
         for (int j = 1; j <= size(A); i++) {
+            
+            moveFront(A->listArr[i]);
+            moveFront(T->listArr[i]);
             val = vectorDot(A->listArr[i], T->listArr[j]);
             append(M->listArr[i], newEntry(j, val));
+            //moveNext(A->listArr[i]);
+            moveNext(T->listArr[j]);
         }
     }
+    
     return M;
-
+}
 
 
     /*
@@ -340,7 +347,6 @@ Matrix product(Matrix A, Matrix B) {
 
     // Rememver to free
  //   return M;
-}
 
 Matrix sum(Matrix A, Matrix B) {
     return A;
