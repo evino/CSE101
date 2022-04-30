@@ -213,12 +213,12 @@ void printMatrix(FILE *out, Matrix M) {
 
 
 Matrix scalarMult(double x, Matrix A) {
-    Matrix M;
-    M = copy(A);
     if (A == NULL) {
         printf("Matrix Error: Calling scalarMult() on NULL Matrix reference\n");
         exit(EXIT_FAILURE);
     }
+    Matrix M;
+    M = copy(A);
     if (x == 0.0) {
         makeZero(M);
     } else {
@@ -260,6 +260,7 @@ double vectorDot(List P, List Q) {
         
         if (getP->column == getQ->column) {
             val += getP->value * getQ->value;
+            //val = getP->value * getQ->value;
             moveNext(Q);
             moveNext(P);
         } else if (getP->column < getQ->column) {
