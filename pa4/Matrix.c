@@ -129,7 +129,7 @@ void changeEntry(Matrix M, int i, int j, double x) {
     }
     if (x != 0) {
         append(M->listArr[i], newEntry(j, x));
-        (M->NNZ)++;
+        //(M->NNZ)++;
     }
 
     return;
