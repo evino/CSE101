@@ -243,21 +243,22 @@ double vectorDot(List P, List Q) {
         exit(EXIT_FAILURE);
     }
     double val = 0.0;
+        
+    if (isEmpty(P) || isEmpty(Q)) {
+        return val;
+    }
+    
     moveFront(P);
     moveFront(Q);
     Entry getP;
     Entry getQ;
-    
-    if (isEmpty(P) || isEmpty(Q)) {
-        return val;
-    }
 
     while (index(P) != -1 && index(Q) != -1) {
         getP = get(P);
         getQ = get(Q);
         
         
-        if (getP->column == getQ->value) {
+        if (getP->column == getQ->column) {
             val += getP->value * getQ->value;
             moveNext(Q);
             moveNext(P);
@@ -266,8 +267,13 @@ double vectorDot(List P, List Q) {
         } else if (getP->column > getQ->column) {
             moveNext(Q);
         }
+        printf("DB\n");
     }
-        /*
+
+    return val;
+}        
+
+/*
         if (getP->value == 0 && getQ->value) {
             moveNext(P);
             moveNext(Q);
@@ -283,8 +289,6 @@ double vectorDot(List P, List Q) {
         */
 
 
-    return val;
-}
 
 
 Matrix product(Matrix A, Matrix B) {
@@ -299,14 +303,12 @@ Matrix product(Matrix A, Matrix B) {
     double val = 0.0;
     
     for (int i = 1; i <= size(A); i++) {
-        for (int j = 1; j <= size(A); i++) {
+        for (int j = 1; j <= size(T); j++) {
             
-            moveFront(A->listArr[i]);
-            moveFront(T->listArr[i]);
             val = vectorDot(A->listArr[i], T->listArr[j]);
-            append(M->listArr[i], newEntry(j, val));
-            //moveNext(A->listArr[i]);
-            moveNext(T->listArr[j]);
+            if (val != 0) {
+                append(M->listArr[i], newEntry(j, val));
+            }
         }
     }
     
