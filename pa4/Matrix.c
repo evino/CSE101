@@ -108,28 +108,36 @@ void changeEntry(Matrix M, int i, int j, double x) {
         printf("Matrix Error: Calling changEntry() on out of bounds column\n");
         exit(EXIT_FAILURE);
     }
-
-    moveFront(M->listArr[i]);
-    while (index(M->listArr[i]) != -1) {
-        Entry E = get(M->listArr[i]);
-        if (E->column == j) {
-            if (x == 0) {
-                delete(M->listArr[i]);
-                (M->NNZ)--;
-            } else {
-                E->value = x;
+    if (length(M->listArr[i]) == 0) {
+        if (x != 0) {
+            append(M->listArr[i], newEntry(j, x));
+            M->NNZ++;
+        }
+    } else {
+        moveFront(M->listArr[i]);
+        while (index(M->listArr[i]) != -1) {
+            Entry E = get(M->listArr[i]);
+            if (E->column == j) {
+                if (x == 0) {
+                    delete(M->listArr[i]);
+                    (M->NNZ)--;
+                } else {
+                    E->value = x;
+                }
+                return;
+            } else if (E->column > j) {
+                insertBefore(M->listArr[i], newEntry(j, x));
+                (M->NNZ)++;
+                return;
             }
-            return;
-        } else if (E->column > j) {
-            insertBefore(M->listArr[i], newEntry(j, x));
-            (M->NNZ)++;
+            moveNext(M->listArr[i]);
+        }
+        if (x != 0) {
+            append(M->listArr[i], newEntry(j, x));
+            //(M->NNZ)++;
+        } else if (x == 0) {
             return;
         }
-        moveNext(M->listArr[i]);
-    }
-    if (x != 0) {
-        append(M->listArr[i], newEntry(j, x));
-        //(M->NNZ)++;
     }
 
     return;
@@ -235,6 +243,44 @@ Matrix scalarMult(double x, Matrix A) {
 
     return M;
 }
+
+/*
+List sumList(List A, List B) {
+    List sum = newList();
+    Entry E;
+
+    if (isEmpty(A) && isEmpty(B)) {
+        return sum;
+    }
+
+    if (isEmpty(A)) {
+        moveFront(B);
+        while (index(B) != -1) {
+            E = get(B);
+            append(sum, E->value);
+            moveNext(B);
+        }
+        return sum;
+    }
+
+    if (isEmpty(B)) {
+        moveFront(A);
+        while (index(A) != -1) {
+            E = get(A);
+            append(sum, newEntry(E->column, E->value));
+            moveNext(A);
+        }
+        return sum;
+    }
+
+    moveFront(A);
+    moveFront(B);
+    while (index(A) != -1 && index(B) != -1) {
+        Entry a = get(A);
+        Entry b = get(B);
+        if (a->column == b->column) {
+            E = newEntry(
+*/
 
 
 double vectorDot(List P, List Q) {
@@ -351,9 +397,6 @@ Matrix product(Matrix A, Matrix B) {
     // Rememver to free
  //   return M;
 
-Matrix sum(Matrix A, Matrix B) {
-    return A;
-}
 
 Matrix diff(Matrix A, Matrix B) {
     return A;
