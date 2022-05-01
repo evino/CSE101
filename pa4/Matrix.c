@@ -90,7 +90,36 @@ int NNZ(Matrix M) {
     return (M->NNZ);
 }
 
+int equals(Matrix A, Matrix B) {
+    if (A == NULL || B == NULL) {
+        printf("Matrix Error: Calling equals() on NULL Matrix referenc\n");
+        exit(EXIT_FAILURE);
+    }
 
+    int s;
+    if (A->size >= B->size) {
+        s = A->size;
+    } else {
+        s = B->size;
+    }
+
+    Entry getA;
+    Entry getB;
+    for (int i = 1; i <= s; i++) {
+        moveFront(A->listArr[i]);
+        moveFront(B->listArr[i]);
+        while (index(A->listArr[i]) != -1 && index(B->listArr[i]) != -1) {
+            getA = get(A->listArr[i]);
+            getB = get(B->listArr[i]);
+            if (getA->value != getB->value) {
+                return 0;
+            }
+            moveNext(A->listArr[i]);
+            moveNext(B->listArr[i]);
+        }
+    }
+    return 1;
+}
 
 
 // Manipulation procedures
@@ -126,10 +155,12 @@ void changeEntry(Matrix M, int i, int j, double x) {
                 } else {
                     E->value = x;
                 }
+                freeEntry(&E);
                 return;
             } else if (E->column > j) {
                 insertBefore(M->listArr[i], newEntry(j, x));
                 M->NNZ++;
+                freeEntry(&E);
                 return;
             }
             moveNext(M->listArr[i]);
@@ -361,6 +392,23 @@ Matrix sum(Matrix A, Matrix B) {
 }
 
 
+Matrix diff(Matrix A, Matrix B) {
+    if (A == NULL || B == NULL) {
+        printf("Matrix Error: Calling diff() on NULL Matrix Reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (A->size != B->size) {
+        printf("Matrix Error: Calling diff() with different Matrix sizes\n");
+        exit(EXIT_FAILURE);
+    }
+
+    Matrix M = newMatrix(A->size);
+    B = scalarMult(-1, B);
+    M = sum(A, B);
+    return M;
+}
+
+
 
 
 double vectorDot(List P, List Q) {
@@ -427,11 +475,3 @@ Matrix product(Matrix A, Matrix B) {
 }
 
 
-
-Matrix diff(Matrix A, Matrix B) {
-    return A;
-}
-
-int equals(Matrix A, Matrix B) {
-    return 1;
-}
