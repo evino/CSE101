@@ -8,7 +8,7 @@
 #include"Matrix.h"
 
 int main(){
-    int n = 50;
+    int n = 5000;
     //int n=100000;
     Matrix A = newMatrix(n);
     Matrix B = newMatrix(n);
@@ -79,7 +79,9 @@ int main(){
     C = copy(A);
     printf("Printing Matrix A\n");
     printMatrix(stdout, A);
+    printf("Matrix B:\n");
     printMatrix(stdout, B);
+    printf("Matrix C:\n");
     printMatrix(stdout, C);
 
     Matrix T;
@@ -87,8 +89,13 @@ int main(){
     printf("Transpose of A:\n");
     printMatrix(stdout, T);
 
+    Matrix Z;
+    Z = copy(B);
+    printf("Matrix Z is\n");
+    printMatrix(stdout, Z);
+
     printf("Calling makeZero on B\n");
-    makeZero(B);
+    //makeZero(B);
     printMatrix(stdout, B);
 
     Matrix S;
@@ -98,9 +105,26 @@ int main(){
     printMatrix(stdout, S);
 
     printf("Going to multiply A and B\n");
+    printf("Matrix A:\n");
+    printMatrix(stdout, A);
+    printf("Matrix C:\n");
+    printMatrix(stdout, C);
+
+    printf("Product of A & C:\n");
     Matrix P = product(A,C);
     printMatrix(stdout, P);
     printf("Matrix P should have been printed\n");
+
+    
+    printf("Adding A & Z\n");
+    printf("A:\n");
+    printMatrix(stdout, A);
+    printf("Z:\n");
+    printMatrix(stdout, Z);
+    Matrix sumTest;
+    sumTest = sum(A, Z);
+    printf("Sum is:\n");
+    printMatrix(stdout, sumTest);
 
     printf("About to call free");
 
