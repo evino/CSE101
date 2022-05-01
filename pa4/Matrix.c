@@ -342,14 +342,16 @@ Matrix sum(Matrix A, Matrix B) {
         return M;
     }
 
+    Entry E;
     for (int i = 1; i <= A->size; i++) {
         moveFront(A->listArr[i]);
         while(index(A->listArr[i]) != -1) {
-            freeList(&(M->listArr[i]));
+            //freeList(&(M->listArr[i]));
             List list_sum = sumList(A->listArr[i], B->listArr[i]);
             moveFront(list_sum);
             while (index(list_sum) != -1) {
-                append(M->listArr[i], get(list_sum));
+                E = get(list_sum);
+                append(M->listArr[i], E);
                 moveNext(list_sum);
             }
             M->NNZ += length(list_sum);
@@ -392,7 +394,6 @@ double vectorDot(List P, List Q) {
         } else if (getP->column > getQ->column) {
             moveNext(Q);
         }
-        printf("DB\n");
     }
 
     return val;
