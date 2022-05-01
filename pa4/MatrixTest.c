@@ -77,7 +77,7 @@ int main(){
 
     Matrix C;
     C = copy(A);
-    printf("Printing Matrix A\n");
+    printf("Printing Matrix A (%d NNZ's)\n", NNZ(A));
     printMatrix(stdout, A);
     printf("Matrix B:\n");
     printMatrix(stdout, B);
