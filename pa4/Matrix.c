@@ -96,6 +96,10 @@ int equals(Matrix A, Matrix B) {
         exit(EXIT_FAILURE);
     }
 
+    if (NNZ(A) != NNZ(B)) {
+        return 0;
+    }
+    
     int s;
     if (A->size >= B->size) {
         s = A->size;
@@ -105,7 +109,12 @@ int equals(Matrix A, Matrix B) {
 
     Entry getA;
     Entry getB;
+
+    
     for (int i = 1; i <= s; i++) {
+        if (A->listArr[i] == NULL || B->listArr[i] == NULL) {
+            return 0;
+        }
         moveFront(A->listArr[i]);
         moveFront(B->listArr[i]);
         while (index(A->listArr[i]) != -1 && index(B->listArr[i]) != -1) {
@@ -138,6 +147,7 @@ void changeEntry(Matrix M, int i, int j, double x) {
         exit(EXIT_FAILURE);
     }
 
+    M->NNZ = 0;
     // This condition was added
     if (length(M->listArr[i]) == 0) {
         if (x != 0) {
@@ -151,16 +161,15 @@ void changeEntry(Matrix M, int i, int j, double x) {
             if (E->column == j) {
                 if (x == 0) {
                     delete(M->listArr[i]);
+                    freeEntry(&E);
                     M->NNZ--;
                 } else {
                     E->value = x;
                 }
-                freeEntry(&E);
                 return;
             } else if (E->column > j) {
                 insertBefore(M->listArr[i], newEntry(j, x));
                 M->NNZ++;
-                freeEntry(&E);
                 return;
             }
             moveNext(M->listArr[i]);
@@ -168,8 +177,6 @@ void changeEntry(Matrix M, int i, int j, double x) {
         if (x != 0) {
             append(M->listArr[i], newEntry(j, x));
             M->NNZ++;
-        } else if (x == 0) {
-            return;
         }
     }
 
