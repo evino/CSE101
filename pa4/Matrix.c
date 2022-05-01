@@ -246,6 +246,8 @@ Matrix scalarMult(double x, Matrix A) {
     return M;
 }
 
+
+// Norton's (Tutor) Pseudocode
 List sumList(List A, List B) {
     List sum = newList();
     Entry E;
@@ -324,6 +326,40 @@ List sumList(List A, List B) {
 }
 
 
+Matrix sum(Matrix A, Matrix B) {
+    if (A == NULL || B == NULL) {
+        printf("Matrix Error: Calling sum() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
+    if (A->size != B->size) {
+        printf("Matrix Error: Calling sum() on Matrices with different size\n");
+        exit(EXIT_FAILURE);
+    }
+
+    Matrix M = newMatrix(A->size);
+    if (A == B) {
+        M = scalarMult(2, A);
+        return M;
+    }
+
+    for (int i = 1; i <= A->size; i++) {
+        moveFront(A->listArr[i]);
+        while(index(A->listArr[i]) != -1) {
+            freeList(&(M->listArr[i]));
+            List list_sum = sumList(A->listArr[i], B->listArr[i]);
+            moveFront(list_sum);
+            while (index(list_sum) != -1) {
+                append(M->listArr[i], get(list_sum));
+                moveNext(list_sum);
+            }
+            M->NNZ += length(list_sum);
+        }
+    }
+    return M;
+}
+
+
+
 
 double vectorDot(List P, List Q) {
     if (P == NULL || Q == NULL) {
@@ -362,23 +398,6 @@ double vectorDot(List P, List Q) {
     return val;
 }        
 
-/*
-        if (getP->value == 0 && getQ->value) {
-            moveNext(P);
-            moveNext(Q);
-        } else if (getP->column < getQ->column) {
-            moveNext(P);
-        } else if (getP->column > getQ->column) {
-            moveNext(Q);
-        } else {
-            val += getP->value * getQ->value;
-            moveNext(Q);
-            moveNext(P);
-        }
-        */
-
-
-
 
 Matrix product(Matrix A, Matrix B) {
     if (A == NULL || B == NULL) {
@@ -407,43 +426,6 @@ Matrix product(Matrix A, Matrix B) {
 }
 
 
-    /*
-    double val = 0.0;
-    for (int i = 1; i <= M->size; i++) {
-        moveFront(M->listArr[i]);
-        if (isEmpty(A->listArr[i]) || isEmpty(T->listArr[i])) {
-            i++;
-            continue;
-        }
-        while (index(M->listArr[i])) {
-            getA = get(A->listArr[i]);
-            getT = get(T->listArr[i]);
-            if (getA->column < getT->column) {
-                moveNext(A->listArr[i]);
-            } else if (getA->column > getT->column) {
-                moveNext(T->listArr[i]);
-            } else {
-                val += (getA->value) * (getT->value);
-
-                moveNext(A->listArr[i]);
-                moveNext(T->listArr[i]);
-                moveNext(M->listArr[i]);
-            }
-        }
-        if (val != 0) {
-            printf("Should be doing an append here\n");
-            append(M->listArr[i],newEntry(i, val));
-            (M->NNZ)++;
-        }
-    }
-    */
-
-    // Rememver to free
- //   return M;
-
-Matrix sum(Matrix A, Matrix B) {
-    return A;
-}
 
 Matrix diff(Matrix A, Matrix B) {
     return A;
