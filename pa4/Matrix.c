@@ -223,6 +223,7 @@ Matrix copy(Matrix A) {
         }
     }
 
+    M->NNZ = A->NNZ;
     return M;
 }
 
