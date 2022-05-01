@@ -96,22 +96,25 @@ int equals(Matrix A, Matrix B) {
         exit(EXIT_FAILURE);
     }
 
-    if (NNZ(A) != NNZ(B)) {
+    if (size(A) != size(B)) {
         return 0;
     }
-    
+   
+    printf("A's NNZ is %d\n", NNZ(A));
+    printf("B's NNZ is %d\n", NNZ(B));
+    /*
     int s;
     if (A->size >= B->size) {
         s = A->size;
     } else {
         s = B->size;
     }
+*/
 
     Entry getA;
     Entry getB;
-
     
-    for (int i = 1; i <= s; i++) {
+    for (int i = 1; i <= A->size; i++) {
         if (A->listArr[i] == NULL || B->listArr[i] == NULL) {
             return 0;
         }
@@ -147,7 +150,7 @@ void changeEntry(Matrix M, int i, int j, double x) {
         exit(EXIT_FAILURE);
     }
 
-    M->NNZ = 0;
+    //M->NNZ = 0;
     // This condition was added
     if (length(M->listArr[i]) == 0) {
         if (x != 0) {
@@ -163,10 +166,12 @@ void changeEntry(Matrix M, int i, int j, double x) {
                     delete(M->listArr[i]);
                     freeEntry(&E);
                     M->NNZ--;
+                    // return on 173 should be here I think
+                    return;
                 } else {
                     E->value = x;
                 }
-                return;
+                //return;
             } else if (E->column > j) {
                 insertBefore(M->listArr[i], newEntry(j, x));
                 M->NNZ++;
@@ -177,6 +182,8 @@ void changeEntry(Matrix M, int i, int j, double x) {
         if (x != 0) {
             append(M->listArr[i], newEntry(j, x));
             M->NNZ++;
+            //maybe return needed here?
+            return;
         }
     }
 
