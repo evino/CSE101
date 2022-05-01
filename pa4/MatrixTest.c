@@ -84,6 +84,13 @@ int main(){
     printf("Matrix C:\n");
     printMatrix(stdout, C);
 
+    if (equals(A, C) == 1) {
+        printf("A and C are equal\n");
+    } else {
+        printf("A and C are NOT equal\n");
+    }
+
+
     Matrix T;
     T = transpose(A);
     printf("Transpose of A:\n");
@@ -126,6 +133,14 @@ int main(){
     printf("Sum is:\n");
     printMatrix(stdout, sumTest);
 
+
+    printf("Subtraction is:\n");
+    Matrix subTest;
+    subTest = diff(A, Z);
+    printf("Sub is:\n");
+    printMatrix(stdout, subTest);
+    
+    
     printf("About to call free");
 
     freeMatrix(&A);
