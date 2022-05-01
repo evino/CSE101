@@ -246,7 +246,6 @@ Matrix scalarMult(double x, Matrix A) {
     return M;
 }
 
-/*
 List sumList(List A, List B) {
     List sum = newList();
     Entry E;
@@ -259,7 +258,7 @@ List sumList(List A, List B) {
         moveFront(B);
         while (index(B) != -1) {
             E = get(B);
-            append(sum, E->value);
+            append(sum, newEntry(E->column, E->value));
             moveNext(B);
         }
         return sum;
@@ -281,8 +280,49 @@ List sumList(List A, List B) {
         Entry a = get(A);
         Entry b = get(B);
         if (a->column == b->column) {
-            E = newEntry(
-*/
+            E = newEntry(a->column, (a->value + b->value));
+            append(sum, E);
+            moveNext(A);
+            moveNext(B);
+        } else {
+            while (b->column < a->column) {
+                E = newEntry(b->column, b->value);
+                append(sum, E);
+                moveNext(B);
+                if (index(B) == -1) {
+                    break;
+                }
+                b = get(B);
+            }
+            while (a->column < b->column) {
+                E = newEntry(a->column, a->value);
+                append(sum, E);
+                moveNext(A);
+                if (index(A) == -1) {
+                    break;
+                }
+                a = get(A);
+            }
+        }
+
+        if (index(B) == -1) {
+            while(index(A) != -1) {
+                a = get(A);
+                E = newEntry(a->column, a->value);
+                append(sum, E);
+                moveNext(A);
+            }
+        } else if (index(A) == -1) {
+            b = get(B);
+            E = newEntry(b->column, b->value);
+            append(sum, E);
+            moveNext(B);
+        }
+    }
+
+    return sum;
+}
+
 
 
 double vectorDot(List P, List Q) {
