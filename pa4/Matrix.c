@@ -150,7 +150,7 @@ void changeEntry(Matrix M, int i, int j, double x) {
         exit(EXIT_FAILURE);
     }
 
-    //M->NNZ = 0;
+    M->NNZ = 0;
     // This condition was added
     if (length(M->listArr[i]) == 0) {
         if (x != 0) {
