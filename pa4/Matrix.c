@@ -415,6 +415,7 @@ Matrix diff(Matrix A, Matrix B) {
     }
 
     Matrix M = newMatrix(A->size);
+    /*
     if (A->NNZ == 0 && B->NNZ > 0) {
         M = copy(B);
         return M;
@@ -422,10 +423,17 @@ Matrix diff(Matrix A, Matrix B) {
         M = copy(A);
         return M;
     }
+    */
     //Matrix M = newMatrix(A->size);
     if (equals(A, B) == 1) {
         M->NNZ = 0;
-    } else {    
+    } else {
+        if (A->NNZ == 0 && B->NNZ > 0) {
+            M = copy(B);
+            M= scalarMult(-1, M);
+            M->NNZ -= 2;
+            return M;
+        }
         B = scalarMult(-1, B);
         M = sum(A, B);
         M->NNZ -= 2;
