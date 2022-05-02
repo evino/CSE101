@@ -23,12 +23,12 @@ int main(int argc, char **argv) {
 
     changeEntry(A, 3, 1, 0);
 
-    printf("A's NNZ is now %d\n", NNZ(A));
 
     
     changeEntry(A, 3, 3, 0);  // This line is causing a segfault
     
     printf("DB\n");
+    printf("A's NNZ is now %d\n", NNZ(A));
 
 
     if (NNZ(A) != 4)
