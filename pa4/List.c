@@ -344,7 +344,7 @@ void deleteFront(List L) {
         printf("List Error: Calling deleteFront() on NULL List reference\n");
         exit(EXIT_FAILURE);
     }
-    if (L->length <= 0) {
+    if (isEmpty(L)) {
         printf("List Error: Calling deleteFront() on empty list\n");
         exit(EXIT_FAILURE);
     }
@@ -406,14 +406,31 @@ void delete(List L) {
         exit(EXIT_FAILURE);
     }
     N = L->cursor;
+    
+    /*
     if (L->cursor == L->front) {
         L->front = L->cursor->next;
         L->cursor->next->previous = NULL;
     }
+    
     else if (L->cursor == L->back) {
         L->back = L->cursor->previous;
         L->cursor->previous->next = NULL;
     }
+    */
+
+    if (index(L) == 0) {
+        printf("Del front\n");
+        deleteFront(L);
+        return;
+    }
+
+    else if(index(L) == length(L) -1) {
+        printf("Del back\n");
+        deleteBack(L);
+        return;
+    }
+
     else {
         L->cursor->previous->next = L->cursor->next;
         L->cursor->next->previous = L->cursor->previous;
