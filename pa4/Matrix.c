@@ -203,11 +203,17 @@ void makeZero(Matrix M) {
 // copy()
 // Returns a reference to a new Matrix object having the same entries as A.
 Matrix copy(Matrix A) {
+    if (A == NULL) {
+        printf("Matrix Error: Calling copy() on NULL Matrix reference\n");
+        exit(EXIT_FAILURE);
+    }
     Matrix M = newMatrix(A->size);
+    Entry E;
     for (int i = 1; i <= A->size; i++) {
         moveFront(A->listArr[i]);
         while (index(A->listArr[i]) != -1) {
-            append(M->listArr[i], get(A->listArr[i]));
+            E = get(A->listArr[i]);
+            append(M->listArr[i], newEntry(E->column, E->value));
             moveNext(A->listArr[i]);
         }
     }
@@ -266,9 +272,11 @@ Matrix scalarMult(double x, Matrix A) {
     M = copy(A);
     if (x == 0.0) {
         makeZero(M);
+        // Added
+        M->NNZ = 0;
     } else {
         Entry E;
-        for (int i = 1; i <= M->size; i++) {
+        for (int i = 1; i <= A->size; i++) {
             moveFront(M->listArr[i]);
             while (index(M->listArr[i]) != -1) {
                 E = get(M->listArr[i]);
@@ -407,6 +415,14 @@ Matrix diff(Matrix A, Matrix B) {
     }
 
     Matrix M = newMatrix(A->size);
+    if (A->NNZ == 0 && B->NNZ > 0) {
+        M = copy(B);
+        return M;
+    } else if (B->NNZ == 0 && A->NNZ > 0) {
+        M = copy(A);
+        return M;
+    }
+    //Matrix M = newMatrix(A->size);
     if (equals(A, B) == 1) {
         M->NNZ = 0;
     } else {    
