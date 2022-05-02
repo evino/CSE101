@@ -352,6 +352,8 @@ void deleteFront(List L) {
     if (L->cursor == L->front) {
         L->cursor = NULL;
         L->index = -1;
+    } else {
+        L->index--;
     }
     if (L->length > 1) {
        L->front = L->front->next;
@@ -360,7 +362,6 @@ void deleteFront(List L) {
         L->front = L->back = NULL;
     }
     L->length--;
-    L->index--;
     freeNode(&N);
     return;
 }
@@ -407,6 +408,7 @@ void delete(List L) {
     }
     N = L->cursor;
     
+    
     /*
     if (L->cursor == L->front) {
         L->front = L->cursor->next;
@@ -420,13 +422,11 @@ void delete(List L) {
     */
 
     if (index(L) == 0) {
-        printf("Del front\n");
         deleteFront(L);
         return;
     }
 
     else if(index(L) == length(L) -1) {
-        printf("Del back\n");
         deleteBack(L);
         return;
     }
