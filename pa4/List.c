@@ -421,20 +421,18 @@ void delete(List L) {
     }
     */
 
-    if (index(L) == 0) {
+    
+    if (L->cursor == L->front) {
         deleteFront(L);
         return;
-    }
-
-    else if(index(L) == length(L) -1) {
+    } else if(L->cursor == L->back) {
         deleteBack(L);
         return;
-    }
-
-    else {
+    } else {
         L->cursor->previous->next = L->cursor->next;
         L->cursor->next->previous = L->cursor->previous;
     }
+
     L->length--;
     L->cursor = NULL;
     L->index = -1;
