@@ -418,8 +418,12 @@ Matrix diff(Matrix A, Matrix B) {
     }
 
     Matrix M = newMatrix(A->size);
-    B = scalarMult(-1, B);
-    M = sum(A, B);
+    if (equals(A, B) == 1) {
+        M->NNZ = 0;
+    } else {    
+        B = scalarMult(-1, B);
+        M = sum(A, B);
+    }
     return M;
 }
 
