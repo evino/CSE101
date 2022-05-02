@@ -431,12 +431,12 @@ Matrix diff(Matrix A, Matrix B) {
         if (A->NNZ == 0 && B->NNZ > 0) {
             M = copy(B);
             M= scalarMult(-1, M);
-            M->NNZ -= 2;
+            //M->NNZ = B->NNZ;
             return M;
         }
         B = scalarMult(-1, B);
         M = sum(A, B);
-        M->NNZ -= 2;
+        //M->NNZ -= 2;
     }
     return M;
 }
