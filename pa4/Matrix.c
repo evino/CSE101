@@ -423,6 +423,7 @@ Matrix diff(Matrix A, Matrix B) {
     } else {    
         B = scalarMult(-1, B);
         M = sum(A, B);
+        M->NNZ -= 2;
     }
     return M;
 }
