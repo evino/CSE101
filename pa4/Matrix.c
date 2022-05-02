@@ -96,20 +96,9 @@ int equals(Matrix A, Matrix B) {
         exit(EXIT_FAILURE);
     }
 
-    if (size(A) != size(B)) {
+    if (size(A) != size(B) || NNZ(A) != NNZ(B)) {
         return 0;
     }
-   
-    printf("A's NNZ is %d\n", NNZ(A));
-    printf("B's NNZ is %d\n", NNZ(B));
-    /*
-    int s;
-    if (A->size >= B->size) {
-        s = A->size;
-    } else {
-        s = B->size;
-    }
-*/
 
     Entry getA;
     Entry getB;
@@ -487,6 +476,8 @@ Matrix product(Matrix A, Matrix B) {
             val = vectorDot(A->listArr[i], T->listArr[j]);
             if (val != 0) {
                 append(M->listArr[i], newEntry(j, val));
+                // Added this in
+                M->NNZ++;
             }
         }
     }
