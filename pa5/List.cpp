@@ -41,17 +41,37 @@ List::List(const List& L) {
 
     Node *N = L.frontDummy->next;
     while (N != nullptr) {
-        insertAfter(N->data);
+        //insertAfter(N->data);
         N = N->next;
     }
 }
 
+
 // Destructor
 List::~List() {
-    moveFront();
+    //moveFront();
     while (length() > 0) {
-        eraseAfter();
+        //eraseAfter();
     }
 }
 
+// Access functions
+int List::length() const {
+    return (num_elements);
+}
 
+
+ListElement front() const {
+    if (length <= 0) {
+        throw std::length_error("List Error: Calling front() on empty list");
+    }
+    // moveFront
+    // peekPrev
+    //return (frontDummy->next->data);
+}
+
+
+// Do same for back()
+
+int position() const {
+    // Need to think about this one, since isn't cursor between two nodes?
