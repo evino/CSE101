@@ -23,8 +23,9 @@ List::List() {
     backDummy->data = -1;
     frontDummy->next = backDummy;
     backDummy->prev = frontDummy;
-    beforeCursor = nullptr;
-    afterCursor = nullptr;
+    // Can have before And after cursor be the front and back dummies
+    beforeCursor = frontDummy;
+    afterCursor = backDummy;
     pos_cursor = 0;
     num_elements = 0;
 }
@@ -56,6 +57,12 @@ List::~List() {
 }
 
 // Access functions
+
+bool List::isEmpty() const{
+   return(length==0);
+}
+
+
 int List::length() const {
     return (num_elements);
 }
@@ -75,3 +82,26 @@ ListElement front() const {
 
 int position() const {
     // Need to think about this one, since isn't cursor between two nodes?
+
+
+}
+
+
+
+// Manipulation
+
+// InsertAfter
+
+void insertAfter(ListElement x) {
+    Node *N = new Node(x);
+    if (isEmpty()) {
+        frontDummy->next = backDummy->prev = N;
+    } else {
+        beforeCursor->next = N;
+        N->prev = beforeCursor;
+        afterCursor->prev = N;
+        N->next = afterCursor;
+        afterCursor = N;
+        num_elements++;
+    }
+}
