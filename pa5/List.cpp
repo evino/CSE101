@@ -58,18 +58,13 @@ List::~List() {
 
 // Access functions
 
-bool List::isEmpty() const{
-   return(length==0);
-}
-
-
 int List::length() const {
     return (num_elements);
 }
 
 
-ListElement front() const {
-    if (length <= 0) {
+ListElement List::front() const {
+    if (length() == 0) {
         throw std::length_error("List Error: Calling front() on empty list");
     }
     // moveFront
@@ -80,7 +75,7 @@ ListElement front() const {
 
 // Do same for back()
 
-int position() const {
+int List::position() const {
     // Need to think about this one, since isn't cursor between two nodes?
 
 
@@ -93,8 +88,8 @@ int position() const {
 // InsertAfter
 
 void insertAfter(ListElement x) {
-    Node *N = new Node(x);
-    if (isEmpty()) {
+    Node* N = new Node(x);
+    if (length() <= 0) {
         frontDummy->next = backDummy->prev = N;
     } else {
         beforeCursor->next = N;
