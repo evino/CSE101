@@ -7,7 +7,7 @@
 
 #include "List.h"
 
-int main() {
+int main(int argc, char **argv) {
     List A;
     std::cout << "List A made" << std::endl;
 
