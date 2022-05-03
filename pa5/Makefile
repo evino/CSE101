@@ -18,10 +18,16 @@ Shuffle.o : List.h Shuffle.cpp
 	g++ -std=c++17 -Wall -c Shuffle.cpp
 
 ListClient : ListClient.o List.o
-	g++ -std=c++17 -Wall -o ListClient ListClient.o List.o 
+	g++ -std=c++17 -Wall -o ListClient ListClient.o List.o
 
 ListClient.o : List.h ListClient.cpp
 	g++ -std=c++17 -Wall -c ListClient.cpp
+
+ListTest : ListTest.o List.o
+	g++ -std=c17 -Wall -o ListTest ListTest.o List.o
+
+ListTest.o : List.h ListTest.cpp
+	g++ -std=c++17 -Wall -o ListTest.cpp
 
 List.o : List.h List.cpp
 	g++ -std=c++17 -Wall -c List.cpp
