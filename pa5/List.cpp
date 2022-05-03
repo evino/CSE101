@@ -19,7 +19,8 @@ List::Node::Node(ListElement x) {
 
 // Class Constructors & Destructors -------------------------------------------
 List::List() {
-
+    frontDummy->data = -1;
+    backDummy->data = -1;
     frontDummy->next = backDummy;
     backDummy->prev = frontDummy;
     beforeCursor = nullptr;
@@ -47,12 +48,9 @@ List::List(const List& L) {
 
 // Destructor
 List::~List() {
-    Node *N = L.frontDummy->next;
-    Node *T;
+    moveFront();
     while (length() > 0) {
-        T = N->next;
         eraseAfter();
-        N = T;
     }
 }
 
