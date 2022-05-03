@@ -6,6 +6,7 @@
 */
 
 #include "List.h"
+#pragma once
 
 // Exported type
 typedef struct MatrixObj* Matrix;
