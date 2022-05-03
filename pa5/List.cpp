@@ -33,6 +33,8 @@ List::List() {
 // Copy Constructor
 List::List(const List& L) {
     // Makes empty List
+    frontDummy = new Node(-10000);
+    backDummy = new Node(10000);
     frontDummy->next = backDummy;
     backDummy->prev = frontDummy;
     beforeCursor = nullptr;
@@ -63,23 +65,18 @@ int List::length() const {
 }
 
 
-ListElement List::front() const {
-    if (length() == 0) {
-        throw std::length_error("List Error: Calling front() on empty list");
-    }
-    // moveFront
-    // peekPrev
-    //return (frontDummy->next->data);
-}
+//ListElement List::front() const {
+    //if (length() == 0) {
+        //throw std::length_error("List Error: Calling front() on empty list");
+    //}
+    //// moveFront
+    //// peekPrev
+    ////return (frontDummy->next->data);
+//}
 
 
 // Do same for back()
 
-int List::position() const {
-    // Need to think about this one, since isn't cursor between two nodes?
-
-
-}
 
 
 
@@ -87,7 +84,7 @@ int List::position() const {
 
 // InsertAfter
 
-void insertAfter(ListElement x) {
+void List::insertAfter(ListElement x) {
     Node* N = new Node(x);
     if (length() <= 0) {
         frontDummy->next = backDummy->prev = N;
