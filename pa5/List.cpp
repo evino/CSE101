@@ -69,6 +69,7 @@ int List::length() const {
     //if (length() == 0) {
         //throw std::length_error("List Error: Calling front() on empty list");
     //}
+
     //// moveFront
     //// peekPrev
     ////return (frontDummy->next->data);
@@ -77,10 +78,18 @@ int List::length() const {
 
 // Do same for back()
 
+int List::position() const {
+    if (!(0 <= pos_cursor && pos_cursor <= length())) {
+        throw std::length_error("List Error: position() out of bounds");
+    }
+    return pos_cursor;
+}
 
 
 
 // Manipulation
+
+
 
 // InsertAfter
 
