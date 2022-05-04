@@ -91,7 +91,7 @@ int List::position() const {
 
 ListElement List::peekNext() const {
     if (!(position()<length())) {
-        throw std::length_error("List Error: Position out of bounds of list");
+        throw std::range_error("List Error: Position out of bounds of list");
     }
     return (afterCursor->data);
 }
@@ -126,6 +126,20 @@ void List::moveFront() {
 }
 
 
+// moveNext()
+ListElement List::moveNext() { 
+    if (!(position()<length())) {
+        throw std::range_error("List Error: Calling moveNext() on out of bounds cursor position");
+    }
+    Node *N = afterCursor;
+    beforeCursor = beforeCursor->next;
+    afterCursor = afterCursor->next;
+    pos_cursor++;
+    return (N->data);
+}
+
+
+
 
 // InsertAfter
 void List::insertAfter(ListElement x) {
@@ -146,7 +160,7 @@ void List::insertAfter(ListElement x) {
 
 void List::setAfter(ListElement x) {
     if (!(position()<length())) {
-        throw std::length_error("List Error: calling setAfter on out of bounds cursor position");
+        throw std::range_error("List Error: calling setAfter on out of bounds cursor position");
     }
 
     afterCursor->data = x;
@@ -156,7 +170,7 @@ void List::setAfter(ListElement x) {
 // Error when running locally but not on timeshare
 void List::eraseAfter() {
     if (!(position()<length())) {
-        throw std::length_error("List Error: calling eraseAfter on empty List");
+        throw std::range_error("List Error: calling eraseAfter on empty List");
     }
 
     Node *N = afterCursor;
