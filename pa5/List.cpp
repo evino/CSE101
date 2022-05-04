@@ -144,6 +144,14 @@ void List::insertAfter(ListElement x) {
     return;
 }
 
+void List::setAfter(ListElement x) {
+    if (!(position()<length())) {
+        throw std::length_error("List Error: calling setAfter on out of bounds cursor position");
+    }
+
+    afterCursor->data = x;
+    return;
+}
 
 // Error when running locally but not on timeshare
 void List::eraseAfter() {
