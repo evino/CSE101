@@ -76,13 +76,11 @@ ListElement List::front() const {
 
     return (frontDummy->next->data);
 
-    // moveFront
-    // peekPrev
-    //return (frontDummy->next->data);
 }
 
 
 // Do same for back()
+
 
 int List::position() const {
     if (!(0 <= pos_cursor && pos_cursor <= length())) {
@@ -91,19 +89,45 @@ int List::position() const {
     return pos_cursor;
 }
 
+ListElement List::peekNext() const {
+    if (!(position()<length())) {
+        throw std::length_error("List Error: Position out of bounds of list");
+    }
+    return (afterCursor->data);
+}
 
 
 // Manipulation
 
+void List::clear() {
+    moveFront();
+    while (afterCursor != backDummy) {
+        eraseAfter();
+    }
+
+    return;
+}
+
+
+
 // moveFront()
+void List::moveBack() {
+    //afterCursor = backDummy;
+    beforeCursor = backDummy->prev;
+    pos_cursor = num_elements - 1;
+    return;
+}
+
 void List::moveFront() {
+    //beforeCursor = frontDummy;
+    afterCursor = frontDummy->next;
     pos_cursor = 0;
     return;
 }
 
 
-// InsertAfter
 
+// InsertAfter
 void List::insertAfter(ListElement x) {
     Node* N = new Node(x);
     if (length() <= 0) {
@@ -121,6 +145,7 @@ void List::insertAfter(ListElement x) {
 }
 
 
+// Error when running locally but not on timeshare
 void List::eraseAfter() {
     if (!(position()<length())) {
         throw std::length_error("List Error: calling eraseAfter on empty List");
