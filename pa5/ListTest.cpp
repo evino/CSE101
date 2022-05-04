@@ -17,6 +17,8 @@ int main(int argc, char **argv) {
     std::cout << "A's length is " << A.length() << std::endl;
     std::cout << "A's front value is " << A.front() << std::endl;
 
+    A.eraseAfter();
+    std::cout << "A's length now is " << A.length() << std::endl;
     std::cout << "\nBefore return" << std::endl;
     return EXIT_SUCCESS;
 }
