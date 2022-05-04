@@ -8,7 +8,6 @@
 #include "List.h"
 
 int main(int argc, char **argv) {
-    printf("Hi\n");
     List A;
     std::cout << "DB" << std::endl;
     A.insertAfter(5);
