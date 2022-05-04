@@ -52,10 +52,13 @@ List::List(const List& L) {
 
 // Destructor
 List::~List() {
-    //moveFront();
+    moveFront();
     while (length() > 0) {
-        //eraseAfter();
+        eraseAfter();
     }
+
+    delete frontDummy;
+    delete backDummy;
 }
 
 // Access functions
@@ -65,15 +68,17 @@ int List::length() const {
 }
 
 
-//ListElement List::front() const {
-    //if (length() == 0) {
-        //throw std::length_error("List Error: Calling front() on empty list");
-    //}
+ListElement List::front() const {
+    if (length() == 0) {
+        throw std::length_error("List Error: Calling front() on empty list");
+    }
 
-    //// moveFront
-    //// peekPrev
-    ////return (frontDummy->next->data);
-//}
+    return (frontDummy->next->data);
+
+    // moveFront
+    // peekPrev
+    //return (frontDummy->next->data);
+}
 
 
 // Do same for back()
@@ -103,6 +108,8 @@ void List::insertAfter(ListElement x) {
         afterCursor->prev = N;
         N->next = afterCursor;
         afterCursor = N;
-        num_elements++;
     }
+    num_elements++;
+
+    return;
 }
