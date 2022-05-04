@@ -17,7 +17,9 @@ int main(int argc, char **argv) {
     A.insertAfter(7);
     std::cout << "A's front value is " << A.front() << std::endl;
     A.moveFront();
+    std::cout << "Front peek next is " << A.peekNext() << std::endl;
     A.setAfter(1);
+    std::cout << "Calling moveNext on front " << A.moveNext() << std::endl;
     std::cout << "A's pos currently is " << A.position() << std::endl;
     std::cout << "A's length now is " << A.length() << std::endl;
     std::cout << "A's front value now is " << A.front() << std::endl;
