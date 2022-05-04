@@ -19,8 +19,8 @@ List::Node::Node(ListElement x) {
 
 // Class Constructors & Destructors -------------------------------------------
 List::List() {
-    frontDummy->data = -1;
-    backDummy->data = -1;
+    frontDummy = new Node (-10000);
+    backDummy = new Node (10000);
     frontDummy->next = backDummy;
     backDummy->prev = frontDummy;
     // Can have before And after cursor be the front and back dummies
@@ -44,7 +44,7 @@ List::List(const List& L) {
 
     Node *N = L.frontDummy->next;
     while (N != nullptr) {
-        //insertAfter(N->data);
+        insertAfter(N->data);
         N = N->next;
     }
 }
