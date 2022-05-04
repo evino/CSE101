@@ -59,6 +59,7 @@ List::~List() {
 
     delete frontDummy;
     delete backDummy;
+    frontDummy = nullptr;
 }
 
 // Access functions
@@ -94,6 +95,11 @@ int List::position() const {
 
 // Manipulation
 
+// moveFront()
+void List::moveFront() {
+    pos_cursor = 0;
+    return;
+}
 
 
 // InsertAfter
@@ -111,5 +117,27 @@ void List::insertAfter(ListElement x) {
     }
     num_elements++;
 
+    return;
+}
+
+
+void List::eraseAfter() {
+    if (!(position()<length())) {
+        throw std::length_error("List Error: calling eraseAfter on empty List");
+    }
+
+    Node *N = afterCursor;
+    if (length() > 1) {
+        afterCursor = afterCursor->next;
+        afterCursor->prev = beforeCursor;
+        beforeCursor->next = afterCursor;
+    } else {
+        frontDummy->next = backDummy;
+        backDummy->prev = frontDummy;
+    }
+    num_elements--;
+    std::cout << "Calling delete here" << std::endl;
+    delete N;
+    
     return;
 }
