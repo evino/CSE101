@@ -136,7 +136,6 @@ void List::eraseAfter() {
         backDummy->prev = frontDummy;
     }
     num_elements--;
-    std::cout << "Calling delete here" << std::endl;
     delete N;
     
     return;
