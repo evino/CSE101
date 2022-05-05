@@ -37,13 +37,13 @@ List::List(const List& L) {
     backDummy = new Node(10000);
     frontDummy->next = backDummy;
     backDummy->prev = frontDummy;
-    beforeCursor = nullptr;
-    afterCursor = nullptr;
+    beforeCursor = frontDummy;
+    afterCursor = backDummy;
     pos_cursor = 0;
     num_elements = 0;
 
     Node *N = L.frontDummy->next;
-    while (N != nullptr) {
+    while (N != backDummy) {
         insertAfter(N->data);
         N = N->next;
     }
@@ -52,14 +52,26 @@ List::List(const List& L) {
 
 // Destructor
 List::~List() {
-    moveFront();
-    while (length() > 0) {
+    
+    
+    std::cout << "\n\n" << std::endl;
+    //moveFront();
+    std::cout << "value: " << afterCursor->data << "(" << length() << ")" << std::endl;
+    clear();
+    /*
+    while (afterCursor != backDummy) {
+       std::cout << "value: " << afterCursor->data << "(" << length() << ")" << std::endl;
         eraseAfter();
     }
+    */
 
+    std::cout << "After while" << std::endl;
+    beforeCursor = nullptr;
+    afterCursor = nullptr;
     delete frontDummy;
     delete backDummy;
-    frontDummy = nullptr;
+    //frontDummy = nullptr;
+    //backDummy = nullptr;
 }
 
 // Access functions
@@ -101,7 +113,7 @@ ListElement List::peekNext() const {
 
 void List::clear() {
     moveFront();
-    while (afterCursor != backDummy) {
+    while (length() > 0) {
         eraseAfter();
     }
 
@@ -144,17 +156,18 @@ ListElement List::moveNext() {
 // InsertAfter
 void List::insertAfter(ListElement x) {
     Node* N = new Node(x);
-    if (length() <= 0) {
-        frontDummy->next = backDummy->prev = N;
-    } else {
+    //if (length() <= 0) {
+        //frontDummy->next = backDummy->prev = N;
+    //} else {
         beforeCursor->next = N;
         N->prev = beforeCursor;
         afterCursor->prev = N;
         N->next = afterCursor;
         afterCursor = N;
-    }
+        //}
     num_elements++;
 
+    std::cout << "Inserting " << x << ". Address is " << &afterCursor << std::endl;
     return;
 }
 
@@ -174,6 +187,7 @@ void List::eraseAfter() {
     }
 
     Node *N = afterCursor;
+    /*
     if (length() > 1) {
         afterCursor = afterCursor->next;
         afterCursor->prev = beforeCursor;
@@ -181,9 +195,39 @@ void List::eraseAfter() {
     } else {
         frontDummy->next = backDummy;
         backDummy->prev = frontDummy;
+        beforeCursor = frontDummy;
+        afterCursor = backDummy;
     }
+    */
+
+    afterCursor = afterCursor->next;
+    afterCursor->prev = beforeCursor;
+    beforeCursor->next = afterCursor;
     num_elements--;
-    delete N;
+    //delete N;
     
     return;
+}
+
+int List::findNext(ListElement x) {
+    while (afterCursor != backDummy) {
+        if (x == afterCursor->data) {
+            return pos_cursor;
+        }
+        moveNext();
+    }
+    // returns -1 if x is not found in List
+    return -1;
+}
+
+
+std::string List::to_string() const {
+    Node *N = nullptr;
+    std::string s = "(";
+    for (N = frontDummy->next; N != backDummy->prev; N = N->next) {
+        s += std::to_string(N->data) + ", ";
+    }
+    s += std::to_string(N->data) + ")";
+
+    return s;
 }
