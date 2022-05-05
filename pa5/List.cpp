@@ -42,8 +42,10 @@ List::List(const List& L) {
     pos_cursor = 0;
     num_elements = 0;
 
-    Node *N = L.frontDummy->next;
-    while (N != backDummy) {
+    //Node *N = L.frontDummy->next;
+    Node *N = L.frontDummy;
+    while (N != L.backDummy) {
+        std::cout << "Data is: " << N->data << std::endl;
         insertAfter(N->data);
         N = N->next;
     }
@@ -141,7 +143,7 @@ void List::moveFront() {
 void List::moveBack() {
     afterCursor = backDummy;
     beforeCursor = backDummy->prev;
-    pos_cursor = num_elements - 1;
+    pos_cursor = length();
     return;
 }
 
@@ -151,19 +153,21 @@ ListElement List::moveNext() {
         throw std::range_error("List Error: Calling moveNext() on out of bounds cursor position");
     }
     Node *N = afterCursor;
-    beforeCursor = beforeCursor->next;
+    //beforeCursor = beforeCursor->next;
+    beforeCursor = afterCursor;
     afterCursor = afterCursor->next;
     pos_cursor++;
     return (N->data);
 }
 
 ListElement List::movePrev() {
-    if (!(position() < length())) {
+    if (!(position() > 0)) {
         throw std::range_error("List Error: Calling movePrev() on out of bounds cursor position");
     }
     Node *N = beforeCursor;
+    afterCursor = beforeCursor;
     beforeCursor = beforeCursor->prev;
-    afterCursor = afterCursor->prev;
+//    afterCursor = afterCursor->prev;
     pos_cursor--;
     return (N->data);
 }
@@ -171,18 +175,14 @@ ListElement List::movePrev() {
 // InsertAfter
 void List::insertAfter(ListElement x) {
     Node* N = new Node(x);
-    //if (length() <= 0) {
-        //frontDummy->next = backDummy->prev = N;
-    //} else {
-        beforeCursor->next = N;
-        N->prev = beforeCursor;
-        afterCursor->prev = N;
-        N->next = afterCursor;
-        afterCursor = N;
-        //}
+    beforeCursor->next = N;
+    N->prev = beforeCursor;
+    afterCursor->prev = N;
+    N->next = afterCursor;
+    afterCursor = N;
     num_elements++;
 
-    std::cout << "Inserting " << x << ". Address is " << &afterCursor << std::endl;
+    //std::cout << "Inserting " << x << ". Address is " << &afterCursor << std::endl;
     return;
 }
 
@@ -265,6 +265,7 @@ void List::eraseBefore() {
 int List::findNext(ListElement x) {
     while (afterCursor != backDummy) {
         if (x == afterCursor->data) {
+            moveNext();
             return pos_cursor;
         }
         moveNext();
@@ -276,6 +277,7 @@ int List::findNext(ListElement x) {
 int List::findPrev(ListElement x) {
     while (beforeCursor != frontDummy) {
         if (x == beforeCursor->data) {
+            movePrev();
             return position();
         }
         movePrev();
@@ -290,10 +292,12 @@ List List::concat(const List& L) const {
     while (N != backDummy) {
         J.insertAfter(N->data);
         N = N->next;
+        J.moveNext();
     }
-    while (M != backDummy) {
+    while (M != L.backDummy) {
         J.insertAfter(M->data);
         M = M->next;
+        J.moveNext();
     }
 
     return J;
@@ -352,4 +356,9 @@ List& List::operator=( const List& L ) {
     }
 
     return *this;
+}
+
+void List::cleanup() {
+    std::cout << "Would call clean up here" << std::endl;
+    return;
 }
