@@ -65,7 +65,6 @@ List::~List() {
     }
     */
 
-    std::cout << "After while" << std::endl;
     beforeCursor = nullptr;
     afterCursor = nullptr;
     delete frontDummy;
@@ -204,7 +203,7 @@ void List::eraseAfter() {
     afterCursor->prev = beforeCursor;
     beforeCursor->next = afterCursor;
     num_elements--;
-    //delete N;
+    delete N;
     
     return;
 }
@@ -230,4 +229,20 @@ std::string List::to_string() const {
     s += std::to_string(N->data) + ")";
 
     return s;
+}
+
+bool List::equals(const List& R) const {
+    bool eq = false;
+    Node *N = nullptr;
+    Node *M = nullptr;
+
+    eq = (this->length() == R.length());
+    N = this->frontDummy->next;
+    M = R.frontDummy->next;
+    while (eq && N!= nullptr) {
+        eq = (N->data == M->data);
+        N = N->next;
+        M = M->next;
+    }
+    return eq;
 }
