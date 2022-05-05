@@ -139,7 +139,7 @@ void List::moveFront() {
 
 // moveBack()
 void List::moveBack() {
-    //afterCursor = backDummy;
+    afterCursor = backDummy;
     beforeCursor = backDummy->prev;
     pos_cursor = num_elements - 1;
     return;
@@ -194,6 +194,7 @@ void List::insertBefore(ListElement x) {
     N->next = afterCursor;
     beforeCursor = N;
     num_elements++;
+    pos_cursor++;
     return;
 }
 
@@ -256,6 +257,7 @@ void List::eraseBefore() {
     beforeCursor->next = afterCursor;
     afterCursor->prev = beforeCursor;
     num_elements--;
+    pos_cursor--;
     delete N;
     return;
 }
