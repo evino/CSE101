@@ -65,7 +65,6 @@ List::~List() {
     }
     */
 
-    std::cout << "After while" << std::endl;
     beforeCursor = nullptr;
     afterCursor = nullptr;
     delete frontDummy;
@@ -281,6 +280,24 @@ int List::findPrev(ListElement x) {
     }
     return -1;
 }
+
+List List::concat(const List& L) const {
+    List J;
+    Node *N = this->frontDummy->next;
+    Node *M = L.frontDummy->next;
+    while (N != backDummy) {
+        J.insertAfter(N->data);
+        N = N->next;
+    }
+    while (M != backDummy) {
+        J.insertAfter(M->data);
+        M = M->next;
+    }
+
+    return J;
+}
+
+
 std::string List::to_string() const {
     Node *N = nullptr;
     std::string s = "(";
@@ -290,4 +307,47 @@ std::string List::to_string() const {
     s += std::to_string(N->data) + ")";
 
     return s;
+}
+
+bool List::equals(const List& R) const {
+    bool eq = false;
+    Node *N = nullptr;
+    Node *M = nullptr;
+
+    eq = (this->length() == R.length());
+    N = this->frontDummy->next;
+    M = R.frontDummy->next;
+    while (eq && N!= backDummy) {
+        eq = (N->data == M->data);
+        N = N->next;
+        M = M->next;
+    }
+    return eq;
+}
+
+
+
+// Overloaded operators -------------------------------------------------------
+
+// operator<<()
+std::ostream& operator<<( std::ostream& stream, const List& L ) {
+    return stream << L.List::to_string();
+}
+
+// operator==()
+bool operator==( const List& A, const List& B ) {
+    return A.List::equals(B);
+}
+
+// operator=()
+List& List::operator=( const List& L ) {
+    if (this != &L) {
+        List temp = L;
+
+        std::swap(frontDummy->next, temp.frontDummy->next);
+        std::swap(backDummy->prev, temp.backDummy->prev);
+        std::swap(num_elements, temp.num_elements);
+    }
+
+    return *this;
 }
