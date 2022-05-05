@@ -85,13 +85,15 @@ ListElement List::front() const {
     if (length() == 0) {
         throw std::length_error("List Error: Calling front() on empty list");
     }
-
     return (frontDummy->next->data);
-
 }
 
-
-// Do same for back()
+ListElement List::back() const {
+    if (length() == 0) {
+        throw std::length_error("List Error: Calling back() on empty list");
+    }
+    return (backDummy->prev->data);
+}
 
 
 int List::position() const {
@@ -108,6 +110,14 @@ ListElement List::peekNext() const {
     return (afterCursor->data);
 }
 
+ListElement List::peekPrev() const {
+    if (!(position() < length())) {
+        throw std::range_error("List Error: Cursor position out of bounds of list.");
+    }
+    return (beforeCursor->data);
+}
+
+
 
 // Manipulation
 
@@ -120,16 +130,7 @@ void List::clear() {
     return;
 }
 
-
-
 // moveFront()
-void List::moveBack() {
-    //afterCursor = backDummy;
-    beforeCursor = backDummy->prev;
-    pos_cursor = num_elements - 1;
-    return;
-}
-
 void List::moveFront() {
     //beforeCursor = frontDummy;
     afterCursor = frontDummy->next;
@@ -137,6 +138,13 @@ void List::moveFront() {
     return;
 }
 
+// moveBack()
+void List::moveBack() {
+    //afterCursor = backDummy;
+    beforeCursor = backDummy->prev;
+    pos_cursor = num_elements - 1;
+    return;
+}
 
 // moveNext()
 ListElement List::moveNext() { 
@@ -150,8 +158,16 @@ ListElement List::moveNext() {
     return (N->data);
 }
 
-
-
+ListElement List::movePrev() {
+    if (!(position() < length())) {
+        throw std::range_error("List Error: Calling movePrev() on out of bounds cursor position");
+    }
+    Node *N = beforeCursor;
+    beforeCursor = beforeCursor->prev;
+    afterCursor = afterCursor->prev;
+    pos_cursor--;
+    return (N->data);
+}
 
 // InsertAfter
 void List::insertAfter(ListElement x) {
@@ -171,6 +187,17 @@ void List::insertAfter(ListElement x) {
     return;
 }
 
+void List::insertBefore(ListElement x) {
+    Node *N = new Node(x);
+    beforeCursor->next = N;
+    N->prev = beforeCursor;
+    afterCursor->prev = N;
+    N->next = afterCursor;
+    beforeCursor = N;
+    num_elements++;
+    return;
+}
+
 void List::setAfter(ListElement x) {
     if (!(position()<length())) {
         throw std::range_error("List Error: calling setAfter on out of bounds cursor position");
@@ -179,6 +206,16 @@ void List::setAfter(ListElement x) {
     afterCursor->data = x;
     return;
 }
+
+void List::setBefore(ListElement x) {
+    if (!(position() < length())) {
+        throw std::range_error("List Error: Calling setBefore on out of bounds cursor position.");
+    }
+
+    beforeCursor->data = x;
+    return;
+}
+
 
 // Error when running locally but not on timeshare
 void List::eraseAfter() {
@@ -204,8 +241,23 @@ void List::eraseAfter() {
     afterCursor->prev = beforeCursor;
     beforeCursor->next = afterCursor;
     num_elements--;
-    //delete N;
+    delete N;
     
+    return;
+}
+
+void List::eraseBefore() {
+    if (!(position() < length())) {
+        throw std::range_error("List Error: Calling eraseBefore() on out of range cursor position.");
+    }
+
+    Node *N = beforeCursor;
+
+    beforeCursor = beforeCursor->prev;
+    beforeCursor->next = afterCursor;
+    afterCursor->prev = beforeCursor;
+    num_elements--;
+    delete N;
     return;
 }
 
@@ -220,7 +272,15 @@ int List::findNext(ListElement x) {
     return -1;
 }
 
-
+int List::findPrev(ListElement x) {
+    while (beforeCursor != frontDummy) {
+        if (x == beforeCursor->data) {
+            return position();
+        }
+        movePrev();
+    }
+    return -1;
+}
 std::string List::to_string() const {
     Node *N = nullptr;
     std::string s = "(";
