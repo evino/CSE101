@@ -74,6 +74,27 @@ int main(int argc, char **argv) {
     //std::cout << "DB2" << std::endl;
     ////A.eraseAfter();
     //std::cout << "A's length now is " << A.length() << std::endl;
+
+
+
+ 
+    // Replicating Cleanup_size test 1:
+    std::cout << "\n\nCleanup_size test 1:" << std::endl;
+    A.clear();
+    A.insertAfter(1);
+    A.insertAfter(2);
+    A.insertAfter(3);
+    A.insertAfter(1);
+    A.insertAfter(2);
+    A.insertAfter(1);
+
+    std::cout << "A now before cleanup is: " << A.to_string() << std::endl;
+
+    A.cleanup();
+    std::cout << "A now after cleanup now is: " << A.to_string() << std::endl;
+
+
+
     std::cout << "\nBefore return" << std::endl;
     return EXIT_SUCCESS;
 }
