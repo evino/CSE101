@@ -123,13 +123,22 @@ ListElement List::peekPrev() const {
 // Manipulation
 
 void List::clear() {
-    moveFront();
-    while (length() > 0) {
+    std::cout << "Inside moveFront.DB." << std::endl;
+    this->moveFront();
+    std:: cout << to_string() << std::endl;
+    std::cout << "Cursor pos inside clear(): " << position() << std::endl;
+    while (afterCursor != backDummy) {
+        std::cout << "afterCursor is: " << peekNext() << std::endl;
+        std::cout << "Len is " << length() << std::endl;
         eraseAfter();
     }
 
-    beforeCursor = frontDummy;
-    afterCursor = backDummy;
+    num_elements = 0;
+    pos_cursor = 0;
+    beforeCursor->prev = frontDummy;
+    afterCursor->next = backDummy;
+    beforeCursor->next = afterCursor;
+    afterCursor->prev = beforeCursor;
 
     return;
 }
@@ -318,6 +327,10 @@ List List::concat(const List& L) const {
 std::string List::to_string() const {
     Node *N = nullptr;
     std::string s = "(";
+    if (length() <= 0) {
+        s = "()";
+        return s;
+    }
     for (N = frontDummy->next; N != backDummy->prev; N = N->next) {
         s += std::to_string(N->data) + ", ";
     }
@@ -373,7 +386,7 @@ void List::cleanup() {
     int old_pos = position();
 
     List M;
-    moveFront();
+    this->moveFront();
 
     while (afterCursor != backDummy) {
         int x = afterCursor->data;
@@ -381,21 +394,21 @@ void List::cleanup() {
         if (M.findNext(x) != -1) {
             //delete
             std::cout << "in cleanup" << std::endl;
-            eraseAfter();
-            if (position() < old_pos) {
+            this->eraseAfter();
+            if (this->position() < old_pos) {
                 old_pos--;
             }
         } else {
             M.insertAfter(x);
-            moveNext();
+            this->moveNext();
         }
     }
     M.clear();
     //delete;
-    moveFront();
+    this->moveFront();
     
-    for (int i =1; i <= old_pos; i++) {
-        moveNext();
+    for (int i = 1; i <= old_pos; i++) {
+        this->moveNext();
     }
     
     return;
