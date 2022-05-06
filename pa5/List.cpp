@@ -226,37 +226,47 @@ void List::eraseAfter() {
         throw std::range_error("List Error: calling eraseAfter on empty List");
     }
 
+   /*
     Node *N = afterCursor;
-    /*
-    if (length() > 1) {
-        afterCursor = afterCursor->next;
-        afterCursor->prev = beforeCursor;
-        beforeCursor->next = afterCursor;
-    } else {
-        frontDummy->next = backDummy;
-        backDummy->prev = frontDummy;
-        beforeCursor = frontDummy;
-        afterCursor = backDummy;
-    }
-    */
-
     afterCursor = afterCursor->next;
     afterCursor->prev = beforeCursor;
     beforeCursor->next = afterCursor;
-    
+    */
+
+
+    std::cout << "Erasing " << peekNext() << std::endl;
+    Node *N = afterCursor;
+    Node *temp = afterCursor->next;
+    afterCursor->prev = nullptr;
+    afterCursor->next = nullptr;
+    beforeCursor->next = temp;
+    temp->prev = beforeCursor;
+    //afterCursor = temp;
+
     num_elements--;
     delete N;
-    
+  
     return;
 }
 
 void List::eraseBefore() {
-    if (!(position() < length())) {
+    if (!(position() > 0)) {
         throw std::range_error("List Error: Calling eraseBefore() on out of range cursor position.");
     }
+    std::cout << "Erasing " << peekPrev() << std::endl;
 
     Node *N = beforeCursor;
+    Node *temp = beforeCursor->prev;
+    beforeCursor->prev = nullptr;
+    beforeCursor->next = nullptr;
+    temp->next = afterCursor;
+    afterCursor->prev = temp;
+    beforeCursor = temp;
+    delete N;
+    return;
 
+    /*
+    Node *N = beforeCursor;
     beforeCursor = beforeCursor->prev;
     beforeCursor->next = afterCursor;
     afterCursor->prev = beforeCursor;
@@ -264,10 +274,12 @@ void List::eraseBefore() {
     pos_cursor--;
     delete N;
     return;
+    */
 }
 
 int List::findNext(ListElement x) {
     while (afterCursor != backDummy) {
+        std::cout << "After cur data: " << peekNext() << std::endl;
         if (x == afterCursor->data) {
             moveNext();
             return pos_cursor;
