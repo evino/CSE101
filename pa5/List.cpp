@@ -235,16 +235,14 @@ void List::eraseAfter() {
 
 
     std::cout << "Erasing " << peekNext() << std::endl;
-    Node *N = afterCursor;
-    Node *temp = afterCursor->next;
-    afterCursor->prev = nullptr;
-    afterCursor->next = nullptr;
-    beforeCursor->next = temp;
-    temp->prev = beforeCursor;
-    //afterCursor = temp;
-
+    Node *N = afterCursor->next;
+    //Node *temp = afterCursor->next;
+    beforeCursor->next = N;
+    N->prev = beforeCursor;
+    delete afterCursor;
+    afterCursor = N;
     num_elements--;
-    delete N;
+    //delete N;
   
     return;
 }
@@ -253,18 +251,16 @@ void List::eraseBefore() {
     if (!(position() > 0)) {
         throw std::range_error("List Error: Calling eraseBefore() on out of range cursor position.");
     }
-    std::cout << "Erasing " << peekPrev() << std::endl;
-
-    Node *N = beforeCursor;
-    Node *temp = beforeCursor->prev;
-    beforeCursor->prev = nullptr;
-    beforeCursor->next = nullptr;
-    temp->next = afterCursor;
-    afterCursor->prev = temp;
-    beforeCursor = temp;
-    delete N;
+    
+    Node *N = beforeCursor->prev;
+    N->next = afterCursor;
+    afterCursor->prev = N;
+    delete beforeCursor;
+    beforeCursor = N;
+    num_elements--;
+    pos_cursor--;
     return;
-
+    
     /*
     Node *N = beforeCursor;
     beforeCursor = beforeCursor->prev;
@@ -395,7 +391,7 @@ void List::cleanup() {
         }
     }
     M.clear();
-    //delete M;
+    //delete;
     moveFront();
     
     for (int i =1; i <= old_pos; i++) {
