@@ -42,13 +42,14 @@ List::List(const List& L) {
     pos_cursor = 0;
     num_elements = 0;
 
-    //Node *N = L.frontDummy->next;
-    Node *N = L.frontDummy;
+    Node *N = L.frontDummy->next;
     while (N != L.backDummy) {
         std::cout << "Data is: " << N->data << std::endl;
         insertAfter(N->data);
         N = N->next;
     }
+    
+    moveFront();
 }
 
 
@@ -57,15 +58,14 @@ List::~List() {
     
     
     std::cout << "\n\n" << std::endl;
-    //moveFront();
+    moveFront();
     std::cout << "value: " << afterCursor->data << "(" << length() << ")" << std::endl;
-    clear();
-    /*
-    while (afterCursor != backDummy) {
+    //clear();
+    
+    while (length() > 0) {
        std::cout << "value: " << afterCursor->data << "(" << length() << ")" << std::endl;
         eraseAfter();
     }
-    */
 
     beforeCursor = nullptr;
     afterCursor = nullptr;
@@ -124,28 +124,29 @@ ListElement List::peekPrev() const {
 
 void List::clear() {
     std::cout << "Inside moveFront.DB." << std::endl;
-    this->moveFront();
+    moveFront();
     std:: cout << to_string() << std::endl;
     std::cout << "Cursor pos inside clear(): " << position() << std::endl;
-    while (afterCursor != backDummy) {
+    while (num_elements > 0) {
         std::cout << "afterCursor is: " << peekNext() << std::endl;
         std::cout << "Len is " << length() << std::endl;
         eraseAfter();
     }
 
+    /*
     num_elements = 0;
     pos_cursor = 0;
     beforeCursor->prev = frontDummy;
     afterCursor->next = backDummy;
     beforeCursor->next = afterCursor;
     afterCursor->prev = beforeCursor;
-
+    */
     return;
 }
 
 // moveFront()
 void List::moveFront() {
-    //beforeCursor = frontDummy;
+    beforeCursor = frontDummy;
     afterCursor = frontDummy->next;
     pos_cursor = 0;
     return;
