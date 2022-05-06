@@ -355,12 +355,37 @@ void List::cleanup() {
             moveNext();
         }
     }
-    M.clear();
+    //M.clear();
     moveFront();
     
     for (int i = 1; i <= old_pos; i++) {
         moveNext();
     }
+
+    num_elements = M.num_elements;
+    std::cout << "List size after cleanup is: " << length() << std::endl;
+    
+    
+    
+    
+    std::cout << "\n\nCleanup_size test 1:" << std::endl;
+    // Replicating Cleanup_size test 1:
+    A.clear();
+    A.insertAfter(1);
+    A.insertAfter(2);
+    A.insertAfter(3);
+    A.insertAfter(1);
+    A.insertAfter(2);
+    A.insertAfter(1);
+
+    std::cout << "A now before cleanup is: " << A.to_string() << std::endl;
+
+    A.cleanup();
+    std::cout << "A now after cleanup now is: " << A.to_string() << std::endl;
+    
+    
+    
+    
     
     return;
 }
