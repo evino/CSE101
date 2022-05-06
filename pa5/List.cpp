@@ -91,21 +91,21 @@ ListElement List::back() const {
 
 int List::position() const {
     if (!(0 <= pos_cursor && pos_cursor <= length())) {
-        throw std::length_error("List Error: position() out of bounds");
+        throw std::length_error("List Error: Calling position() out of bounds cursor position");
     }
     return pos_cursor;
 }
 
 ListElement List::peekNext() const {
     if (!(position()<length())) {
-        throw std::range_error("List Error: Position out of bounds of list");
+        throw std::range_error("List Error: Calling peekNext() on out of bounds of cursor position");
     }
     return (afterCursor->data);
 }
 
 ListElement List::peekPrev() const {
     if (!(position() > 0)) {
-        throw std::range_error("List Error: Cursor position out of bounds of list.");
+        throw std::range_error("List Error: Calling peekPrev() on out of bounds cursor position");
     }
     return (beforeCursor->data);
 }
@@ -188,7 +188,7 @@ void List::insertBefore(ListElement x) {
 
 void List::setAfter(ListElement x) {
     if (!(position()<length())) {
-        throw std::range_error("List Error: calling setAfter on out of bounds cursor position");
+        throw std::range_error("List Error: calling setAfter() on out of bounds cursor position");
     }
 
     afterCursor->data = x;
@@ -197,7 +197,7 @@ void List::setAfter(ListElement x) {
 
 void List::setBefore(ListElement x) {
     if (!(position() > 0)) {
-        throw std::range_error("List Error: Calling setBefore on out of bounds cursor position.");
+        throw std::range_error("List Error: Calling setBefore() on out of bounds cursor position.");
     }
 
     beforeCursor->data = x;
@@ -208,7 +208,7 @@ void List::setBefore(ListElement x) {
 // Error when running locally but not on timeshare
 void List::eraseAfter() {
     if (!(position()<length())) {
-        throw std::range_error("List Error: calling eraseAfter on empty List");
+        throw std::range_error("List Error: calling eraseAfter() on empty List");
     }
 
     Node *N = afterCursor->next;
