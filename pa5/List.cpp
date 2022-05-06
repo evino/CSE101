@@ -44,7 +44,7 @@ List::List(const List& L) {
 
     Node *N = L.frontDummy->next;
     while (N != L.backDummy) {
-        insertAfter(N->data);
+        insertBefore(N->data);
         N = N->next;
     }
     
@@ -274,6 +274,7 @@ List List::concat(const List& L) const {
         J.moveNext();
     }
 
+    J.moveFront();
     return J;
 }
 
@@ -328,8 +329,8 @@ List& List::operator=( const List& L ) {
     if (this != &L) {
         List temp = L;
 
-        std::swap(frontDummy->next, temp.frontDummy->next);
-        std::swap(backDummy->prev, temp.backDummy->prev);
+        std::swap(frontDummy, temp.frontDummy);
+        std::swap(backDummy, temp.backDummy);
         std::swap(num_elements, temp.num_elements);
     }
 
@@ -338,28 +339,27 @@ List& List::operator=( const List& L ) {
 
 void List::cleanup() {
     int old_pos = position();
-
     List M;
-    this->moveFront();
-
+    moveFront();
+    int x = 0;
     while (afterCursor != backDummy) {
-        int x = afterCursor->data;
-
+        x = afterCursor->data;
         if (M.findNext(x) != -1) {
-            this->eraseAfter();
-            if (this->position() < old_pos) {
+            M.moveFront();
+            eraseAfter();
+            if (position() < old_pos) {
                 old_pos--;
             }
         } else {
             M.insertAfter(x);
-            this->moveNext();
+            moveNext();
         }
     }
     M.clear();
-    this->moveFront();
+    moveFront();
     
     for (int i = 1; i <= old_pos; i++) {
-        this->moveNext();
+        moveNext();
     }
     
     return;
