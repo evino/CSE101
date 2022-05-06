@@ -83,14 +83,14 @@ int List::length() const {
 
 
 ListElement List::front() const {
-    if (length() == 0) {
+    if (length() <= 0) {
         throw std::length_error("List Error: Calling front() on empty list");
     }
     return (frontDummy->next->data);
 }
 
 ListElement List::back() const {
-    if (length() == 0) {
+    if (length() <= 0) {
         throw std::length_error("List Error: Calling back() on empty list");
     }
     return (backDummy->prev->data);
@@ -112,7 +112,7 @@ ListElement List::peekNext() const {
 }
 
 ListElement List::peekPrev() const {
-    if (!(position() < length())) {
+    if (!(position() > 0)) {
         throw std::range_error("List Error: Cursor position out of bounds of list.");
     }
     return (beforeCursor->data);
@@ -211,7 +211,7 @@ void List::setAfter(ListElement x) {
 }
 
 void List::setBefore(ListElement x) {
-    if (!(position() < length())) {
+    if (!(position() > 0)) {
         throw std::range_error("List Error: Calling setBefore on out of bounds cursor position.");
     }
 
@@ -242,7 +242,6 @@ void List::eraseAfter() {
     delete afterCursor;
     afterCursor = N;
     num_elements--;
-    //delete N;
   
     return;
 }
@@ -381,6 +380,7 @@ void List::cleanup() {
 
         if (M.findNext(x) != -1) {
             //delete
+            std::cout << "in cleanup" << std::endl;
             eraseAfter();
             if (position() < old_pos) {
                 old_pos--;
