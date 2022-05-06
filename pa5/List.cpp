@@ -70,9 +70,9 @@ List::~List() {
     beforeCursor = nullptr;
     afterCursor = nullptr;
     delete frontDummy;
+    frontDummy = nullptr;
     delete backDummy;
-    //frontDummy = nullptr;
-    //backDummy = nullptr;
+    backDummy = nullptr;
 }
 
 // Access functions
@@ -127,6 +127,9 @@ void List::clear() {
     while (length() > 0) {
         eraseAfter();
     }
+
+    beforeCursor = frontDummy;
+    afterCursor = backDummy;
 
     return;
 }
@@ -240,6 +243,7 @@ void List::eraseAfter() {
     afterCursor = afterCursor->next;
     afterCursor->prev = beforeCursor;
     beforeCursor->next = afterCursor;
+    
     num_elements--;
     delete N;
     
@@ -359,6 +363,32 @@ List& List::operator=( const List& L ) {
 }
 
 void List::cleanup() {
-    std::cout << "Would call clean up here" << std::endl;
+    int old_pos = position();
+
+    List M;
+    moveFront();
+
+    while (afterCursor != backDummy) {
+        int x = afterCursor->data;
+
+        if (M.findNext(x) != -1) {
+            //delete
+            eraseAfter();
+            if (position() < old_pos) {
+                old_pos--;
+            }
+        } else {
+            M.insertAfter(x);
+            moveNext();
+        }
+    }
+    M.clear();
+    //delete M;
+    moveFront();
+    
+    for (int i =1; i <= old_pos; i++) {
+        moveNext();
+    }
+    
     return;
 }
