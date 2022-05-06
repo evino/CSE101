@@ -25,7 +25,8 @@ int main(int argc, char **argv) {
     B.insertAfter(6);
     B.insertAfter(7);
     B.eraseAfter();
-
+    std::cout << "A: " << A.to_string() << std::endl;
+    
     if (A.equals(B) == true) {
         std::cout << "True!!" << std::endl;
     } else {
@@ -52,12 +53,27 @@ int main(int argc, char **argv) {
 
     //std::cout << "DB1" << std::endl;
     std::cout << "A: " << A.to_string() << std::endl;
-    std::cout << "Peeknext() gets: " << A.peekNext() << std::endl;
+    //std::cout << "Peeknext() gets: " << A.peekNext() << std::endl;
+    A.insertAfter(12);
     A.eraseAfter();
-    std::cout << "after eraseAfter() A is: " << A.to_string() << std::endl;
+    A.insertAfter(9);
+    A.insertAfter(6);
+    A.insertAfter(7);
+    A.insertAfter(1);
+    A.insertAfter(7);
+    std::cout << "bef A.clear()" << std::endl;
+    A.moveNext();
+    std::cout << A.to_string() << std::endl;
+    std::cout << "Cursor position is " << A.position() << std::endl;
+    std::cout << "Peeknext() gets: " << A.peekNext() << std::endl;
+    std::cout << "A length: " << A.length() << std::endl;
+    //A.clear();
+
+    A.cleanup();
+    std::cout << "after cleanup() A is: " << A.to_string() << std::endl;
     //std::cout << "DB2" << std::endl;
     ////A.eraseAfter();
     //std::cout << "A's length now is " << A.length() << std::endl;
-    //std::cout << "\nBefore return" << std::endl;
+    std::cout << "\nBefore return" << std::endl;
     return EXIT_SUCCESS;
 }
