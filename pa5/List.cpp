@@ -337,15 +337,16 @@ List& List::operator=( const List& L ) {
     return *this;
 }
 
+// Got help with cleanup() pseudocode from tutor Vincent
 void List::cleanup() {
     int old_pos = position();
-    std::cout << "Pos is " << position() << std::endl;
     List M;
     moveFront();
     int x = 0;
+    
+    // need to moveFront to the front of the List M
     while (afterCursor != backDummy) {
         x = afterCursor->data;
-        std::cout << "FindNext is: " << M.findNext(x) << std::endl;
         M.moveFront(); // Added here
         if (M.findNext(x) != -1) {
             M.moveFront();
@@ -357,7 +358,6 @@ void List::cleanup() {
             M.insertAfter(x);
             moveNext();
         }
-        std::cout << "M: " << M.to_string() << std::endl;
     }
     //M.clear();
     moveFront();
@@ -365,8 +365,6 @@ void List::cleanup() {
     for (int i = 1; i <= old_pos; i++) {
         moveNext();
     }
-    //num_elements = M.num_elements;
     M.clear();
-    std::cout << "List size after cleanup is: " << length() << std::endl;
     return;
 }
