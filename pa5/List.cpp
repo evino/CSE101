@@ -44,7 +44,6 @@ List::List(const List& L) {
 
     Node *N = L.frontDummy->next;
     while (N != L.backDummy) {
-        std::cout << "Data is: " << N->data << std::endl;
         insertAfter(N->data);
         N = N->next;
     }
@@ -55,15 +54,8 @@ List::List(const List& L) {
 
 // Destructor
 List::~List() {
-    
-    
-    std::cout << "\n\n" << std::endl;
     moveFront();
-    std::cout << "value: " << afterCursor->data << "(" << length() << ")" << std::endl;
-    //clear();
-    
     while (length() > 0) {
-       std::cout << "value: " << afterCursor->data << "(" << length() << ")" << std::endl;
         eraseAfter();
     }
 
@@ -123,24 +115,10 @@ ListElement List::peekPrev() const {
 // Manipulation
 
 void List::clear() {
-    std::cout << "Inside moveFront.DB." << std::endl;
     moveFront();
-    std:: cout << to_string() << std::endl;
-    std::cout << "Cursor pos inside clear(): " << position() << std::endl;
     while (num_elements > 0) {
-        std::cout << "afterCursor is: " << peekNext() << std::endl;
-        std::cout << "Len is " << length() << std::endl;
         eraseAfter();
     }
-
-    /*
-    num_elements = 0;
-    pos_cursor = 0;
-    beforeCursor->prev = frontDummy;
-    afterCursor->next = backDummy;
-    beforeCursor->next = afterCursor;
-    afterCursor->prev = beforeCursor;
-    */
     return;
 }
 
@@ -166,7 +144,6 @@ ListElement List::moveNext() {
         throw std::range_error("List Error: Calling moveNext() on out of bounds cursor position");
     }
     Node *N = afterCursor;
-    //beforeCursor = beforeCursor->next;
     beforeCursor = afterCursor;
     afterCursor = afterCursor->next;
     pos_cursor++;
@@ -180,7 +157,6 @@ ListElement List::movePrev() {
     Node *N = beforeCursor;
     afterCursor = beforeCursor;
     beforeCursor = beforeCursor->prev;
-//    afterCursor = afterCursor->prev;
     pos_cursor--;
     return (N->data);
 }
@@ -195,7 +171,6 @@ void List::insertAfter(ListElement x) {
     afterCursor = N;
     num_elements++;
 
-    //std::cout << "Inserting " << x << ". Address is " << &afterCursor << std::endl;
     return;
 }
 
@@ -236,17 +211,7 @@ void List::eraseAfter() {
         throw std::range_error("List Error: calling eraseAfter on empty List");
     }
 
-   /*
-    Node *N = afterCursor;
-    afterCursor = afterCursor->next;
-    afterCursor->prev = beforeCursor;
-    beforeCursor->next = afterCursor;
-    */
-
-
-    std::cout << "Erasing " << peekNext() << std::endl;
     Node *N = afterCursor->next;
-    //Node *temp = afterCursor->next;
     beforeCursor->next = N;
     N->prev = beforeCursor;
     delete afterCursor;
@@ -269,22 +234,10 @@ void List::eraseBefore() {
     num_elements--;
     pos_cursor--;
     return;
-    
-    /*
-    Node *N = beforeCursor;
-    beforeCursor = beforeCursor->prev;
-    beforeCursor->next = afterCursor;
-    afterCursor->prev = beforeCursor;
-    num_elements--;
-    pos_cursor--;
-    delete N;
-    return;
-    */
 }
 
 int List::findNext(ListElement x) {
     while (afterCursor != backDummy) {
-        std::cout << "After cur data: " << peekNext() << std::endl;
         if (x == afterCursor->data) {
             moveNext();
             return pos_cursor;
@@ -393,8 +346,6 @@ void List::cleanup() {
         int x = afterCursor->data;
 
         if (M.findNext(x) != -1) {
-            //delete
-            std::cout << "in cleanup" << std::endl;
             this->eraseAfter();
             if (this->position() < old_pos) {
                 old_pos--;
@@ -405,7 +356,6 @@ void List::cleanup() {
         }
     }
     M.clear();
-    //delete;
     this->moveFront();
     
     for (int i = 1; i <= old_pos; i++) {
