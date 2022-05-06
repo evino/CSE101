@@ -349,7 +349,6 @@ void List::cleanup() {
         x = afterCursor->data;
         M.moveFront(); // Added here
         if (M.findNext(x) != -1) {
-            M.moveFront();
             eraseAfter();
             if (position() < old_pos) {
                 old_pos--;
@@ -359,7 +358,6 @@ void List::cleanup() {
             moveNext();
         }
     }
-    //M.clear();
     moveFront();
     
     for (int i = 1; i <= old_pos; i++) {
