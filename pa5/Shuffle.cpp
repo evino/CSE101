@@ -34,14 +34,17 @@ void Shuffle(List& D) {
     while (B.peekNext() != B.back()) {
         D.insertBefore(B.peekNext());
         B.moveNext();
-        // Can use if statement instead since only going through once
         if (A.peekNext() != A.back()) {
             //D.insertBefore(B.peekNext());
             D.insertBefore(A.peekNext());
             A.moveNext();
-            //B.moveNext();
+        } else { //Insert back element of A
+            D.insertBefore(A.back());
         }
     }
+
+    D.insertBefore(B.back()); //Insert back elem of B
+
 
     std::cout << "List A: " << A.to_string() << std::endl;
     std::cout << "List B: " << B.to_string() << std::endl;
@@ -54,6 +57,12 @@ void Shuffle(List& D) {
 int main (int argc, char **argv) {
     List D;
     List S;
+    int n;
+    if (argc != 2) { // One count for program name, and second for argument
+        throw std::invalid_argument("Must include one command line arguement.");
+    }
+
+    std::cout << "Passed in: " << argv[1] << std::endl;
     for (int i = 1; i <= 7; i++) {
         D.insertBefore(i);
     }
