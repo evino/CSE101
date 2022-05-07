@@ -19,14 +19,38 @@ void Shuffle(List& D) {
     int A_elems = (D.length() / 2);
     int B_elems = (D.length() - A_elems);
 
-    for (int i = 1; i <= A_elems; i++) {
-        A.insertBefore(i);
+    D.moveFront();
+    std::cout << "D org is " << D << std::endl;
+    int A_Val;
+    while (D.position() < A_elems) {
+        A_Val  = D.peekNext();
+        A.insertBefore(A_Val);
+        D.moveNext();
+    }
+    
+    int B_Val;
+    while (D.position() < D.length()) {
+        B_Val = D.peekNext();
+        B.insertBefore(B_Val);
+        D.moveNext();
     }
 
-    for (int j = B_elems; j <= D.length(); j++) {
-        B.insertBefore(j);
-    }
+    //for (int i = D.peekNext(); D.position() < A_elems; D.moveNext()) {
+        //D.moveNext();
+        //std::cout << "The next one is " << i << std::endl;
+        //A.insertBefore(i);
+    //}
+    
+    //for (int j = D.peekNext(); D.position() < D.length(); D.moveNext()) {
+        //B.insertBefore(j);
+    //}
+    
+    std::cout << "A is " << A << std::endl;
+    std::cout << "B is " << B << std::endl;
 
+
+    //std::cout << "A is " << A << std::endl;
+    //std::cout << "B is " << B << std::endl;
     D.clear();
     A.moveFront();
     B.moveFront();
@@ -55,7 +79,7 @@ int main (int argc, char **argv) {
     }
     int n = std::stoi(argv[1]);
     if (!(n > 0)) {
-        throw std::range_error("Invalid List start.");
+        throw std::range_error("Invalid Deck start.");
     }
     List D;
     List D_Copy;
@@ -78,10 +102,11 @@ int main (int argc, char **argv) {
     //while (!(D_Copy.equals(D))) {
     while (!(D_Copy == D)) {
         Shuffle(D);
+        std::cout << "After calling shuffle again (in main's while): " << D << std::endl;
         shuffleCount++;
     }
 
-    std::cout << "Shuffle count is " << shuffleCount << std::endl;
+    //std::cout << "Shuffle count is " << shuffleCount << std::endl;
 
 
     return 0;
