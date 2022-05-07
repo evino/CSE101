@@ -33,7 +33,6 @@ void Shuffle(List& D) {
 
     //while (B.peekNext() != B.back()) {
     while (B.position() < B.length()) {
-        std::cout << "DB1" << std::endl;
         D.insertBefore(B.peekNext());
         B.moveNext();
         //if (A.peekNext() != A.back()) {
@@ -64,21 +63,13 @@ int main (int argc, char **argv) {
     }
 
     D_Copy = D;
-    std::cout << "D is " << D << std::endl;
-    std::cout << "D copy is " << D_Copy << std::endl;
-    if (D_Copy.equals(D)) {
-        std::cout << "t" << std::endl;
-    }
     Shuffle(D);
-    std::cout << "D is " << D.to_string() << std::endl;
 
     int shuffleCount = 1;
     while (!(D_Copy.equals(D))) {
-        std::cout << "DB2 (Main)" << std::endl;
         Shuffle(D);
         shuffleCount++;
     }
-    std::cout << "D copy is " << D_Copy << std::endl;
 
     std::cout << "Shuffle count is " << shuffleCount << std::endl;
 
