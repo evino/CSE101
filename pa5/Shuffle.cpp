@@ -31,42 +31,56 @@ void Shuffle(List& D) {
     A.moveFront();
     B.moveFront();
 
-    while (B.peekNext() != B.back()) {
+    //while (B.peekNext() != B.back()) {
+    while (B.position() < B.length()) {
+        std::cout << "DB1" << std::endl;
         D.insertBefore(B.peekNext());
         B.moveNext();
-        if (A.peekNext() != A.back()) {
-            //D.insertBefore(B.peekNext());
+        //if (A.peekNext() != A.back()) {
+        if (A.position() < A.length()) {
             D.insertBefore(A.peekNext());
             A.moveNext();
-        } else { //Insert back element of A
-            D.insertBefore(A.back());
-        }
+        } //else { //Insert back element of A
+           //D.insertBefore(A.back());
+        //}
+    //}
+    //D.insertBefore(B.back()); //Insert back elem of B
     }
-
-    D.insertBefore(B.back()); //Insert back elem of B
-
-
-    std::cout << "List A: " << A.to_string() << std::endl;
-    std::cout << "List B: " << B.to_string() << std::endl;
-    std::cout << "D: " << D.to_string() << std::endl;
-
     return;
 }
 
 
 int main (int argc, char **argv) {
-    List D;
-    List S;
-    int n;
-    if (argc != 2) { // One count for program name, and second for argument
+        if (argc != 2) { // One count for program name, and second for argument
         throw std::invalid_argument("Must include one command line arguement.");
     }
 
-    std::cout << "Passed in: " << argv[1] << std::endl;
-    for (int i = 1; i <= 7; i++) {
+    List D;
+    List D_Copy;
+    int n = std::stoi(argv[1]);
+
+    for (int i = 1; i <= n; i++) {
         D.insertBefore(i);
     }
+
+    D_Copy = D;
+    std::cout << "D is " << D << std::endl;
+    std::cout << "D copy is " << D_Copy << std::endl;
+    if (D_Copy.equals(D)) {
+        std::cout << "t" << std::endl;
+    }
     Shuffle(D);
+    std::cout << "D is " << D.to_string() << std::endl;
+
+    int shuffleCount = 1;
+    while (!(D_Copy.equals(D))) {
+        std::cout << "DB2 (Main)" << std::endl;
+        Shuffle(D);
+        shuffleCount++;
+    }
+    std::cout << "D copy is " << D_Copy << std::endl;
+
+    std::cout << "Shuffle count is " << shuffleCount << std::endl;
 
 
     return 0;
