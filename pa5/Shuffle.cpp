@@ -106,7 +106,7 @@ int main (int argc, char **argv) {
         shuffleCount++;
     }
 
-    //std::cout << "Shuffle count is " << shuffleCount << std::endl;
+    std::cout << "Shuffle count is " << shuffleCount << std::endl;
 
 
     return 0;
