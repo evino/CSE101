@@ -303,6 +303,9 @@ bool List::equals(const List& R) const {
     N = this->frontDummy->next;
     M = R.frontDummy->next;
     while (eq && N!= backDummy) {
+        if (N->data != M->data) {
+            return false;
+        }
         eq = (N->data == M->data);
         N = N->next;
         M = M->next;
