@@ -50,23 +50,33 @@ void Shuffle(List& D) {
 
 
 int main (int argc, char **argv) {
-        if (argc != 2) { // One count for program name, and second for argument
+    if (argc != 2) { // One count for program name, and second for argument
         throw std::invalid_argument("Must include one command line arguement.");
     }
-
+    int n = std::stoi(argv[1]);
+    if (!(n > 0)) {
+        throw std::range_error("Invalid List start.");
+    }
     List D;
     List D_Copy;
-    int n = std::stoi(argv[1]);
 
+    std::cout << "DB1" << std::endl;
     for (int i = 1; i <= n; i++) {
         D.insertBefore(i);
     }
 
     D_Copy = D;
+   
+    std::cout << "before shuffle" << std::endl;
     Shuffle(D);
+    std::cout << D << std::endl;
+    if (!(D_Copy.equals(D))) {
+        std::cout << "false." << std::endl;
+    }
 
     int shuffleCount = 1;
-    while (!(D_Copy.equals(D))) {
+    //while (!(D_Copy.equals(D))) {
+    while (!(D_Copy == D)) {
         Shuffle(D);
         shuffleCount++;
     }
