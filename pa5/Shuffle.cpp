@@ -62,6 +62,8 @@ int main (int argc, char **argv) {
     List D;
     List D_Copy;
 
+std::cout << "deck size       shuffle count" << std::endl;
+std::cout << "------------------------------" << std::endl;
 for (int size = 1; size <= n; size++) {
     // clearing lists for each iteration
     D.clear();
@@ -79,8 +81,9 @@ for (int size = 1; size <= n; size++) {
         Shuffle(D);
         shuffleCount++;
     }
-
-    std::cout << "Shuffle count is " << shuffleCount << std::endl;
+    
+    std::cout << size;
+    std::cout << "\t\t " << shuffleCount << std::endl;
 }
 
     return 0;
