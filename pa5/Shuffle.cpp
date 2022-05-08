@@ -62,7 +62,12 @@ int main (int argc, char **argv) {
     List D;
     List D_Copy;
 
-    for (int i = 1; i <= n; i++) {
+for (int size = 1; size <= n; size++) {
+    // clearing lists for each iteration
+    D.clear();
+    D_Copy.clear();
+
+    for (int i = 1; i <= size; i++) {
         D.insertBefore(i);
     }
     D_Copy = D;
@@ -76,7 +81,7 @@ int main (int argc, char **argv) {
     }
 
     std::cout << "Shuffle count is " << shuffleCount << std::endl;
-
+}
 
     return 0;
 }
