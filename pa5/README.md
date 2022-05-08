@@ -27,8 +27,8 @@ a vertical cursor that goes between two nodes, and two dummy nodes that sit at b
 difficult part of this assignment was the cleanup() function in List.cpp. After getting some help from a tutor,
 specifically Vincent, I was able to implement cleanup in an efficient and clear to follow way. The design for
 cleanup() is as follows:
-    1. Iterate through list L, searching for repeats.
-    2. If no repeat found, add it to another list, M
-    3. Continue with iterating through List until repeat found.
-    4. When repeat is foudn, delete it from the list.
-    5. Continue till end/back of list is reached.
+1. Iterate through list L, searching for repeats.
+2. If no repeat found, add it to another list, M
+3. Continue with iterating through List until repeat found.
+4. When repeat is foudn, delete it from the list.
+5. Continue till end/back of list is reached.
