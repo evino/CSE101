@@ -1,5 +1,9 @@
 #include "BigInteger.h"
 
+// Global Const Variables
+const long base = 1000000000;
+const int power = 9;
+
 BigInteger::BigInteger() {
     signum = 0;
     digits = List();
@@ -9,7 +13,7 @@ BigInteger::BigInteger(std::string s) {
     if (s.empty()) {
         throw std::invalid_argument("BigInteger: Constructor: empty string");
     }
-    if (s[0] != '-' || s[0] != '+') {
+    if (s[0] != '-' || s[0] != '+' || !isdigit(s[0])) {
         throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
     }
     for (int i = 0; i <= s.length(); i++) {
@@ -17,4 +21,5 @@ BigInteger::BigInteger(std::string s) {
             throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
         }
     }
+
 
