@@ -6,7 +6,7 @@ const int power = 9;
 
 BigInteger::BigInteger() {
     signum = 0;
-    digits = List();
+    //digits = List();
 }
 
 BigInteger::BigInteger(std::string s) {
@@ -25,6 +25,18 @@ BigInteger::BigInteger(std::string s) {
     }
     
     long l;
+    //digits = List();
+    digits.moveFront();
+    for (; i <= s.length(); i++) {
+        if (i % power == 0) { // Checks if divisble by 9, to put it into node
+            digits.moveNext();
+        } else {
+            digits.insertBefore(stol(s.substr(i-9, i)));
+        }
+    }
+}
+
+/*
     for (; i <= s.length(); i++) {
         try {
             l = std::stol(s[i]);
@@ -35,5 +47,6 @@ BigInteger::BigInteger(std::string s) {
             //throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
         //}
     }
+    */
 
-}
+
