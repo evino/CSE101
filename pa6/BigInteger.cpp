@@ -14,26 +14,43 @@ BigInteger::BigInteger(std::string s) {
         throw std::invalid_argument("BigInteger: Constructor: empty string");
     }
 
-    if (s[0] != '-' || s[0] != '+' || !isdigit(s[0])) {
+    //if (s[0] != '-' || s[0] != '+' || !isdigit(s[0])) {
+        //throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
+    //}
+
+    if (s[0] == '-') {
+        signum = -1;
+    } else if (s[0] == '0') {
+        signum = 0;
+    } else if (s[0] == '+' || isdigit(s[0])) {
+        signum = 1;
+    } else {
         throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
     }
+
     int i;
     if (isdigit(s[0])) {
         i = 0;
     } else {
         i = 1;
     }
-    
-    long l;
+
+    std::string str;
+
     //digits = List();
     digits.moveFront();
     for (; i <= s.length(); i++) {
-        if (i % power == 0) { // Checks if divisble by 9, to put it into node
+        if (i % power == 0 && i >= 9 && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
             digits.moveNext();
         } else {
-            digits.insertBefore(stol(s.substr(i-9, i)));
+            str = s.substr(i, 9);
+            i += 8;
+            std::cout << "Sub string of s is: " << str << std::endl;
+            digits.insertBefore(stol(str));
+            //digits.insertBefore(stol(s.substr(i, 9)));
         }
     }
+    std::cout << "Digits is " << digits << std::endl;
 }
 
 /*
