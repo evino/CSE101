@@ -22,10 +22,10 @@ BigInteger::BigInteger(std::string s) {
     //}
 
     // Making signum correct value, based of what first char of string is
-    if (s[0] == '-') {
-        signum = -1;
-    } else if (s[0] == '0') {
+    if (s[0] == '0' || s[1] == '0') {
         signum = 0;
+    } else if (s[0] == '-') {
+        signum = -1;
     } else if (s[0] == '+' || isdigit(s[0])) {
         signum = 1;
     } else {
@@ -60,7 +60,12 @@ BigInteger::BigInteger(std::string s) {
     //digits = List();
     digits.moveFront();
     for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
-        if (i % power == 0 && i >= 9 && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
+        if (s[i] == 0) {
+            str = std::to_string(s[0]);
+            digits.insertBefore(stol(str));
+            //break;
+        }
+        else if (i % power == 0 && i >= 9 && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
             digits.moveNext();
         } else {
             str = s.substr(i, 9);
@@ -101,6 +106,7 @@ std::string BigInteger::to_string() {
         str = "-";
     } else if (signum == 0) {
         str = "0";
+        return str;
     }
 
     digits.moveFront();
@@ -110,13 +116,16 @@ std::string BigInteger::to_string() {
     }
     str += std::to_string(digits.back());
 
-    std::string back = std::to_string(digits.back());
-
-    if (str.length() < back.length()) {
-        int zeroes = back.length() - str.length();
-        for (int j = 0; j < zeroes; j++) {
-            str = '0' + str;
+    //Padding, works I think..
+/*
+    if (str.length() < power) {
+        int zeroes_to_add = power - str.length();
+        for (int j = 0; j < zeroes_to_add; j++) {
+            str.insert(0, 1, '0');
+            //str = '0' + str;
         }
     }
+
+    */
     return str;
 }
