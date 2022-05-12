@@ -28,7 +28,7 @@ BigInteger::BigInteger(std::string s) {
         throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
     }
 
-    int i;
+    unsigned long i;
     if (isdigit(s[0])) {
         i = 0;
     } else {
@@ -37,7 +37,7 @@ BigInteger::BigInteger(std::string s) {
 
     //std::cout << "I is " << i << std::endl;
     //std::cout << "Str len is " << s.length() << std::endl;
-    for (int ind = i; ind < s.length(); ind++) {
+    for (unsigned long ind = i; ind < s.length(); ind++) {
         if (!(isdigit(s[ind]))) {
             //std::cout << "Index " << ind << std::endl;
             //std::cout << "isDigi loop" << std::endl;
