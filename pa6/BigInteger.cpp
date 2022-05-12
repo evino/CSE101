@@ -35,35 +35,36 @@ BigInteger::BigInteger(std::string s) {
         i = 1;
     }
 
+    //std::cout << "I is " << i << std::endl;
+    //std::cout << "Str len is " << s.length() << std::endl;
+    for (int ind = i; ind < s.length(); ind++) {
+        if (!(isdigit(s[ind]))) {
+            //std::cout << "Index " << ind << std::endl;
+            //std::cout << "isDigi loop" << std::endl;
+            throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
+        }
+    }
+
     std::string str;
 
     //digits = List();
     digits.moveFront();
     for (; i <= s.length(); i++) {
+        
         if (i % power == 0 && i >= 9 && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
             digits.moveNext();
         } else {
             str = s.substr(i, 9);
             i += 8;
-            std::cout << "Sub string of s is: " << str << std::endl;
+            //std::cout << "Sub string of s is: " << str << std::endl;
             digits.insertBefore(stol(str));
-            //digits.insertBefore(stol(s.substr(i, 9)));
         }
     }
     std::cout << "Digits is " << digits << std::endl;
 }
 
-/*
-    for (; i <= s.length(); i++) {
-        try {
-            l = std::stol(s[i]);
-        } catch (const std::invalid_argument) {
-            throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
-        }
-        //if (!isdigit(s[i])) {
-            //throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
-        //}
-    }
-    */
-
+BigInteger::BigInteger(const BigInteger& N) {
+    signum = N.signum;
+    digits = N.digits;
+}
 
