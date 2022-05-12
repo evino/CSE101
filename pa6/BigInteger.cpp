@@ -4,6 +4,9 @@
 const long base = 1000000000;
 const int power = 9;
 
+
+// Constructors ---------------------------------------------------------------
+
 BigInteger::BigInteger() {
     signum = 0;
     //digits = List();
@@ -67,4 +70,11 @@ BigInteger::BigInteger(const BigInteger& N) {
     signum = N.signum;
     digits = N.digits;
 }
+
+
+
+
+
+// Other Functions ------------------------------------------------------------
+
 
