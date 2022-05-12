@@ -82,7 +82,10 @@ BigInteger::BigInteger(const BigInteger& N) {
     digits = N.digits;
 }
 
+
+
 // Access Functions -----------------------------------------------------------
+
 
 // Returns a number representing negative (-1), positive (1), zero (0).
 int BigInteger::sign() const {
@@ -90,8 +93,11 @@ int BigInteger::sign() const {
 }
 
 
-
-
+// Compare()
+// Returns -1, 1 or 0 according to whether this BigInteger is less than N,
+// greater than N or equal to N, respectively.
+int BigInteger::compare(const BigInteger& N) const {
+// maybe strcmp() ???
 
 // Other Functions ------------------------------------------------------------
 
