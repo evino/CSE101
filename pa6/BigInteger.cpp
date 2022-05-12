@@ -77,6 +77,13 @@ BigInteger::BigInteger(const BigInteger& N) {
     digits = N.digits;
 }
 
+// Access Functions -----------------------------------------------------------
+
+// Returns a number representing negative (-1), positive (1), zero (0).
+int BigInteger::sign() const {
+    return signum;
+}
+
 
 
 
@@ -103,5 +110,13 @@ std::string BigInteger::to_string() {
     }
     str += std::to_string(digits.back());
 
+    std::string back = std::to_string(digits.back());
+
+    if (str.length() < back.length()) {
+        int zeroes = back.length() - str.length();
+        for (int j = 0; j < zeroes; j++) {
+            str = '0' + str;
+        }
+    }
     return str;
 }
