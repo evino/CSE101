@@ -15,5 +15,8 @@ int main(int argc, char **argv) {
     std::cout << "A: " << A.to_string() << std::endl;
     std::cout << "B: " << B.to_string() << std::endl;
     std::cout << A.compare(B) << std::endl;
+    std::cout << "A's sign is " << A.sign() << std::endl;
+    A.negate();
+    std::cout << "After negates, A's sign is " << A.sign() << std::endl;
     return 0;
 }
