@@ -22,9 +22,10 @@ BigInteger::BigInteger(std::string s) {
     //}
 
     // Making signum correct value, based of what first char of string is
-    if (s[0] == '0' || s[1] == '0') {
-        signum = 0;
-    } else if (s[0] == '-') {
+    //if (s[0] == '0' || s[1] == '0') {
+    //    signum = 0;
+    //}
+    if (s[0] == '-') {
         signum = -1;
     } else if (s[0] == '+' || isdigit(s[0])) {
         signum = 1;
@@ -65,11 +66,11 @@ BigInteger::BigInteger(std::string s) {
             digits.insertBefore(stol(str));
             //break;
         }
-        else if (i % power == 0 && i >= 9 && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
+        else if (i % power == 0 && i >= power && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
             digits.moveNext();
         } else {
-            str = s.substr(i, 9);
-            i += 8;
+            str = s.substr(i, power);
+            i += (power - 1);
             //std::cout << "Sub string of s is: " << str << std::endl;
             digits.insertBefore(stol(str));
         }
@@ -92,6 +93,8 @@ int BigInteger::sign() const {
     return signum;
 }
 
+
+// WILL CHANGE, TO THE LONGER BUT MORE MEMORY EFFICIENT WAY!!!
 
 // Compare()
 // Returns -1, 1 or 0 according to whether this BigInteger is less than N,
@@ -125,6 +128,27 @@ int BigInteger::compare(const BigInteger& N) const {
 
 
     return cmp;
+}
+
+
+// Manipulation Procedures ----------------------------------------------------
+
+// makeZero()
+//  Re-sets this BigInteger to the zero state.
+void BigInteger::makeZero() {
+    digits.clear();
+    signum = 0;
+    return;
+}
+
+
+void BigInteger::negate() {
+    if (signum == -1) {
+        signum = 1;
+    } else if (signum == 1) {
+        signum = -1;
+    }
+    return;
 }
 
 // Other Functions ------------------------------------------------------------
