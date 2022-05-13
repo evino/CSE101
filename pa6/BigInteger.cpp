@@ -98,6 +98,34 @@ int BigInteger::sign() const {
 // greater than N or equal to N, respectively.
 int BigInteger::compare(const BigInteger& N) const {
 // maybe strcmp() ???
+    int cmp;
+
+    std::string A = this->digits.to_string();
+    std::string B = N.digits.to_string();
+    if (A < B) {
+        cmp = -1;
+        std::cout << "A less" << std::endl;
+    } else if (A > B) {
+        cmp = 1;
+        std::cout << "A greater" << std::endl;
+    } else {
+        std::cout << "equal" << std::endl;
+        cmp = 0;
+    }
+
+    //if (this->signum < N.signum) {
+        //cmp = -1;
+    //} else if (this->signum > N.signum) {
+        //cmp = 1;
+    //} else {
+        ////if (this->digits.length() < N.digits.length())
+        ////}
+    //}
+
+
+
+    return cmp;
+}
 
 // Other Functions ------------------------------------------------------------
 
