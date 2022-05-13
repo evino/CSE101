@@ -151,6 +151,55 @@ void BigInteger::negate() {
     return;
 }
 
+
+// BigInteger Arithmetic Helper functions -------------------------------------
+
+// negateList()
+// Changes the sign of each integer in List L. Used by sub().
+void negateList(List& L) {
+    L.moveFront();
+    long negate;
+    while (L.position() != L.length()) {
+        negate = L.peekNext() * -1;
+        L.setAfter(negate);
+        L.moveNext();
+    }
+    return;
+}
+
+// sumList()
+// Overwrites the state of S with A + sgn*B (considered as vectors).
+// Used by both sum() and sub().
+void sumList(List& S, List A, List B, int sgn) {
+    S.moveFront();
+    A.moveFront();
+    B.moveFront();
+    long sum;
+    while (A.position() < A.length() && B.position() < B.length()) {
+        sum = A.peekNext() + (sgn * B.peekNext());
+        S.insertBefore(sum);
+        A.moveNext();
+        B.moveNext();
+    }
+
+    while (A.position() < A.length()) {
+        S.insertBefore(A.peekNext());
+        A.moveNext();
+    }
+
+    while (B.position() < B.length()) {
+        S.insertBefore(B.peekNext());
+        B.moveNext();
+    }
+
+    return;
+}
+
+// BigInteger Arithmetic operations -------------------------------------------
+
+// BigInteger BigInteger::add(const BigInteger& N) const {
+
+
 // Other Functions ------------------------------------------------------------
 
 // to_string()
