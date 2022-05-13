@@ -7,8 +7,8 @@ int main(int argc, char **argv) {
     //std::string s2 = "9876545439000000000000000100000000000006543654365346534";
     //std::string s2 = "0";
     
-    std::string s = "0050";
-    std::string s2 = "00500";
+    std::string s = "10";
+    std::string s2 = "9";
     A = BigInteger(s);
     B = BigInteger(s2);
     //A.makeZero();
