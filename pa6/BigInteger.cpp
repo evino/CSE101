@@ -167,6 +167,7 @@ void negateList(List& L) {
     return;
 }
 
+
 // sumList()
 // Overwrites the state of S with A + sgn*B (considered as vectors).
 // Used by both sum() and sub().
@@ -194,6 +195,27 @@ void sumList(List& S, List A, List B, int sgn) {
 
     return;
 }
+
+
+// normalizeList()
+// Performs carries from right to left (least to most significant
+// digits), then returns the sign of the resulting integer. Used
+// by add(), sub() and mult().
+int normalizeList(List &L) {
+    int sign;
+    long addUp;
+    long carry;
+    this->moveBack();
+    L.moveBack();
+    while (position() > 0 && L.position() > 0) {
+        // Need to figure how to do carry part in pseudo
+    }
+
+    return sign;
+}
+
+
+
 
 // BigInteger Arithmetic operations -------------------------------------------
 
