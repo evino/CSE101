@@ -242,6 +242,16 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     return sum;
 }
 
+
+BigInteger BigInteger::sub(const BigInteger& N) const {
+    BigInteger Diff;
+    BigInteger copy;
+    copy.digits = N.digits;
+    copy.signum = N.signum;
+    negateList(copy.digits);
+    Diff = this->add(copy);
+    return Diff;
+}
 // Other Functions ------------------------------------------------------------
 
 // to_string()
