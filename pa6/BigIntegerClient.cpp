@@ -19,7 +19,8 @@ int main(int argc, char **argv) {
 
     // add test
     std::cout << "Adding A and B" << std::endl;
-    BigInteger sum = A.add(B);
+    BigInteger sum;
+    sum = A.add(B);
     std::cout << sum.to_string() << std::endl;
 
     A.negate();
