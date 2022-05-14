@@ -23,6 +23,11 @@ int main(int argc, char **argv) {
     sum = A.add(B);
     std::cout << sum.to_string() << std::endl;
 
+    std::cout << "Doing diff between  A and B" << std::endl;
+    BigInteger diff;
+    diff = A.sub(B);
+    std::cout << diff.to_string() << std::endl;
+
     A.negate();
     std::cout << "After negates, A's sign is " << A.sign() << std::endl;
     return 0;
