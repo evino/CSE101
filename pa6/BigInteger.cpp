@@ -235,8 +235,19 @@ int normalizeList(List &L) {
 
 // BigInteger Arithmetic operations -------------------------------------------
 
-// BigInteger BigInteger::add(const BigInteger& N) const {
+BigInteger BigInteger::add(const BigInteger& N) const {
+    BigInteger sum;
+    List sum_list;
 
+    if (this->signum == N.signum) {
+        sumList(sum_list, this->digits, N.digits, N.signum);
+    } else {
+        sumList(sum_list, this->digits, N.digits, -1);
+        sum.digits = sum_list;
+    }
+    sum.signum = normalizeList(sum_list);
+    return sum;
+}
 
 // Other Functions ------------------------------------------------------------
 
