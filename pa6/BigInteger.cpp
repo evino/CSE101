@@ -47,7 +47,8 @@ BigInteger::BigInteger(std::string s) {
     std::string str;
 
     digits.moveFront();
-    for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
+    //for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
+    for (; i < s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
         if (s[i] == 0) {
             str = std::to_string(s[0]);
             digits.insertBefore(stol(str));
@@ -162,7 +163,9 @@ void sumList(List& S, List A, List B, int sgn) {
     A.moveFront();
     B.moveFront();
     long sum;
+    std::cout << "A len " << A.length() << ". B len " << B.length() << std::endl;
     while (A.position() < A.length() && B.position() < B.length()) {
+        std::cout << "A Pos " << A.position() << ". B pos " << B.position() << std::endl;
         sum = A.peekNext() + (sgn * B.peekNext());
         S.insertBefore(sum);
         A.moveNext();
@@ -170,11 +173,13 @@ void sumList(List& S, List A, List B, int sgn) {
     }
 
     while (A.position() < A.length()) {
+        std::cout << "DB1" << std::endl;
         S.insertBefore(A.peekNext());
         A.moveNext();
     }
 
     while (B.position() < B.length()) {
+        std::cout << "DB2" << std::endl;
         S.insertBefore(B.peekNext());
         B.moveNext();
     }
@@ -226,11 +231,14 @@ BigInteger BigInteger::add(const BigInteger& N) const {
 
     if (this->signum == N.signum) {
         sumList(sum_list, this->digits, N.digits, N.signum);
+        //sum.digits = sum_list;
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
-        sum.digits = sum_list;
+        //sum.digits = sum_list;
     }
     sum.signum = normalizeList(sum_list);
+    sum.digits = sum_list;
+    std::cout << "sum's list is " << sum.digits << std::endl;
     return sum;
 }
 
@@ -251,11 +259,12 @@ std::string BigInteger::to_string() {
     }
 
     digits.moveFront();
-    while (digits.peekNext() != digits.back()) {
+    //while (digits.peekNext() != digits.back()) {
+    while (digits.position() < digits.length()) {
         str += std::to_string(digits.peekNext());
         digits.moveNext();
     }
-    str += std::to_string(digits.back());
+    //str += std::to_string(digits.back());
 
     //Padding, works I think..
 /*
