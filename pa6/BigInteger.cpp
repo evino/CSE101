@@ -1,8 +1,9 @@
 #include "BigInteger.h"
+#include <math.h>
 
 // Global Const Variables
-const long base = 1000000000;
-const int power = 9;
+const long base = 100;
+const int power = 2;
 
 
 // Constructors ---------------------------------------------------------------
@@ -201,20 +202,35 @@ void sumList(List& S, List A, List B, int sgn) {
 // Performs carries from right to left (least to most significant
 // digits), then returns the sign of the resulting integer. Used
 // by add(), sub() and mult().
+
+
+
 int normalizeList(List &L) {
-    int sign;
-    long addUp;
-    long carry;
-    this->moveBack();
-    L.moveBack();
-    while (position() > 0 && L.position() > 0) {
-        // Need to figure how to do carry part in pseudo
+    if (L.front() < 0) {
+        negateList(L);
     }
 
-    return sign;
+    L.moveBack();
+    int carry = 0;
+    while (L.position() > 0) {
+        L.setBefore(L.peekPrev() + carry);
+        carry = floor(L.peekPrev() / base);
+        L.setBefore(L.peekPrev() % base);
+        L.movePrev();
+    }
+
+    if (carry != 0) {
+        L.insertBefore(carry);
+    }
+
+    if (L.front() > 0) {
+        return 1;
+    } else if (L.front() < 0) {
+        return -1;
+    }
+
+    return 0;
 }
-
-
 
 
 // BigInteger Arithmetic operations -------------------------------------------
