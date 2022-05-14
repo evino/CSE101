@@ -25,8 +25,8 @@ ADT2_TEST      = $(ADT2)Client
 ADT2_SOURCE    = $(ADT2).cpp
 ADT2_OBJECT    = $(ADT2).o
 ADT2_HEADER    = $(ADT2).h
-COMPILE        =  g++ -std=c++17 -Wall -c
-LINK           =  g++ -std=c++17 -Wall -o
+COMPILE        =  g++ -g -std=c++17 -Wall -c
+LINK           =  g++ -g -std=c++17 -Wall -o
 REMOVE         = rm -f
 MEMCHECK       = valgrind --leak-check=full
 
