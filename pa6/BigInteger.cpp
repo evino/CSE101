@@ -17,15 +17,7 @@ BigInteger::BigInteger(std::string s) {
     if (s.empty()) {
         throw std::invalid_argument("BigInteger: Constructor: empty string");
     }
-
-    //if (s[0] != '-' || s[0] != '+' || !isdigit(s[0])) {
-        //throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
-    //}
-
-    // Making signum correct value, based of what first char of string is
-    //if (s[0] == '0' || s[1] == '0') {
-    //    signum = 0;
-    //}
+    
     if (s[0] == '-') {
         signum = -1;
     } else if (s[0] == '+' || isdigit(s[0])) {
@@ -45,21 +37,15 @@ BigInteger::BigInteger(std::string s) {
         i = 1;
     }
 
-    //std::cout << "I is " << i << std::endl;
-    //std::cout << "Str len is " << s.length() << std::endl;
-
     // Loops through string, making sure each element is a valid digit.
     for (unsigned long ind = i; ind < s.length(); ind++) {
         if (!(isdigit(s[ind]))) {
-            //std::cout << "Index " << ind << std::endl;
-            //std::cout << "isDigi loop" << std::endl;
             throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
         }
     }
 
     std::string str;
 
-    //digits = List();
     digits.moveFront();
     for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
         if (s[i] == 0) {
@@ -72,7 +58,6 @@ BigInteger::BigInteger(std::string s) {
         } else {
             str = s.substr(i, power);
             i += (power - 1);
-            //std::cout << "Sub string of s is: " << str << std::endl;
             digits.insertBefore(stol(str));
         }
     }
