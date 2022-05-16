@@ -220,7 +220,7 @@ int normalizeList(List &L) {
         std::cout << "Carry is " << carry <<std::endl;
         mod = L.peekPrev() % base;
         if (mod < 0) {
-            mod *= -1;
+            mod += base;
         }
         L.setBefore(mod);
         //L.setBefore(L.peekPrev() % base);
