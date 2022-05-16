@@ -145,10 +145,10 @@ void BigInteger::negate() {
 // Changes the sign of each integer in List L. Used by sub().
 void negateList(List& L) {
     L.moveFront();
-    long negate;
-    while (L.position() != L.length()) {
-        negate = L.peekNext() * -1;
-        L.setAfter(negate);
+    long negateElem;
+    while (L.position() < L.length()) {
+        negateElem = L.peekNext() * -1;
+        L.setAfter(negateElem);
         L.moveNext();
     }
     return;
@@ -159,29 +159,29 @@ void negateList(List& L) {
 // Overwrites the state of S with A + sgn*B (considered as vectors).
 // Used by both sum() and sub().
 void sumList(List& S, List A, List B, int sgn) {
-    S.moveFront();
-    A.moveFront();
-    B.moveFront();
+    S.moveBack();
+    A.moveBack();
+    B.moveBack();
     long sum;
     std::cout << "A len " << A.length() << ". B len " << B.length() << std::endl;
-    while (A.position() < A.length() && B.position() < B.length()) {
+    while (A.position() > 0 && B.position() > 0) {
         std::cout << "A Pos " << A.position() << ". B pos " << B.position() << std::endl;
-        sum = A.peekNext() + (sgn * B.peekNext());
-        S.insertBefore(sum);
-        A.moveNext();
-        B.moveNext();
+        sum = A.peekPrev() + (sgn * B.peekPrev());
+        S.insertAfter(sum);
+        A.movePrev();
+        B.movePrev();
     }
 
-    while (A.position() < A.length()) {
+    while (A.position() > 0) {
         std::cout << "DB1" << std::endl;
-        S.insertBefore(A.peekNext());
-        A.moveNext();
+        S.insertAfter(A.peekPrev());
+        A.movePrev();
     }
 
-    while (B.position() < B.length()) {
+    while (B.position() > 0) {
         std::cout << "DB2" << std::endl;
-        S.insertBefore(B.peekNext());
-        B.moveNext();
+        S.insertAfter(B.peekPrev());
+        B.movePrev();
     }
 
     return;
@@ -198,10 +198,13 @@ void sumList(List& S, List A, List B, int sgn) {
 int normalizeList(List &L) {
     if (L.front() < 0) {
         negateList(L);
+        normalizeList(L);  // Not sure if this will work
     }
 
     L.moveBack();
-    int carry = 0;
+    long carry = 0;
+    std::cout << "L: " << L <<std::endl;
+
     while (L.position() > 0) {
         L.setBefore(L.peekPrev() + carry);
         carry = floor(L.peekPrev() / base);
@@ -231,13 +234,15 @@ BigInteger BigInteger::add(const BigInteger& N) const {
 
     if (this->signum == N.signum) {
         sumList(sum_list, this->digits, N.digits, N.signum);
+        normalizeList(sum_list);
         //sum.digits = sum_list;
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
-        //sum.digits = sum_list;
+        //normalizeList(sum_list);
     }
-    sum.signum = normalizeList(sum_list);
     sum.digits = sum_list;
+    //sum.signum = normalizeList(sum.digits);
+    sum.signum = sum_list.front();
     std::cout << "sum's list is " << sum.digits << std::endl;
     return sum;
 }
@@ -246,9 +251,12 @@ BigInteger BigInteger::add(const BigInteger& N) const {
 BigInteger BigInteger::sub(const BigInteger& N) const {
     BigInteger Diff;
     BigInteger copy;
-    copy.digits = N.digits;
-    copy.signum = N.signum;
+    copy = N;
+    //copy.digits = N.digits;
+    //copy.signum = N.signum;
     negateList(copy.digits);
+    //copy.negate();
+    std::cout << "Signum now is " << copy.sign() << std::endl;
     Diff = this->add(copy);
     return Diff;
 }
