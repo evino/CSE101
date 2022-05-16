@@ -158,7 +158,7 @@ void negateList(List& L) {
 // sumList()
 // Overwrites the state of S with A + sgn*B (considered as vectors).
 // Used by both sum() and sub().
-void sumList(List& S, List A, List B, int sgn) {
+void sumList(List& S, List A, List B, long sgn) {
     S.moveBack();
     A.moveBack();
     B.moveBack();
@@ -197,7 +197,9 @@ void sumList(List& S, List A, List B, int sgn) {
 
 int normalizeList(List &L) {
     if (L.front() < 0) {
+        std::cout << "Front before: " << L.front() << std::endl;
         negateList(L);
+        std::cout << "Front after: " << L.front() << std::endl;
         normalizeList(L);  // Not sure if this will work
     }
 
@@ -205,10 +207,24 @@ int normalizeList(List &L) {
     long carry = 0;
     std::cout << "L: " << L <<std::endl;
 
+    double prevTemp;
+    double baseTemp;
+    long mod;
     while (L.position() > 0) {
+        std::cout << "Prev before is " << L.peekPrev() << std::endl;
         L.setBefore(L.peekPrev() + carry);
-        carry = floor(L.peekPrev() / base);
-        L.setBefore(L.peekPrev() % base);
+        prevTemp = L.peekPrev();
+        baseTemp = base;
+        carry = floor(prevTemp / baseTemp);
+        //carry = floor(L.peekPrev() / base);
+        std::cout << "Carry is " << carry <<std::endl;
+        mod = L.peekPrev() % base;
+        if (mod < 0) {
+            mod *= -1;
+        }
+        L.setBefore(mod);
+        //L.setBefore(L.peekPrev() % base);
+        std::cout << "Prev now is " << L.peekPrev() << std::endl;
         L.movePrev();
     }
 
@@ -238,7 +254,7 @@ BigInteger BigInteger::add(const BigInteger& N) const {
         //sum.digits = sum_list;
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
-        //normalizeList(sum_list);
+        normalizeList(sum_list);
     }
     sum.digits = sum_list;
     //sum.signum = normalizeList(sum.digits);
