@@ -253,6 +253,15 @@ int normalizeList(List &L) {
 }
 
 
+void shiftList(List& L, int p) {
+    L.moveFront();
+    for (int i = 0; i <= p; i++) {
+        L.insertBefore(0);
+    }
+    return;
+}
+
+
 // BigInteger Arithmetic operations -------------------------------------------
 
 BigInteger BigInteger::add(const BigInteger& N) const {
@@ -309,8 +318,8 @@ std::string BigInteger::to_string() {
         str += std::to_string(digits.peekNext());
         digits.moveNext();
         std::string zeros;
-        if (digits.position() > 1) {
-            std::string padSize = std::to_string(this->digits);
+        if (digits.position() > 1 && digits.position() < digits.length()) {
+            std::string padSize = std::to_string(digits.peekNext());
             for (int i = 0; i < power - (padSize.length()); i++) {
                 zeros = '0' + zeros;
             }
