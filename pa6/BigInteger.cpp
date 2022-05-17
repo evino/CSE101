@@ -121,6 +121,17 @@ int BigInteger::compare(const BigInteger& N) const {
         ////}
     //}
 
+    if (signum > N.signum) {
+        return 1;
+    } else if (signum < N.signum) {
+        return -1;
+    }
+
+    if (signum > 0 && digits.length() > N.digits.length()) {
+        return 1;
+    } else if (signum > 0 && digits.length() < N.digits.length()) {
+        return -1;
+    }
 
 
     return cmp;
