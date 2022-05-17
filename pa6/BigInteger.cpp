@@ -2,9 +2,10 @@
 #include <math.h>
 
 // Global Const Variables
-const long base = 1000000000;
-const int power = 9;
-
+//const long base = 1000000000;
+//const int power = 9;
+const long base = 100;  // CHANGE WHEN DONE
+const int power = 2;
 
 // Constructors ---------------------------------------------------------------
 
@@ -262,6 +263,16 @@ void shiftList(List& L, int p) {
 }
 
 
+void scalarMultList(List& L, ListElement m) {
+    L.moveBack();
+    while (L.position() > 0) {
+        L.setBefore(L.peekPrev() * m);
+        L.movePrev();
+    }
+    return;
+}
+
+
 // BigInteger Arithmetic operations -------------------------------------------
 
 BigInteger BigInteger::add(const BigInteger& N) const {
@@ -296,6 +307,31 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
     Diff = this->add(copy);
     return Diff;
 }
+
+
+BigInteger BigInteger::mult(const BigInteger& N) const {
+    BigInteger product;
+    BigInteger A;
+    A.signum = this->signum;
+    A.digits = this->digits;
+    BigInteger B;
+    B.signum = N.signum;
+    B.digits = N.digits;
+    List scalar_mult;
+    B.digits.moveBack();
+    while (B.digits.position() > 0) {
+        std::cout << "DB1" << std::endl;
+        scalarMultList(A.digits, B.digits.peekPrev());
+        B.digits.movePrev();
+        std::cout << "DB2" << std::endl;
+    }
+    shiftList(A.digits, power);
+    product.digits = A.digits;
+    product.signum = A.signum;
+    std::cout << "Out of loop" << std::endl;
+    return product;
+}
+
 // Other Functions ------------------------------------------------------------
 
 // to_string()
@@ -340,4 +376,54 @@ std::string BigInteger::to_string() {
     }
 */
     return str;
+}
+
+
+
+std::ostream& operator<<( std::ostream& stream, BigInteger N) {
+    return stream << N.BigInteger::to_string();
+}
+
+bool operator==( const BigInteger& A, const BigInteger& B) {
+    // Need to fix compare first
+    return false;
+}
+
+bool operator<( const BigInteger& A, const BigInteger& B ) {
+    return false;
+}
+
+bool operator<=( const BigInteger& A, const BigInteger& B ) {
+    return false;
+}
+
+bool operator>=( const BigInteger& A, const BigInteger& B ) {
+    return false;
+}
+
+BigInteger operator+( const BigInteger& A, const BigInteger& B ) {
+    return A.add(B);
+}
+
+BigInteger operator+=( BigInteger& A, const BigInteger& B ) {
+    A += A.add(B);
+    return A;
+}
+
+BigInteger operator-( const BigInteger& A, const BigInteger& B ) {
+    return A.sub(B);
+}
+
+BigInteger operator-=( BigInteger& A, const BigInteger& B ) {
+    A -= A.sub(B);
+    return B;
+}
+
+BigInteger operator*( const BigInteger& A, const BigInteger& B ) {
+    return A.mult(B);
+}
+
+BigInteger operator*=( BigInteger& A, const BigInteger& B ) {
+    A = A.mult(B);
+    return A;
 }
