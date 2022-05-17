@@ -134,7 +134,7 @@ int BigInteger::compare(const BigInteger& N) const {
 void BigInteger::makeZero() {
     digits.clear();
     signum = 0;
-    return;
+    //return;
 }
 
 
@@ -308,13 +308,16 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
     B.digits = N.digits;
     List scalar_mult;
     B.digits.moveBack();
+    BigInteger copy;
+    copy.signum = this->signum;
+    copy.digits = this->digits;
     while (B.digits.position() > 0) {
         std::cout << "DB1" << std::endl;
-        scalarMultList(A.digits, B.digits.peekPrev());
-        B.digits.movePrev();
+        //scalarMultList(A.digits, B.digits.movePrev());
+        scalarMultList(copy, B.digits.movePrev());
+        shiftList(copy, power); // might need to iterate
         std::cout << "DB2" << std::endl;
     }
-    shiftList(A.digits, power);
     product.digits = A.digits;
     product.signum = A.signum;
     std::cout << "Out of loop" << std::endl;
