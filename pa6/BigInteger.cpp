@@ -52,19 +52,26 @@ BigInteger::BigInteger(std::string s) {
 
     std::string str;
 
-    digits.moveFront();
+    //digits.moveFront();
     //for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
     //for (; i < s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
-     for (long ind = s.length(); ind > 0; ind -= power) {
+     for (int ind = s.length(); ind >= 0; ind -= power) {
         //if (s[i] == 0) {
             //str = std::to_string(s[0]);
             //digits.insertBefore(stol(str));
             ////break;
         //}
-        //else if (i % power == 0 && i >= power && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
-        str = s.substr(ind - power, power);
-        //i += (power ); // - 1
-        digits.insertBefore(stol(str));
+         std::cout << "Index is " << ind << std::endl;
+         if (ind < power) {
+             //ind = ind + power;
+             std::cout << "Ind now " << ind << std::endl;
+            str = s.substr(0, ind);
+         } else {
+            str = s.substr(ind - power, power);
+         }
+         std::cout << "str: " << str << std::endl;
+        if (str.length() > 0)
+            digits.insertAfter(stol(str));
     }
     std::cout << "Digits is " << digits << std::endl;
 }
@@ -301,19 +308,27 @@ std::string BigInteger::to_string() {
     while (digits.position() < digits.length()) {
         str += std::to_string(digits.peekNext());
         digits.moveNext();
+        std::string zeros;
+        if (digits.position() > 1) {
+            std::string padSize = std::to_string(this->digits);
+            for (int i = 0; i < power - (padSize.length()); i++) {
+                zeros = '0' + zeros;
+            }
+            str += zeros;
+        }
     }
+
     //str += std::to_string(digits.back());
 
     //Padding, works I think..
-/*
+   /* 
     if (str.length() < power) {
         int zeroes_to_add = power - str.length();
         for (int j = 0; j < zeroes_to_add; j++) {
             str.insert(0, 1, '0');
-            //str = '0' + str;
+            str = '0' + str;
         }
     }
-
-    */
+*/
     return str;
 }
