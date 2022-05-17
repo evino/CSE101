@@ -2,13 +2,25 @@
 int main(int argc, char **argv) {
     BigInteger A;
     BigInteger B;
-    std::string s = "882133";
-    std::string s2 = "659179";
+    
+    //std::string s = "1";
+    //std::string s2 = "-1";
+
+    //std::string s = "882133";
+    //std::string s2 = "659179";
+
+    //std::string s = "111122223333";
+    //std::string s2 = "112122223333";
+
     //std::string s = "12345678910111213141516171819202123";
     //std::string s2 = "00012345678910111213141516171819202121";
     //std::string s2 = "9876545439000000000000000100000000000006543654365346534";
     //std::string s2 = "0";
     
+    std::string s = "9128734667000004389234563456345619187236478";
+    std::string s2 = "9876545439000000000000000200000000000006543654365346534";
+
+
     A = BigInteger(s);
     B = BigInteger(s2);
     //A.makeZero();
