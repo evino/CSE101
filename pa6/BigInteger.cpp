@@ -62,15 +62,12 @@ BigInteger::BigInteger(std::string s) {
             //digits.insertBefore(stol(str));
             ////break;
         //}
-         std::cout << "Index is " << ind << std::endl;
          if (ind < power) {
              //ind = ind + power;
-             std::cout << "Ind now " << ind << std::endl;
             str = s.substr(0, ind);
          } else {
             str = s.substr(ind - power, power);
          }
-         std::cout << "str: " << str << std::endl;
         if (str.length() > 0)
             digits.insertAfter(stol(str));
     }
@@ -175,9 +172,7 @@ void sumList(List& S, List A, List B, long sgn) {
     A.moveBack();
     B.moveBack();
     long sum;
-    std::cout << "A len " << A.length() << ". B len " << B.length() << std::endl;
     while (A.position() > 0 && B.position() > 0) {
-        std::cout << "A Pos " << A.position() << ". B pos " << B.position() << std::endl;
         sum = A.peekPrev() + (sgn * B.peekPrev());
         S.insertAfter(sum);
         A.movePrev();
@@ -209,34 +204,28 @@ void sumList(List& S, List A, List B, long sgn) {
 
 int normalizeList(List &L) {
     if (L.front() < 0) {
-        std::cout << "Front before: " << L.front() << std::endl;
         negateList(L);
-        std::cout << "Front after: " << L.front() << std::endl;
         normalizeList(L);  // Not sure if this will work
     }
 
     L.moveBack();
     long carry = 0;
-    std::cout << "L: " << L <<std::endl;
 
     double prevTemp;
     double baseTemp;
     long mod;
     while (L.position() > 0) {
-        std::cout << "Prev before is " << L.peekPrev() << std::endl;
         L.setBefore(L.peekPrev() + carry);
         prevTemp = L.peekPrev();
         baseTemp = base;
         carry = floor(prevTemp / baseTemp);
         //carry = floor(L.peekPrev() / base);
-        std::cout << "Carry is " << carry <<std::endl;
         mod = L.peekPrev() % base;
         if (mod < 0) {
             mod += base;
         }
         L.setBefore(mod);
         //L.setBefore(L.peekPrev() % base);
-        std::cout << "Prev now is " << L.peekPrev() << std::endl;
         L.movePrev();
     }
 
@@ -394,6 +383,10 @@ bool operator<( const BigInteger& A, const BigInteger& B ) {
 }
 
 bool operator<=( const BigInteger& A, const BigInteger& B ) {
+    return false;
+}
+
+bool operator>( const BigInteger& A, const BigInteger& B ) {
     return false;
 }
 
