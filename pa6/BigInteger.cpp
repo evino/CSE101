@@ -2,8 +2,8 @@
 #include <math.h>
 
 // Global Const Variables
-const long base = 100;
-const int power = 2;
+const long base = 1000000000;
+const int power = 9;
 
 
 // Constructors ---------------------------------------------------------------
@@ -38,9 +38,15 @@ BigInteger::BigInteger(std::string s) {
     }
 
     // Loops through string, making sure each element is a valid digit.
+    bool zero = true;
     for (unsigned long ind = i; ind < s.length(); ind++) {
         if (!(isdigit(s[ind]))) {
             throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
+        }
+        if (zero && s[ind] == 0) {
+            zero = true;
+        } else {
+            zero = false;
         }
     }
 
@@ -48,19 +54,17 @@ BigInteger::BigInteger(std::string s) {
 
     digits.moveFront();
     //for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
-    for (; i < s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
-        if (s[i] == 0) {
-            str = std::to_string(s[0]);
-            digits.insertBefore(stol(str));
-            //break;
-        }
-        else if (i % power == 0 && i >= power && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
-            digits.moveNext();
-        } else {
-            str = s.substr(i, power);
-            i += (power - 1);
-            digits.insertBefore(stol(str));
-        }
+    //for (; i < s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
+     for (long ind = s.length(); ind > 0; ind -= power) {
+        //if (s[i] == 0) {
+            //str = std::to_string(s[0]);
+            //digits.insertBefore(stol(str));
+            ////break;
+        //}
+        //else if (i % power == 0 && i >= power && digits.peekPrev() != digits.back()) { // Checks if divisble by 9, to put it into node
+        str = s.substr(ind - power, power);
+        //i += (power ); // - 1
+        digits.insertBefore(stol(str));
     }
     std::cout << "Digits is " << digits << std::endl;
 }
