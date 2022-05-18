@@ -304,12 +304,13 @@ BigInteger BigInteger::add(const BigInteger& N) const {
 
     if (this->signum == N.signum) {
         sumList(sum_list, this->digits, N.digits, N.signum);
-        normalizeList(sum_list);
+        //normalizeList(sum_list);
         //sum.digits = sum_list;
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
-        normalizeList(sum_list);
+        //normalizeList(sum_list);
     }
+    normalizeList(sum_list);
     sum.digits = sum_list;
     //sum.signum = normalizeList(sum.digits);
     //sum.signum = sum_list.front();
