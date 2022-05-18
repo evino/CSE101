@@ -53,25 +53,42 @@ int main(int argc, char **argv) {
         std::cout << "bruh 2" << std::endl;
         return 2;
     }
-
+    std::cout << "--- TEST 2 PASSED -----" << std::endl;
+    
+    std::cout << "--- TEST 3 ---" << std::endl;
     //-> pos + neg > 0
     B = BigInteger("-110122223333");
     D = BigInteger("1000000000");
     C = A + B;
+    std::cout << "C's signum (should be 1): " << C.sign() << std::endl;
     if (C.sign() != 1)
       return 31;
+    std::cout << "A: " << A << std::endl;
+    std::cout << "B: " << B << std::endl;
+    std::cout << "C: " << C << std::endl;
+    std::cout << "D: " << D << std::endl;
     if (!(C == D))
       return 32;
 
+    std::cout << "--- TEST 3 Passed ---" << std::endl;
+    
+    std::cout << "\n--- TEST 4 ---" << std::endl;
     //-> pos + neg < 0
     B = BigInteger("-112122223333");
     D = BigInteger("-1000000000");
+    std::cout << "A: " << A << std::endl;
+    std::cout << "B: " << B << std::endl;
     C = A + B;
+    std::cout << "C is: " << C << std::endl;
+    std::cout << "C signum: " << C.sign() << std::endl;
     if (C.sign() != -1)
       return 41;
+    
+    
     if (!(C == D))
       return 42;
 
+    std::cout << "--- TEST 4 Passed---" << std::endl;
     //-> neg + neg = neg
     A = BigInteger("-221211110000");
     D = BigInteger("-333333333333");
