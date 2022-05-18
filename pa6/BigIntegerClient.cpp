@@ -1,5 +1,126 @@
 #include "BigInteger.h"
 int main(int argc, char **argv) {
+
+/*
+     * Adding numbers fall into one of 4 cases, denote pos = positive number,
+     * neg = negative number
+     *
+     * pos + pos = pos
+     *
+     * pos + neg = 0
+     *           < 0
+     *           > 0
+     *
+     * neg + pos = 0
+     *           < 0
+     *           > 0
+     *
+     * neg + neg = neg
+     */
+    BigInteger A, B, C, D;
+    A = BigInteger("+111122223333");
+    B = BigInteger("+222211110000");
+
+    // pos + pos = pos
+    D = BigInteger("+333333333333");
+    C = A + B;
+
+    std::cout << "C: " << C << std::endl;
+    std::cout << "D: " << D << std::endl;
+
+    std::cout << "C's signum is " << C.sign() << std::endl;
+    if (!(C == D))
+      std::cout << "Bruh" << std::endl;
+      return 1;
+
+    // add a positive and a negative integer
+    //-> pos + neg = 0
+    B = BigInteger("-111122223333");
+    C = A + B;
+    if (C.sign() != 0)
+      return 2;
+
+    //-> pos + neg > 0
+    B = BigInteger("-110122223333");
+    D = BigInteger("1000000000");
+    C = A + B;
+    if (C.sign() != 1)
+      return 31;
+    if (!(C == D))
+      return 32;
+
+    //-> pos + neg < 0
+    B = BigInteger("-112122223333");
+    D = BigInteger("-1000000000");
+    C = A + B;
+    if (C.sign() != -1)
+      return 41;
+    if (!(C == D))
+      return 42;
+
+    //-> neg + neg = neg
+    A = BigInteger("-221211110000");
+    D = BigInteger("-333333333333");
+    C = A + B;
+    if (!(C == D))
+      return 5;
+
+    return 0;
+  }
+    
+/*
+    A = BigInteger("+111122223333");
+    B = BigInteger("+222211110000");
+
+    // pos + pos = pos
+    D = BigInteger("+333333333333");
+    A += B;
+
+    if (!(A == D))
+      return 1;
+
+    // add a positive and a negative integer
+    //-> pos + neg = 0
+
+    A = BigInteger("+111122223333");
+    B = BigInteger("-111122223333");
+    A += B;
+    if (A.sign() != 0)
+      return 2;
+
+    //-> pos + neg > 0
+
+    A = BigInteger("+111122223333");
+    B = BigInteger("-110122223333");
+    D = BigInteger("1000000000");
+    A += B;
+    if (A.sign() != 1)
+      return 31;
+    if (!(A == D))
+      return 32;
+
+    //-> pos + neg < 0
+    A = BigInteger("+111122223333");
+    B = BigInteger("-112122223333");
+    D = BigInteger("-1000000000");
+    A += B;
+    if (A.sign() != -1)
+      return 41;
+    if (!(A == D))
+      return 42;
+
+    //-> neg + neg = neg
+    A = BigInteger("-221211110000");
+    B = BigInteger("-112122223333");
+    D = BigInteger("-333333333333");
+    A += B;
+    if (!(A == D))
+      return 5;
+
+    return 0;
+  }
+  */
+    /*
     BigInteger A;
     BigInteger B;
     
@@ -54,3 +175,5 @@ int main(int argc, char **argv) {
     std::cout << "After negates, A's sign is " << A.sign() << std::endl;
     return 0;
 }
+    */
+
