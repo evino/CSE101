@@ -259,7 +259,7 @@ void sumList(List& S, List A, List B, long sgn) {
     }
 
     while (B.position() > 0) {
-        std::cout << "DB2" << std::endl;
+        std::cout << "sumList DB2" << std::endl;
         S.insertAfter(B.peekPrev());
         B.movePrev();
     }
@@ -355,7 +355,7 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     sum.digits = sum_list;
     //sum.signum = normalizeList(sum.digits);
     sum.signum = sum_list.front();
-    std::cout << "sum's list is " << sum.digits << std::endl;
+    //std::cout << "sum's list is " << sum.digits << std::endl;
     return sum;
 }
 
@@ -375,21 +375,25 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
 
 BigInteger BigInteger::mult(const BigInteger& N) const {
     BigInteger product;
+    List sum;
     BigInteger A = *this;
     BigInteger B = N;
     BigInteger tmp = B;
     B.digits.moveBack();
     for (int i = 0; B.digits.position() > 0; i++) {
-        std::cout << "DB1" << std::endl;
+        std::cout << "!!!!DB1" << std::endl;
         tmp.digits = B.digits;
         tmp.signum = tmp.signum;
         //scalarMultList(A.digits, B.digits.movePrev());
         scalarMultList(tmp.digits, B.digits.movePrev());
         shiftList(tmp.digits, i); // might need to iterate
-        std::cout << "DB2" << std::endl;
+        std::cout << "!!!!!!!!!!!DB2" << std::endl;
         product += tmp;
+        //sumList(sum, sum, tmp.digits, 1);
+        //normalizeList(sum);
     }
 
+    std::cout << "Outside of for in mult()" << std::endl;
     // Gets products's signum
     int sign;
     sign = A.signum * B.signum;
