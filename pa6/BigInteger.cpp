@@ -419,23 +419,44 @@ std::ostream& operator<<( std::ostream& stream, BigInteger N) {
 
 bool operator==( const BigInteger& A, const BigInteger& B) {
     // Need to fix compare first
-    return false;
+    if (A.compare(B) == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool operator<( const BigInteger& A, const BigInteger& B ) {
-    return false;
+    if (A.compare(B) == -1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool operator<=( const BigInteger& A, const BigInteger& B ) {
-    return false;
+    if (A.compare(B) == -1 || A.compare(B) == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool operator>( const BigInteger& A, const BigInteger& B ) {
-    return false;
+    if (A.compare(B) == 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 bool operator>=( const BigInteger& A, const BigInteger& B ) {
-    return false;
+    if (A.compare(B) == 1 || A.compare(B) == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 BigInteger operator+( const BigInteger& A, const BigInteger& B ) {
@@ -457,11 +478,11 @@ BigInteger operator-=( BigInteger& A, const BigInteger& B ) {
 }
 
 BigInteger operator*( const BigInteger& A, const BigInteger& B ) {
-    return A;
-    //return A.mult(B);
+    //return A;
+    return A.mult(B);
 }
 
 BigInteger operator*=( BigInteger& A, const BigInteger& B ) {
-    //A = A.mult(B);
+    A = A.mult(B);
     return A;
 }
