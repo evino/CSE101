@@ -196,7 +196,12 @@ void sumList(List& S, List A, List B, long sgn) {
     B.moveBack();
     long sum;
     while (A.position() > 0 && B.position() > 0) {
+        std::cout << "A peekPrev is: " << A.peekPrev() << std::endl;
+        std::cout << "B peekPrev is: " << B.peekPrev() << std::endl;
+        if (B.peekPrev() < 0) /// test     
+            sgn = 1;            ///test
         sum = A.peekPrev() + (sgn * B.peekPrev());
+        std::cout << "Sum is " << sum << std::endl;
         S.insertAfter(sum);
         A.movePrev();
         B.movePrev();
@@ -382,7 +387,7 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
 std::string BigInteger::to_string() {
     std::string str;
     if (this->signum == -1) {
-        str = "-";
+        //str = "-";
     } else if (signum == 0) {
         str = "0";
         return str;
