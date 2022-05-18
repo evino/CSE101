@@ -71,7 +71,7 @@ BigInteger::BigInteger(std::string s) {
         if (str.length() > 0)
             digits.insertAfter(stol(str));
     }
-    std::cout << "Digits is " << digits << std::endl;
+     //std::cout << "Digits is " << digits << std::endl;
 }
 
 BigInteger::BigInteger(const BigInteger& N) {
@@ -203,13 +203,13 @@ void sumList(List& S, List A, List B, long sgn) {
     }
 
     while (A.position() > 0) {
-        std::cout << "DB1" << std::endl;
+        //std::cout << "DB1" << std::endl;
         S.insertAfter(A.peekPrev());
         A.movePrev();
     }
 
     while (B.position() > 0) {
-        std::cout << "sumList() DB2" << std::endl;
+        //std::cout << "sumList() DB2" << std::endl;
         S.insertAfter(B.peekPrev());
         B.movePrev();
     }
@@ -307,7 +307,14 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     }
     sum.digits = sum_list;
     //sum.signum = normalizeList(sum.digits);
-    sum.signum = sum_list.front();
+    //sum.signum = sum_list.front();
+    if (sum_list.front() > 0) {
+        sum.signum = 1;
+    } else if (sum_list.front() < 0) {
+        sum.signum = -1;
+    } else if (sum_list.front() == 0) {
+        sum.signum = 0;
+    }
     //std::cout << "sum's list is " << sum.digits << std::endl;
     return sum;
 }
