@@ -4,10 +4,13 @@ int main(int argc, char **argv) {
     BigInteger B;
     
     //std::string s = "1";
-    //std::string s2 = "-1";
-
+    ////std::string s2 = "-1";
+    //
     //std::string s = "882133";
     //std::string s2 = "659179";
+
+    std::string s = "3";
+    std::string s2 = "99";
 
     //std::string s = "111122223333";
     //std::string s2 = "112122223333";
@@ -17,8 +20,8 @@ int main(int argc, char **argv) {
     //std::string s2 = "9876545439000000000000000100000000000006543654365346534";
     //std::string s2 = "0";
     
-    std::string s = "9128734667000004389234563456345619187236478";
-    std::string s2 = "9876545439000000000000000200000000000006543654365346534";
+    //std::string s = "9128734667000004389234563456345619187236478";
+    //std::string s2 = "9876545439000000000000000200000000000006543654365346534";
 
 
     A = BigInteger(s);
@@ -39,6 +42,13 @@ int main(int argc, char **argv) {
     BigInteger diff;
     diff = A.sub(B);
     std::cout << diff.to_string() << std::endl;
+
+
+    std::cout<< "doing mult() of A and B" << std::endl;
+    BigInteger prod;
+    prod = A.mult(B);
+    std::cout << "Prdouct: " << prod.to_string() << std::endl;
+
 
     A.negate();
     std::cout << "After negates, A's sign is " << A.sign() << std::endl;
