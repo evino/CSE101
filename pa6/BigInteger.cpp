@@ -387,7 +387,7 @@ std::string BigInteger::to_string() {
         str += std::to_string(digits.peekNext());
         digits.moveNext();
         std::string zeros;
-        if (digits.position() > 1 && digits.position() < digits.length()) {
+        if (digits.position() >= 1 && digits.position() < digits.length()) {
             std::string padSize = std::to_string(digits.peekNext());
             for (int i = 0; i < power - (padSize.length()); i++) {
                 zeros = "0" + zeros;
