@@ -29,16 +29,30 @@ int main(int argc, char **argv) {
     std::cout << "D: " << D << std::endl;
 
     std::cout << "C's signum is " << C.sign() << std::endl;
-    if (!(C == D))
+    if (!(C == D)) {
       std::cout << "Bruh" << std::endl;
       return 1;
+    }
 
     // add a positive and a negative integer
     //-> pos + neg = 0
     B = BigInteger("-111122223333");
+    
+
+    std::cout << "----- TEST 2 ------" << std::endl;
+    std::cout << "A: " << A << std::endl;
+    std::cout << "A's sign is " << A.sign() << std::endl;
+    std::cout << "B: " << B << std::endl;
+    std::cout << "B's sign is " << B.sign() << std::endl;
+    
+
     C = A + B;
-    if (C.sign() != 0)
-      return 2;
+    std::cout << "C (C = A + B): " << C << std::endl;
+    std::cout << "C's signum is " << C.sign() << std::endl;
+    if (C.sign() != 0) {
+        std::cout << "bruh 2" << std::endl;
+        return 2;
+    }
 
     //-> pos + neg > 0
     B = BigInteger("-110122223333");
@@ -65,6 +79,7 @@ int main(int argc, char **argv) {
     if (!(C == D))
       return 5;
 
+    std::cout << "Right before return" << std::endl;
     return 0;
   }
     
