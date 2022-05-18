@@ -96,7 +96,67 @@ int BigInteger::sign() const {
 // Returns -1, 1 or 0 according to whether this BigInteger is less than N,
 // greater than N or equal to N, respectively.
 int BigInteger::compare(const BigInteger& N) const {
-// maybe strcmp() ???
+    BigInteger A = *this;
+    BigInteger B = N;
+    if (A.signum > B.signum) {
+        return 1;
+    } else if (A.signum < B.signum) {
+        return -1;
+    } else if (A.signum == 0 && B.signum == 0) {
+        return 0;
+    }
+    
+    // Implied that signums are equal at this point
+    if (A.signum == 1) {
+        if (A.digits.length() > B.digits.length()) {
+            return 1;
+        } else if (A.digits.length() < B.digits.length()) {
+            return -1;
+        } else if (A.digits.length() == B.digits.length()){
+            A.digits.moveBack();
+            B.digits.moveBack();
+            while (A.digits.position() > 0 && B.digits.position() > 0) {
+                if (A.digits.peekPrev() > B.digits.peekPrev()) {
+                    return 1;
+                } else if (A.digits.peekPrev() < B.digits.peekPrev()) {
+                    return -1;
+                }
+                A.digits.movePrev();
+                B.digits.movePrev();
+            }
+        }
+    } else if (A.signum == -1) {
+        if (A.digits.length() < B.digits.length()) {
+            return 1;
+        } else if (A.digits.length() > B.digits.length()) {
+            return -1;
+        } else if (A.digits.length() == B.digits.length()) {
+            A.digits.moveBack();
+            B.digits.moveBack();
+            while (A.digits.position() > 0 && B.digits.position() > 0) {
+                if (A.digits.peekPrev() > B.digits.peekPrev()) {
+                    return 1;
+                } else if (A.digits.peekPrev() < B.digits.peekPrev()) {
+                    return -1;
+                }
+                A.digits.movePrev();
+                B.digits.movePrev();
+            }
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+// THE WRONG STUFF, DELETE WHEN DONE
+/*
+    // maybe strcmp() ???
     int cmp;
 
     std::string A = this->digits.to_string();
@@ -136,6 +196,8 @@ int BigInteger::compare(const BigInteger& N) const {
 
     return cmp;
 }
+*/
+
 
 
 // Manipulation Procedures ----------------------------------------------------
@@ -256,7 +318,7 @@ int normalizeList(List &L) {
 
 void shiftList(List& L, int p) {
     L.moveFront();
-    for (int i = 0; i <= p; i++) {
+    for (int ind = 0; ind < p; ind++) {
         L.insertBefore(0);
     }
     return;
@@ -264,10 +326,13 @@ void shiftList(List& L, int p) {
 
 
 void scalarMultList(List& L, ListElement m) {
+    ListElement m_copy;
     L.moveBack();
     while (L.position() > 0) {
-        L.setBefore(L.peekPrev() * m);
-        L.movePrev();
+        m_copy = L.movePrev() * m;
+        L.setAfter(m_copy);
+        //L.setBefore(L.movePrev() * m);
+        //L.movePrev();
     }
     return;
 }
@@ -308,29 +373,34 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
     return Diff;
 }
 
-
 BigInteger BigInteger::mult(const BigInteger& N) const {
     BigInteger product;
-    BigInteger A;
-    A.signum = this->signum;
-    A.digits = this->digits;
-    BigInteger B;
-    B.signum = N.signum;
-    B.digits = N.digits;
-    List scalar_mult;
+    BigInteger A = *this;
+    BigInteger B = N;
+    BigInteger tmp = B;
     B.digits.moveBack();
-    BigInteger copy;
-    copy.signum = this->signum;
-    copy.digits = this->digits;
-    while (B.digits.position() > 0) {
+    for (int i = 0; B.digits.position() > 0; i++) {
         std::cout << "DB1" << std::endl;
+        tmp.digits = B.digits;
+        tmp.signum = tmp.signum;
         //scalarMultList(A.digits, B.digits.movePrev());
-        scalarMultList(copy, B.digits.movePrev());
-        shiftList(copy, power); // might need to iterate
+        scalarMultList(tmp.digits, B.digits.movePrev());
+        shiftList(tmp.digits, i); // might need to iterate
         std::cout << "DB2" << std::endl;
+        product += tmp;
     }
-    product.digits = A.digits;
-    product.signum = A.signum;
+
+    // Gets products's signum
+    int sign;
+    sign = A.signum * B.signum;
+    if (sign > 0) {
+        product.signum = 1;
+    } else if (sign < 0) {
+        product.signum = -1;
+    } else {
+        product.signum = 0;
+    }
+    //product.signum = A.signum;
     std::cout << "Out of loop" << std::endl;
     return product;
 }
@@ -427,10 +497,11 @@ BigInteger operator-=( BigInteger& A, const BigInteger& B ) {
 }
 
 BigInteger operator*( const BigInteger& A, const BigInteger& B ) {
-    return A.mult(B);
+    return A;
+    //return A.mult(B);
 }
 
 BigInteger operator*=( BigInteger& A, const BigInteger& B ) {
-    A = A.mult(B);
+    //A = A.mult(B);
     return A;
 }
