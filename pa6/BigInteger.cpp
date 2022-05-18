@@ -2,10 +2,10 @@
 #include <math.h>
 
 // Global Const Variables
-//const long base = 1000000000;
-//const int power = 9;
-const long base = 100;  // CHANGE WHEN DONE
-const int power = 2;
+const long base = 1000000000;
+const int power = 9;
+//const long base = 100;  // CHANGE WHEN DONE
+//const int power = 2;
 
 // Constructors ---------------------------------------------------------------
 
@@ -150,56 +150,6 @@ int BigInteger::compare(const BigInteger& N) const {
 
 
 
-
-
-
-
-// THE WRONG STUFF, DELETE WHEN DONE
-/*
-    // maybe strcmp() ???
-    int cmp;
-
-    std::string A = this->digits.to_string();
-    std::string B = N.digits.to_string();
-    if (A < B) {
-        cmp = -1;
-        std::cout << "A less" << std::endl;
-    } else if (A > B) {
-        cmp = 1;
-        std::cout << "A greater" << std::endl;
-    } else {
-        std::cout << "equal" << std::endl;
-        cmp = 0;
-    }
-
-    //if (this->signum < N.signum) {
-        //cmp = -1;
-    //} else if (this->signum > N.signum) {
-        //cmp = 1;
-    //} else {
-        ////if (this->digits.length() < N.digits.length())
-        ////}
-    //}
-
-    if (signum > N.signum) {
-        return 1;
-    } else if (signum < N.signum) {
-        return -1;
-    }
-
-    if (signum > 0 && digits.length() > N.digits.length()) {
-        return 1;
-    } else if (signum > 0 && digits.length() < N.digits.length()) {
-        return -1;
-    }
-
-
-    return cmp;
-}
-*/
-
-
-
 // Manipulation Procedures ----------------------------------------------------
 
 // makeZero()
@@ -259,7 +209,7 @@ void sumList(List& S, List A, List B, long sgn) {
     }
 
     while (B.position() > 0) {
-        std::cout << "sumList DB2" << std::endl;
+        std::cout << "sumList() DB2" << std::endl;
         S.insertAfter(B.peekPrev());
         B.movePrev();
     }
@@ -326,14 +276,17 @@ void shiftList(List& L, int p) {
 
 
 void scalarMultList(List& L, ListElement m) {
-    ListElement m_copy;
     L.moveBack();
+    ListElement m_copy;
     while (L.position() > 0) {
-        m_copy = L.movePrev() * m;
+        m_copy = L.peekPrev() * m;
+
+        //m_copy = L.movePrev() * m;
+        L.movePrev();
         L.setAfter(m_copy);
+    }
         //L.setBefore(L.movePrev() * m);
         //L.movePrev();
-    }
     return;
 }
 
@@ -385,10 +338,13 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
         tmp.digits = B.digits;
         tmp.signum = tmp.signum;
         //scalarMultList(A.digits, B.digits.movePrev());
-        scalarMultList(tmp.digits, B.digits.movePrev());
+        //scalarMultList(tmp.digits, B.digits.movePrev());
+        scalarMultList(tmp.digits, B.digits.peekPrev());
+        B.digits.movePrev();
         shiftList(tmp.digits, i); // might need to iterate
         std::cout << "!!!!!!!!!!!DB2" << std::endl;
         product += tmp;
+        std::cout << "Prod: " << product << std::endl;
         //sumList(sum, sum, tmp.digits, 1);
         //normalizeList(sum);
     }
@@ -434,7 +390,7 @@ std::string BigInteger::to_string() {
         if (digits.position() > 1 && digits.position() < digits.length()) {
             std::string padSize = std::to_string(digits.peekNext());
             for (int i = 0; i < power - (padSize.length()); i++) {
-                zeros = '0' + zeros;
+                zeros = "0" + zeros;
             }
             str += zeros;
         }
@@ -487,7 +443,7 @@ BigInteger operator+( const BigInteger& A, const BigInteger& B ) {
 }
 
 BigInteger operator+=( BigInteger& A, const BigInteger& B ) {
-    A += A.add(B);
+    A = A.add(B);
     return A;
 }
 
@@ -496,8 +452,8 @@ BigInteger operator-( const BigInteger& A, const BigInteger& B ) {
 }
 
 BigInteger operator-=( BigInteger& A, const BigInteger& B ) {
-    A -= A.sub(B);
-    return B;
+    A = A.sub(B);
+    return A;
 }
 
 BigInteger operator*( const BigInteger& A, const BigInteger& B ) {
