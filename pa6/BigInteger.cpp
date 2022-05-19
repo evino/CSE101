@@ -300,6 +300,14 @@ BigInteger BigInteger::add(const BigInteger& N) const {
         sum.signum = sum_list.front() * normalizeList(sum_list);
     }
     
+    if (sum.signum < 0) {
+        sum.signum = -1;
+    } else if (sum.signum > 0) {
+        sum.signum = 1;
+    } else {
+        sum.signum = 0;
+    }
+
     //normalizeList(sum_list);
     sum.digits = sum_list;
     //sum.signum = normalizeList(sum.digits);
@@ -325,8 +333,8 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
     copy = N;
     //copy.digits = N.digits;
     //copy.signum = N.signum;
-    negateList(copy.digits);
-    //copy.negate();
+    //egateList(copy.digits);
+    copy.negate();
     Diff = this->add(copy);
     return Diff;
 }
