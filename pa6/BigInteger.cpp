@@ -12,8 +12,6 @@
 // Global Const Variables
 const long base = 1000000000;
 const int power = 9;
-//const long base = 100;  // CHANGE WHEN DONE
-//const int power = 2;
 
 // Constructors ---------------------------------------------------------------
 
@@ -45,14 +43,7 @@ BigInteger::BigInteger(std::string s) {
         s = s.substr(1, s.length() -1);
     }
 
-    /*
-    if (isdigit(s[0])) {
-        i = 0;
-    } else {
-        i = 1;
-    }
-    */
-
+    
     // Loops through string, making sure each element is a valid digit.
     bool zero = true;
     for (unsigned long ind = 0; ind < s.length(); ind++) {
@@ -298,8 +289,6 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     if (this->signum == N.signum) {
         sumList(sum_list, this->digits, N.digits, 1);
         sum.signum = signum * normalizeList(sum_list);
-        //normalizeList(sum_list);
-        //sum.digits = sum_list;
     } else if (this->signum < N.signum) {
         sumList(sum_list, N.digits, this->digits, -1);
         sum.signum = sum_list.front() * normalizeList(sum_list);
@@ -336,22 +325,14 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
     BigInteger B = N;
     BigInteger tmp;
     B.digits.moveBack();
-    std::cout << "(A) Before scalarMultList: " << this->digits << std::endl;
-    std::cout << "(B) Before scalarMultList: " << N.digits << std::endl;
     for (int i = 0; B.digits.position() > 0; i++) {
         tmp.digits = A.digits;
         tmp.signum = A.signum;
-        std::cout << "Before scalarMultList: " << tmp.digits << std::endl;
         scalarMultList(tmp.digits, B.digits.peekPrev());
-        std::cout << "After scalarMultList: " << tmp.digits << std::endl;
         B.digits.movePrev();
         shiftList(tmp.digits, i); // might need to iterate
-        std::cout << "loops Product: " << product << std::endl;
         product += tmp;
-        std::cout << "after loops Product: " << product << std::endl;
 
-        //sumList(sum, sum, tmp.digits, 1);
-        //normalizeList(sum);
     }
     std::cout << "Product: " << product << std::endl;
 
@@ -365,7 +346,6 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
     } else {
         product.signum = 0;
     }
-    //product.signum = A.signum;
     return product;
 }
 
@@ -386,32 +366,19 @@ std::string BigInteger::to_string() {
     }
 
     digits.moveFront();
-    //while (digits.peekNext() != digits.back()) {
     while (digits.position() < digits.length()) {
         str += std::to_string(digits.peekNext());
         digits.moveNext();
         std::string zeros;
         if (digits.position() >= 1 && digits.position() < digits.length()) {
             std::string padSize = std::to_string(digits.peekNext());
-            for (int i = 0; i < power - (padSize.length()); i++) {
+            for (unsigned long i = 0; i < power - (padSize.length()); i++) {
                 zeros = "0" + zeros;
             }
             str += zeros;
         }
     }
 
-    //str += std::to_string(digits.back());
-
-    //Padding, works I think..
-   /* 
-    if (str.length() < power) {
-        int zeroes_to_add = power - str.length();
-        for (int j = 0; j < zeroes_to_add; j++) {
-            str.insert(0, 1, '0');
-            str = '0' + str;
-        }
-    }
-*/
     return str;
 }
 
