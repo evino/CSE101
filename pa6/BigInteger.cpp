@@ -308,21 +308,7 @@ BigInteger BigInteger::add(const BigInteger& N) const {
         sum.signum = 0;
     }
 
-    //normalizeList(sum_list);
     sum.digits = sum_list;
-    //sum.signum = normalizeList(sum.digits);
-    //sum.signum = sum_list.front();
-    /*
-    if (sum_list.front() > 0) {
-        sum.signum = 1;
-    } else if (sum_list.front() < 0) {
-        sum.signum = -1;
-    } else if (sum_list.front() == 0) {
-        sum.signum = 0;
-    }
-    */
-    //std::cout << "sum's list is " << sum.digits << std::endl;
-    //normalizeList(sum_list);
     return sum;
 }
 
@@ -331,9 +317,6 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
     BigInteger Diff;
     BigInteger copy;
     copy = N;
-    //copy.digits = N.digits;
-    //copy.signum = N.signum;
-    //egateList(copy.digits);
     copy.negate();
     Diff = this->add(copy);
     return Diff;
@@ -345,18 +328,24 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
     BigInteger B = N;
     BigInteger tmp;
     B.digits.moveBack();
+    std::cout << "(A) Before scalarMultList: " << this->digits << std::endl;
+    std::cout << "(B) Before scalarMultList: " << N.digits << std::endl;
     for (int i = 0; B.digits.position() > 0; i++) {
         tmp.digits = A.digits;
         tmp.signum = A.signum;
-        //scalarMultList(A.digits, B.digits.movePrev());
-        //scalarMultList(tmp.digits, B.digits.movePrev());
+        std::cout << "Before scalarMultList: " << tmp.digits << std::endl;
         scalarMultList(tmp.digits, B.digits.peekPrev());
+        std::cout << "After scalarMultList: " << tmp.digits << std::endl;
         B.digits.movePrev();
         shiftList(tmp.digits, i); // might need to iterate
+        std::cout << "loops Product: " << product << std::endl;
         product += tmp;
+        std::cout << "after loops Product: " << product << std::endl;
+
         //sumList(sum, sum, tmp.digits, 1);
         //normalizeList(sum);
     }
+    std::cout << "Product: " << product << std::endl;
 
     // Gets products's signum
     int sign;
