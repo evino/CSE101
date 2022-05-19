@@ -1,3 +1,11 @@
+/*
+   Evin Odisho
+   edodisho
+   PA6
+   BigInteger.cpp
+*/
+
+
 #include "BigInteger.h"
 #include <math.h>
 
