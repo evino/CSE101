@@ -60,19 +60,8 @@ BigInteger::BigInteger(std::string s) {
 
     std::string str;
 
-    std::cout << "Digits rn " << digits << std::endl;
-
-    //digits.moveFront();
-    //for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
-    //for (; i < s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
      for (int ind = s.length(); ind >= 0; ind -= power) {
-        //if (s[i] == 0) {
-            //str = std::to_string(s[0]);
-            //digits.insertBefore(stol(str));
-            ////break;
-        //}
          if (ind < power) {
-             //ind = ind + power;
             str = s.substr(0, ind);
          } else {
             str = s.substr(ind - power, power);
@@ -81,10 +70,7 @@ BigInteger::BigInteger(std::string s) {
             digits.insertAfter(stol(str));
         }
 
-        // ADDED THIS LINE FOR DEBUG
-        std::cout << "Const str: " << str << std::endl;
     }
-     std::cout << "Digits (in constructor) is " << digits << std::endl;
 }
 
 BigInteger::BigInteger(const BigInteger& N) {
@@ -210,27 +196,18 @@ void sumList(List& S, List A, List B, int sgn) {
     long sum;
 
     while (A.position() > 0 && B.position() > 0) {
-        std::cout << "A peekPrev is: " << A.peekPrev() << std::endl;
-        std::cout << "B peekPrev is: " << B.peekPrev() << std::endl;
-        std::cout << "sgn: " << sgn << std::endl;
-
-        //if (B.peekPrev() < 0) /// test     
-        //sgn = 1;            ///test
         sum = A.peekPrev() + (sgn * B.peekPrev());
-        std::cout << "Sum is " << sum << std::endl;
         S.insertAfter(sum);
         A.movePrev();
         B.movePrev();
     }
 
     while (A.position() > 0) {
-        //std::cout << "DB1" << std::endl;
         S.insertAfter(A.peekPrev());
         A.movePrev();
     }
 
     while (B.position() > 0) {
-        //std::cout << "sumList() DB2" << std::endl;
         S.insertAfter(B.peekPrev());
         B.movePrev();
     }
@@ -243,9 +220,6 @@ void sumList(List& S, List A, List B, int sgn) {
 // Performs carries from right to left (least to most significant
 // digits), then returns the sign of the resulting integer. Used
 // by add(), sub() and mult().
-
-
-
 int normalizeList(List &L) {
     if (L.front() < 0) {
         negateList(L);
@@ -263,13 +237,11 @@ int normalizeList(List &L) {
         prevTemp = L.peekPrev();
         baseTemp = base;
         carry = floor(prevTemp / baseTemp);
-        //carry = floor(L.peekPrev() / base);
         mod = L.peekPrev() % base;
         if (mod < 0) {
             mod += base;
         }
         L.setBefore(mod);
-        //L.setBefore(L.peekPrev() % base);
         L.movePrev();
     }
 
@@ -302,12 +274,9 @@ void scalarMultList(List& L, ListElement m) {
     while (L.position() > 0) {
         m_copy = L.peekPrev() * m;
 
-        //m_copy = L.movePrev() * m;
         L.movePrev();
         L.setAfter(m_copy);
     }
-        //L.setBefore(L.movePrev() * m);
-        //L.movePrev();
     return;
 }
 
@@ -328,11 +297,7 @@ BigInteger BigInteger::add(const BigInteger& N) const {
         sum.signum = normalizeList(sum_list);
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
-        std::cout << "sum_list: " << sum_list << std::endl;
-        std::cout << "signum of sum_list: " << sum.sign() << std::endl;
-        std::cout << "List front: " << sum_list.front() << std::endl;
         sum.signum = sum_list.front() * normalizeList(sum_list);
-        std::cout << "signum of sum_list: " << sum.sign() << std::endl;
     }
     
     //normalizeList(sum_list);
@@ -365,7 +330,6 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
     //copy.signum = N.signum;
     negateList(copy.digits);
     //copy.negate();
-    std::cout << "Signum now is " << copy.sign() << std::endl;
     Diff = this->add(copy);
     return Diff;
 }
@@ -378,7 +342,6 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
     BigInteger tmp = B;
     B.digits.moveBack();
     for (int i = 0; B.digits.position() > 0; i++) {
-        std::cout << "!!!!DB1" << std::endl;
         tmp.digits = B.digits;
         tmp.signum = tmp.signum;
         //scalarMultList(A.digits, B.digits.movePrev());
@@ -386,14 +349,11 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
         scalarMultList(tmp.digits, B.digits.peekPrev());
         B.digits.movePrev();
         shiftList(tmp.digits, i); // might need to iterate
-        std::cout << "!!!!!!!!!!!DB2" << std::endl;
         product += tmp;
-        std::cout << "Prod: " << product << std::endl;
         //sumList(sum, sum, tmp.digits, 1);
         //normalizeList(sum);
     }
 
-    std::cout << "Outside of for in mult()" << std::endl;
     // Gets products's signum
     int sign;
     sign = A.signum * B.signum;
@@ -405,7 +365,6 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
         product.signum = 0;
     }
     //product.signum = A.signum;
-    std::cout << "Out of loop" << std::endl;
     return product;
 }
 
