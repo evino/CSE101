@@ -341,14 +341,13 @@ BigInteger BigInteger::sub(const BigInteger& N) const {
 
 BigInteger BigInteger::mult(const BigInteger& N) const {
     BigInteger product;
-    List sum;
     BigInteger A = *this;
     BigInteger B = N;
-    BigInteger tmp = B;
+    BigInteger tmp;
     B.digits.moveBack();
     for (int i = 0; B.digits.position() > 0; i++) {
-        tmp.digits = B.digits;
-        tmp.signum = tmp.signum;
+        tmp.digits = A.digits;
+        tmp.signum = A.signum;
         //scalarMultList(A.digits, B.digits.movePrev());
         //scalarMultList(tmp.digits, B.digits.movePrev());
         scalarMultList(tmp.digits, B.digits.peekPrev());
