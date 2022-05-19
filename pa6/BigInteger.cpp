@@ -294,7 +294,7 @@ BigInteger BigInteger::add(const BigInteger& N) const {
         //sum.digits = sum_list;
     } else if (this->signum < N.signum) {
         sumList(sum_list, N.digits, this->digits, -1);
-        sum.signum = normalizeList(sum_list);
+        sum.signum = sum_list.front() * normalizeList(sum_list);
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
         sum.signum = sum_list.front() * normalizeList(sum_list);
@@ -302,9 +302,6 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     
     //normalizeList(sum_list);
     sum.digits = sum_list;
-    std::cout << *this << std::endl;
-    std::cout << N << std::endl;
-    std::cout << sum << std::endl;
     //sum.signum = normalizeList(sum.digits);
     //sum.signum = sum_list.front();
     /*
