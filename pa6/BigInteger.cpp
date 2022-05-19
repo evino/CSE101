@@ -31,16 +31,23 @@ BigInteger::BigInteger(std::string s) {
     // at the front, and I can start from the 0 character. Otherwise, there is
     // a plus or minus sign at the front, so I must start from character 1 in the
     // string.
-    unsigned long i;
+    //unsigned long i;
+    
+    if (s[0] == '-' || s[0] == '+') {
+        s = s.substr(1, s.length() -1);
+    }
+
+    /*
     if (isdigit(s[0])) {
         i = 0;
     } else {
         i = 1;
     }
+    */
 
     // Loops through string, making sure each element is a valid digit.
     bool zero = true;
-    for (unsigned long ind = i; ind < s.length(); ind++) {
+    for (unsigned long ind = 0; ind < s.length(); ind++) {
         if (!(isdigit(s[ind]))) {
             throw std::invalid_argument("BigInteger: Constructor: non-numeric string");
         }
@@ -52,6 +59,8 @@ BigInteger::BigInteger(std::string s) {
     }
 
     std::string str;
+
+    std::cout << "Digits rn " << digits << std::endl;
 
     //digits.moveFront();
     //for (; i <= s.length(); i++) {  // Grabs power number of digits and places inserts them into digits list
@@ -68,10 +77,14 @@ BigInteger::BigInteger(std::string s) {
          } else {
             str = s.substr(ind - power, power);
          }
-        if (str.length() > 0)
+        if (str.length() > 0) {
             digits.insertAfter(stol(str));
+        }
+
+        // ADDED THIS LINE FOR DEBUG
+        std::cout << "Const str: " << str << std::endl;
     }
-     //std::cout << "Digits is " << digits << std::endl;
+     std::cout << "Digits (in constructor) is " << digits << std::endl;
 }
 
 BigInteger::BigInteger(const BigInteger& N) {
@@ -177,7 +190,7 @@ void BigInteger::negate() {
 // Changes the sign of each integer in List L. Used by sub().
 void negateList(List& L) {
     L.moveFront();
-    long negateElem;
+    ListElement negateElem;
     while (L.position() < L.length()) {
         negateElem = L.peekNext() * -1;
         L.setAfter(negateElem);
@@ -190,16 +203,19 @@ void negateList(List& L) {
 // sumList()
 // Overwrites the state of S with A + sgn*B (considered as vectors).
 // Used by both sum() and sub().
-void sumList(List& S, List A, List B, long sgn) {
+void sumList(List& S, List A, List B, int sgn) {
     S.moveBack();
     A.moveBack();
     B.moveBack();
     long sum;
+
     while (A.position() > 0 && B.position() > 0) {
         std::cout << "A peekPrev is: " << A.peekPrev() << std::endl;
         std::cout << "B peekPrev is: " << B.peekPrev() << std::endl;
-        if (B.peekPrev() < 0) /// test     
-            sgn = 1;            ///test
+        std::cout << "sgn: " << sgn << std::endl;
+
+        //if (B.peekPrev() < 0) /// test     
+        //sgn = 1;            ///test
         sum = A.peekPrev() + (sgn * B.peekPrev());
         std::cout << "Sum is " << sum << std::endl;
         S.insertAfter(sum);
@@ -303,17 +319,30 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     List sum_list;
 
     if (this->signum == N.signum) {
-        sumList(sum_list, this->digits, N.digits, N.signum);
+        sumList(sum_list, this->digits, N.digits, 1);
+        sum.signum = signum * normalizeList(sum_list);
         //normalizeList(sum_list);
         //sum.digits = sum_list;
+    } else if (this->signum < N.signum) {
+        sumList(sum_list, N.digits, this->digits, -1);
+        sum.signum = normalizeList(sum_list);
     } else {
         sumList(sum_list, this->digits, N.digits, -1);
-        //normalizeList(sum_list);
+        std::cout << "sum_list: " << sum_list << std::endl;
+        std::cout << "signum of sum_list: " << sum.sign() << std::endl;
+        std::cout << "List front: " << sum_list.front() << std::endl;
+        sum.signum = sum_list.front() * normalizeList(sum_list);
+        std::cout << "signum of sum_list: " << sum.sign() << std::endl;
     }
-    normalizeList(sum_list);
+    
+    //normalizeList(sum_list);
     sum.digits = sum_list;
+    std::cout << *this << std::endl;
+    std::cout << N << std::endl;
+    std::cout << sum << std::endl;
     //sum.signum = normalizeList(sum.digits);
     //sum.signum = sum_list.front();
+    /*
     if (sum_list.front() > 0) {
         sum.signum = 1;
     } else if (sum_list.front() < 0) {
@@ -321,7 +350,9 @@ BigInteger BigInteger::add(const BigInteger& N) const {
     } else if (sum_list.front() == 0) {
         sum.signum = 0;
     }
+    */
     //std::cout << "sum's list is " << sum.digits << std::endl;
+    //normalizeList(sum_list);
     return sum;
 }
 
@@ -388,7 +419,7 @@ BigInteger BigInteger::mult(const BigInteger& N) const {
 std::string BigInteger::to_string() {
     std::string str;
     if (this->signum == -1) {
-        //str = "-";
+        str = "-";
     } else if (signum == 0) {
         str = "0";
         return str;
