@@ -1,3 +1,4 @@
+#include "BigInteger.h"
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -33,8 +34,10 @@ int main(int argc, char * argv[]){
     getline(in, blankLine);
     getline(in, line3);
 
-    BigInteger A = BigInteger(line1);
-    BigInteger B = BigInteger(line3);
+    BigInteger A;
+    A = BigInteger(line1);
+    BigInteger B;
+    B = BigInteger(line3);
     
     out << A << endl;
     out << B << endl;
@@ -43,19 +46,25 @@ int main(int argc, char * argv[]){
     out << A - B << endl;
     out << A - A << endl;
 
-    BigInteger A_mult1 = BigInteger("3");
-    BigInteger B_mult1 = BigInteger("2");
+    BigInteger A_mult1;
+    A_mult1 = BigInteger("3");
+    BigInteger B_mult1;
+    B_mult1 = BigInteger("2");
     out << (A_mult1 * A) - (B_mult1 * B) << endl;
 
     out << A * B << endl;
     out << A * A << endl;
     out << B * B << endl;
 
-    BigInteger A_mult2 = BigInteger("9");
-    BigInteger B_mult2 = BigInteger("16");
-    BigInteger A_pow_4 = A * A * A * A;
-    BigInteger B_pow_5 = B * B * B * B * B;
-    out << (9 * A_pow_4) + (16 * B_pow_5) << endl;
+    BigInteger A_mult2;
+    A_mult2 = BigInteger("9");
+    BigInteger B_mult2;
+    B_mult2 = BigInteger("16");
+    BigInteger A_pow_4;
+    A_pow_4 = A * A * A * A;
+    BigInteger B_pow_5;
+    B_pow_5 = B * B * B * B * B;
+    out << (A_mult2 * A_pow_4) + (B_mult2 * B_pow_5) << endl;
 
 
     // close files
