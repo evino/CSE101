@@ -25,4 +25,5 @@ Dictionary::Dictionary(const Dictionary& D) {
 
 Dictionary::~Dictionary() {
     delete nil;
+    nil = nullptr;
 }
