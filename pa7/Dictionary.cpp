@@ -15,6 +15,7 @@ Dictionary::Dictionary() {
     num_pairs = 0;
 }
 
+/*
 Dictionary::Dictionary(const Dictionary& D) {
     nil = new Node("/", -1);
     nil = D.nil;
@@ -22,5 +23,8 @@ Dictionary::Dictionary(const Dictionary& D) {
     current = D.current;
     num_pairs = D.num_pairs;
 }
+*/
 
-
+Dictionary::~Dictionary() {
+    delete nil;
+}
