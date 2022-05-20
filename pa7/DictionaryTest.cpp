@@ -1,8 +1,11 @@
 #include "Dictionary.h"
 
+using namespace std;
 int main(int argc, char **argv) {
-    //Node n("test", 1);
+    cout << "First call of constructor" << endl;
     Dictionary A;
+    Dictionary B = Dictionary(A);
+    cout << "Copy constructor called" << endl;
 
     return EXIT_SUCCESS;
 }
