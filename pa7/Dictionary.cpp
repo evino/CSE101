@@ -8,4 +8,19 @@ Dictionary::Node::Node(keyType k, valType v) {
     right = nullptr;
 }
 
-//Dictionary::Dictionary() {
+Dictionary::Dictionary() {
+    nil = new Node("/", -1);
+    root = nullptr;
+    current = nullptr;
+    num_pairs = 0;
+}
+
+Dictionary::Dictionary(const Dictionary& D) {
+    nil = new Node("/", -1);
+    nil = D.nil;
+    root = D.root;
+    current = D.current;
+    num_pairs = D.num_pairs;
+}
+
+
