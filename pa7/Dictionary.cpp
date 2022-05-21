@@ -27,3 +27,9 @@ Dictionary::~Dictionary() {
     delete nil;
     nil = nullptr;
 }
+
+int Dictionary::size() const {
+    return num_pairs;
+}
+
+
