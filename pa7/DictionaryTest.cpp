@@ -6,6 +6,7 @@ int main(int argc, char **argv) {
     Dictionary A;
     Dictionary B = Dictionary(A);
     cout << "Copy constructor called" << endl;
+    cout << "B's size: " << B.size() << endl;
 
     return EXIT_SUCCESS;
 }
