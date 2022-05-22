@@ -1,7 +1,7 @@
 #include "Dictionary.h"
 
 
-// constructors -------------------------------------------
+// constructors ---------------------------------------------------------------
 
 Dictionary::Node::Node(keyType k, valType v) {
     key = k;
@@ -13,8 +13,8 @@ Dictionary::Node::Node(keyType k, valType v) {
 
 Dictionary::Dictionary() {
     nil = new Node("/", -1);
-    root = nullptr;
-    current = nullptr;
+    root = nil;
+    current = nil;
     num_pairs = 0;
 }
 
@@ -32,20 +32,38 @@ Dictionary::~Dictionary() {
 }
 
 
-// Binary Search Tree Helper Functions --------------------
+// Binary Search Tree Helper Functions ----------------------------------------
 // inOrderString()
 // Appends a string representation of the tree rooted at R to string s. The
 // string appended consists of: "key : value \n" for each key-value pair in
 // tree R, arranged in order by keys.
 void Dictionary::inOrderString(std::string& s, Node* R) const {
     // s = s + ...;
-    s = s + (R->key) + " : " + std::to_string(R->val) + " \n";  // Concatenates key and corresponding
-                                                           // key and value to string s.
+    if (current != nil) {
+        //current = R->left;
+        inOrderString(s, R->left);
+        s = s + (R->key) + " : " + std::to_string(R->val) + " \n";  // Concatenates key and corresponding
+                                                                   // key and value to string s.
+        //current = R->right;
+        inOrderString(s, R->right);
+    }
     return;
 }
 
 
-// Access Functions ---------------------------------------
+Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
+    if (R == nil || k == R->key) {
+        return R;
+    } else if (k < R->key) {
+        search(R->left, k);
+    } else {
+        search(R->right, k);
+    }
+
+    return R;  // Should never hit this return. To silence non-void return warning.
+}
+
+// Access Functions -----------------------------------------------------------
 
 int Dictionary::size() const {
     return num_pairs;
@@ -53,3 +71,21 @@ int Dictionary::size() const {
 
 //
 //bool Dictionary::contains(keyType k) const;
+
+
+// Manipulation Procedures() --------------------------------------------------
+
+// setValue()
+// If a pair with key==k exists, overwrites the corresponding value with v,·
+// otherwise inserts the new pair (k, v)
+void Dictionary::setValue(keyType k, valType v) {
+    current = root;
+    if (search(current, k) != nil) {
+        current->val = v;
+    } else {
+        current->key = k;
+        current->val = v;
+    }
+    return;
+}
+
