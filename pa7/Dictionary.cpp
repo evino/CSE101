@@ -1,5 +1,8 @@
 #include "Dictionary.h"
 
+
+// constructors -------------------------------------------
+
 Dictionary::Node::Node(keyType k, valType v) {
     key = k;
     val = v;
@@ -28,8 +31,21 @@ Dictionary::~Dictionary() {
     nil = nullptr;
 }
 
+
+// Binary Search Tree Helper Functions --------------------
+// inOrderString()
+// Appends a string representation of the tree rooted at R to string s. The
+// string appended consists of: "key : value \n" for each key-value pair in
+// tree R, arranged in order by keys.
+void Dictionary::inOrderString(std::string& s, Node* R) const {
+    // s = s + ...;
+
+
+// Access Functions ---------------------------------------
+
 int Dictionary::size() const {
     return num_pairs;
 }
 
-
+//
+//bool Dictionary::contains(keyType k) const;
