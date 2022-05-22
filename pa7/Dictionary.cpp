@@ -39,6 +39,10 @@ Dictionary::~Dictionary() {
 // tree R, arranged in order by keys.
 void Dictionary::inOrderString(std::string& s, Node* R) const {
     // s = s + ...;
+    s = s + (R->key) + " : " + std::to_string(R->val) + " \n";  // Concatenates key and corresponding
+                                                           // key and value to string s.
+    return;
+}
 
 
 // Access Functions ---------------------------------------
