@@ -51,8 +51,8 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
 }
 
 void Dictionary::preOrderString(std::string& s, Node* R) const {
-    //current = root;
-    std::cout << "Current is " << current << std::endl;
+    //current = R->val;
+    std::cout << "Current is " << R->val << std::endl;
     if (current != nil) {
         s = s + (R->key) + " : " + std::to_string(R->val) + " \n";
         preOrderString(s, R->left);
@@ -89,7 +89,7 @@ int Dictionary::size() const {
 // If a pair with key==k exists, overwrites the corresponding value with v,·
 // otherwise inserts the new pair (k, v)
 void Dictionary::setValue(keyType k, valType v) {
-    current = root;
+    //current = root;
     if (search(current, k) != nil) {
         current->val = v;
     } else {
