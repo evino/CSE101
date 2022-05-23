@@ -5,7 +5,7 @@ int main(int argc, char **argv) {
     cout << "First call of constructor" << endl;
     Dictionary A;
     string S[] = {"first", "second"};
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 2; i++) {
         cout << "I = " << i << endl;
         A.setValue(S[i], i+1);
     }
