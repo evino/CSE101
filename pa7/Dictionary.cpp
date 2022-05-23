@@ -18,6 +18,7 @@ Dictionary::Dictionary() {
     num_pairs = 0;
 }
 
+// Need to fix. This will not work.
 Dictionary::Dictionary(const Dictionary& D) {
     nil = new Node("/", -1);
     nil = D.nil;
@@ -39,7 +40,7 @@ Dictionary::~Dictionary() {
 // tree R, arranged in order by keys.
 void Dictionary::inOrderString(std::string& s, Node* R) const {
     // s = s + ...;
-    if (current != nil) {
+    if (R != nil) {
         //current = R->left;
         inOrderString(s, R->left);
         s = s + (R->key) + " : " + std::to_string(R->val) + " \n";  // Concatenates key and corresponding
@@ -52,12 +53,14 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
 
 void Dictionary::preOrderString(std::string& s, Node* R) const {
     //current = R->val;
-    std::cout << "Current is " << R->val << std::endl;
-    if (current != nil) {
+    std::cout << "\nRoot is " << root->val << std::endl;
+    std::cout << "current is " << current->val << std::endl;
+    if (R != nil) {
         s = s + (R->key) + " : " + std::to_string(R->val) + " \n";
         preOrderString(s, R->left);
         preOrderString(s, R->right);
     }
+    std::cout << "s = " << s << std::endl;
     return;
 }
 
@@ -90,13 +93,18 @@ int Dictionary::size() const {
 // otherwise inserts the new pair (k, v)
 void Dictionary::setValue(keyType k, valType v) {
     //current = root;
-    if (search(current, k) != nil) {
+    if (search(root, k) != nil) {
         current->val = v;
     } else {
         current->key = k;
         current->val = v;
+        if (num_pairs == 0) {
+            root = current;
+        }
         num_pairs++;
     }
+    std::cout << "In setVal(), key is " << current->key << ", and value is "
+        << current->val << std::endl;
     return;
 }
 
