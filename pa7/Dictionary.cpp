@@ -100,7 +100,7 @@ void Dictionary::setValue(keyType k, valType v) {
     Node *z = new Node(k, v);
     while (x != nil) {
         y = x;
-        if (k < x->key) {
+        if (z->key < x->key) {
             x = x->left;
         } else if  (k == x->key) {
             z->val = x->val;
