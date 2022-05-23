@@ -93,7 +93,34 @@ int Dictionary::size() const {
 // otherwise inserts the new pair (k, v)
 void Dictionary::setValue(keyType k, valType v) {
     //current = root;
-    if (search(root, k) != nil) {
+
+    Node *y = nil;
+    Node *x = root;
+
+    Node *z = new Node(k, v);
+    while (x != nil) {
+        y = x;
+        if (k < x->key) {
+            x = x->left;
+        } else if  (k == x->key) {
+            z->val = x->val;
+        } else {
+            x = x->right;
+        }
+    }
+    z->parent = y;
+    if (y == nil) {
+        root = z;
+    } else if (z->key < y->key) {
+        y->left = z;
+    } else {
+        y->right = z;
+    }
+
+
+
+    /*
+       if (search(root, k) != nil) {
         current->val = v;
     } else {
         current->key = k;
@@ -106,6 +133,7 @@ void Dictionary::setValue(keyType k, valType v) {
     std::cout << "In setVal(), key is " << current->key << ", and value is "
         << current->val << std::endl;
     return;
+    */
 }
 
 std::string Dictionary::pre_string() const {
