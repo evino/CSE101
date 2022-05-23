@@ -50,6 +50,16 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
     return;
 }
 
+void Dictionary::preOrderString(std::string& s, Node* R) const {
+    //current = root;
+    std::cout << "Current is " << current << std::endl;
+    if (current != nil) {
+        s = s + (R->key) + " : " + std::to_string(R->val) + " \n";
+        preOrderString(s, R->left);
+        preOrderString(s, R->right);
+    }
+    return;
+}
 
 Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
     if (R == nil || k == R->key) {
@@ -85,7 +95,13 @@ void Dictionary::setValue(keyType k, valType v) {
     } else {
         current->key = k;
         current->val = v;
+        num_pairs++;
     }
     return;
 }
 
+std::string Dictionary::pre_string() const {
+    std::string s;
+    preOrderString(s, root);
+    return s;
+}
