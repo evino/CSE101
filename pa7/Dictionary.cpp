@@ -98,16 +98,23 @@ void Dictionary::setValue(keyType k, valType v) {
     Node *x = root;
 
     Node *z = new Node(k, v);
+    std::cout << "DB1" << std::endl;
     while (x != nil) {
         y = x;
+        std::cout << "DB2" << std::endl;
         if (z->key < x->key) {
+            std::cout << "!!DB2.5" << std::endl;
             x = x->left;
-        } else if  (k == x->key) {
+            std::cout << "DB3" << std::endl;
+        } else if (z->key == x->key) {
             z->val = x->val;
+            std::cout << "DB4" << std::endl;
         } else {
             x = x->right;
+            std::cout << "DB5" << std::endl;
         }
     }
+    std::cout << "DB6" << std::endl;
     z->parent = y;
     if (y == nil) {
         root = z;
@@ -118,6 +125,7 @@ void Dictionary::setValue(keyType k, valType v) {
     }
 
 
+    std::cout << "End of set value" << std::endl;
 
     /*
        if (search(root, k) != nil) {
