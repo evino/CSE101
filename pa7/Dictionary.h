@@ -89,7 +89,7 @@ private:
 
    void transplant(Node *A, Node* B);
 
-   void Delete(Node* N)
+   void Delete(Node* N);
 public:
 
    // Class Constructors & Destructors ----------------------------------------
