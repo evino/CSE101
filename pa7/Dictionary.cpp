@@ -94,7 +94,7 @@ Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
         return R;
     } else if (k < R->key) {
         search(R->left, k);
-    } else if (k > R->key) {
+    } else {
         search(R->right, k);
     }
     
@@ -220,26 +220,57 @@ bool Dictionary::contains(keyType k) const {
 // Returns a reference to the value corresponding to key k.
 // Pre: contains(k)
 valType& Dictionary::getValue(keyType k) const {
+    if (!contains(k)) {
+        throw std::logic_error("Dictionary Error: Calling getValue() on dictionary that doesn't contain key k.");
+    }
+
     Node *n;
     n = search(root, k);
     return n->val;
 }
 
+// hasCurrent()
+// Returns true if the current iterator is defined, and returns false·
+// otherwise.
+bool Dictionary::hasCurrent() const {
+    if (current != nil) {
+        return true;
+    }
+
+    return false;
+}
+
+// currentKey()
+// Returns the current key.
+// Pre: hasCurrent()
+keyType Dictionary::currentKey() const {
+    if (hasCurrent() == false) {
+        std::logic_error("Dictionary Error: Calling currentKey on undefined current");
+    }
+
+    return current->key;
+}
+
+// currentVal()
+// Returns a reference to the current value
+// Pre: hasCurrent()
+valType& Dictionary::currentVal() const {
+    if (hasCurrent() == false) {
+        std::logic_error("Dictionary Error: Calling currentVal on undefined current");
+    }
+
+    return current->val;
+}
 
 // Manipulation Procedures() --------------------------------------------------
 
 // clear()
 // Resets this Dictionary to the empty state, containing no pairs.
 void Dictionary::clear() {
-    //Dictionary A;
     root = nil;
-    //Node *R = nil;
     postOrderDelete(root);
     current = nil;
     num_pairs = 0;
-    //R->parent = nil;
-    //R->left = nil;
-    //R->right = nil;
 }
 
 
@@ -286,6 +317,41 @@ void Dictionary::remove(keyType k) {
 
     return;
 }
+
+// begin()
+// If non-empty, places current iterator at the first (key, value) pair
+// (as defined by the order operator < on keys), otherwise does nothing.
+void Dictionary::begin() {
+    if (num_pairs > 0) {
+        current = root; // might need something else
+    }
+    return;
+}
+
+
+// end()
+// If non-empty, places current iterator at the last (key, value) pair
+// (as defined by the order operator < on keys), otherwise does nothing.
+void Dictionary::end() {
+    if (num_pairs > 0) {
+        current = findMax(root);
+    }
+    return;
+}
+
+
+// next()
+// If the current iterator is not at the last pair, advances current
+// to the next pair (as defined by the order operator < on keys). If
+// the current iterator is at the last pair, makes current undefined.
+// Pre: hasCurrent()
+void Dictionary::next() {
+    if (has
+
+
+
+
+
 
 
 
