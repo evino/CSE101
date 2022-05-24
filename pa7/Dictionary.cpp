@@ -14,6 +14,9 @@ Dictionary::Node::Node(keyType k, valType v) {
 Dictionary::Dictionary() {
     nil = new Node("/", -1);
     root = nil;
+    root->parent = nil;
+    root->left = nil;
+    root->right = nil;
     current = nil;
     num_pairs = 0;
 }
@@ -102,12 +105,15 @@ void Dictionary::setValue(keyType k, valType v) {
     while (x != nil) {
         y = x;
         std::cout << "DB2" << std::endl;
-        if (z->key < x->key) {
-            std::cout << "!!DB2.5" << std::endl;
+        std::cout << "Z key: " << z->key << std::endl;
+        std::cout << "x key: " << x->key << std::endl;  // segfaults cause of accessing x->key
+        if (z->key == x->key) {
+            x->val = z->val;
+            std::cout << "DB2.5" << std::endl;
+            return;
+        } else if (z->key < x->key) {
+            std::cout << "!!DB3" << std::endl;
             x = x->left;
-            std::cout << "DB3" << std::endl;
-        } else if (z->key == x->key) {
-            z->val = x->val;
             std::cout << "DB4" << std::endl;
         } else {
             x = x->right;
@@ -117,13 +123,22 @@ void Dictionary::setValue(keyType k, valType v) {
     std::cout << "DB6" << std::endl;
     z->parent = y;
     if (y == nil) {
-        root = z;
+        this->root = z;
+        //root->left = nil;
+        //root->right = nil;
+        //root->parent = nil;
+
     } else if (z->key < y->key) {
         y->left = z;
-    } else {
+    } 
+    //else if (z->key == y->key) {
+    //y->key = z->key;
+    //}
+    else {
         y->right = z;
     }
-
+    num_pairs++;
+    std::cout << "Z key: " << z->key << std::endl;
 
     std::cout << "End of set value" << std::endl;
 
