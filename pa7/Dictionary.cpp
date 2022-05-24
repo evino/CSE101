@@ -154,6 +154,23 @@ Dictionary::Node* Dictionary::findPrev(Node* N) {
     return y;
 }
 
+Dictionary::transplant(Node *A, Node *B) {
+    if (A->parent== nil) {
+        root = B;
+    } else if (A = A->parent->left) {
+        A->parent->left = B;
+    } else {
+        A->parent->right = B;
+    }
+
+    if (B != nil) {
+        B->parent = A.parent;
+    }
+
+    return;
+}
+
+
 // Access Functions -----------------------------------------------------------
 
 int Dictionary::size() const {
