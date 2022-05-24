@@ -231,12 +231,15 @@ valType& Dictionary::getValue(keyType k) const {
 // clear()
 // Resets this Dictionary to the empty state, containing no pairs.
 void Dictionary::clear() {
-    Dictionary A;
-    Node *R = nil;
-    postOrderDelete(R);
-    R->parent = nil;
-    R->left = nil;
-    R->right = nil;
+    //Dictionary A;
+    root = nil;
+    //Node *R = nil;
+    postOrderDelete(root);
+    current = nil;
+    num_pairs = 0;
+    //R->parent = nil;
+    //R->left = nil;
+    //R->right = nil;
 }
 
 
