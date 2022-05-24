@@ -183,6 +183,18 @@ valType& Dictionary::getValue(keyType k) const {
 
 // Manipulation Procedures() --------------------------------------------------
 
+// clear()
+// Resets this Dictionary to the empty state, containing no pairs.
+void Dictionary::clear() {
+    Dictionary A;
+    Node *R = nil;
+    postOrderDelete(R);
+    R->parent = nil;
+    R->left = nil;
+    R->right = nil;
+}
+
+
 // setValue()
 // If a pair with key==k exists, overwrites the corresponding value with v,·
 // otherwise inserts the new pair (k, v)
@@ -234,3 +246,5 @@ std::string Dictionary::pre_string() const {
     preOrderString(s, root);
     return s;
 }
+
+
