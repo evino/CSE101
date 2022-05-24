@@ -37,16 +37,40 @@ Dictionary::~Dictionary() {
 
 
 // Binary Search Tree Helper Functions ----------------------------------------
+
 // inOrderString()
 // Appends a string representation of the tree rooted at R to string s. The
 // string appended consists of: "key : value \n" for each key-value pair in
 // tree R, arranged in order by keys.
 void Dictionary::inOrderString(std::string& s, Node* R) const {
-    // s = s + ...;
     if (R != nil) {
         inOrderString(s, R->left);
         s = s + (R->key) + " : " + std::to_string(R->val) + " \n";  // Concatenates key and corresponding
         inOrderString(s, R->right);
+    }
+    return;
+}
+
+
+// preOrderCopy()
+// Recursively inserts a deep copy of the subtree rooted at R into this 
+// Dictionary. Recursion terminates at N.
+void Dictionary::preOrderCopy(Node* R, Node* N) {
+    if (R != nil) {
+        setValue(R->key, N->val);
+        preOrderCopy(R->left, N->left);
+        preOrderCopy(R->right, N->right);
+    }
+    return;
+}
+
+// postOrderDelete()
+// Deletes all Nodes in the subtree rooted at R, sets R to nil.
+void Dictionary::postOrderDelete(Node* R) {
+    if (R != nil) {
+        delete R;
+        postOrderDelete(R->left);
+        postOrderDelete(R->right);
     }
     return;
 }
@@ -65,11 +89,69 @@ Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
         return R;
     } else if (k < R->key) {
         search(R->left, k);
-    } else {
+    } else if (k > R->key) {
         search(R->right, k);
     }
+    
+    return nil;  // Should never hit this return. To silence non-void return warning.
+}
 
-    return R;  // Should never hit this return. To silence non-void return warning.
+// findMin()
+// If the subtree rooted at R is not empty, returns a pointer to the 
+// leftmost Node in that subtree, otherwise returns nil.
+Dictionary::Node* Dictionary::findMin(Node* R) {
+    if (R == nil) {
+        throw std::invalid_argument("Tree Error: Trying to find min Node from nil rooted subtree.");
+    }
+
+    while (R->left != nil) {
+        R = R->left;
+    }
+    return R;
+}
+
+// findMax()
+// If the subtree rooted at R is not empty, returns a pointer to the 
+// rightmost Node in that subtree, otherwise returns nil.
+Dictionary::Node* Dictionary::findMax(Node* R) {
+    if (R == nil) {
+        throw std::invalid_argument("Tree Error: Trying to find max node from nil rooted subtree.");
+    }
+
+    while (R->right != nil) {
+        R = R->right;
+    }
+    return R;
+}
+
+
+// findNext()
+// If N does not point to the rightmost Node, returns a pointer to the
+// Node after N in an in-order tree walk.  If N points to the rightmost 
+// Node, or is nil, returns nil. 
+Dictionary::Node* Dictionary::findNext(Node* N) {
+    if (N->right != nil) {
+        return findNext(N->right);
+    }
+    Node *y = N->parent;
+    while (y != nil && N == y->right) {
+        N = y;
+        y  = y->parent;
+    }
+    return y;
+}
+
+
+Dictionary::Node* Dictionary::findPrev(Node* N) {
+    if (N->left != nil) {
+        return findPrev(N->left);
+    }
+    Node *y = N->parent;
+    while (y != nil && N == y->left) {
+        N = y;
+        y = y->parent;
+    }
+    return y;
 }
 
 // Access Functions -----------------------------------------------------------
@@ -78,8 +160,25 @@ int Dictionary::size() const {
     return num_pairs;
 }
 
-//
-//bool Dictionary::contains(keyType k) const;
+// Returns true if there exists a pair such that key==k, and returns false
+// otherwise.
+bool Dictionary::contains(keyType k) const {
+    if (search(root, k) != nil) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+// getValue()
+// Returns a reference to the value corresponding to key k.
+// Pre: contains(k)
+valType& Dictionary::getValue(keyType k) const {
+    Node *n;
+    n = search(root, k);
+    return n->val;
+}
 
 
 // Manipulation Procedures() --------------------------------------------------
