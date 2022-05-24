@@ -59,7 +59,7 @@ void Dictionary::preOrderString(std::string& s, Node* R) const {
     //std::cout << "\nRoot is " << root->val << std::endl;
     //std::cout << "current is " << current->val << std::endl;
     if (R != nil) {
-        s = s + (R->key) + " : " + std::to_string(R->val) + " \n";
+        s = s + (R->key) + "\n";
         preOrderString(s, R->left);
         preOrderString(s, R->right);
     }
