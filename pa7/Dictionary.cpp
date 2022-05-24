@@ -14,9 +14,9 @@ Dictionary::Node::Node(keyType k, valType v) {
 Dictionary::Dictionary() {
     nil = new Node("/", -1);
     root = nil;
-    root->parent = nil;
-    root->left = nil;
-    root->right = nil;
+    //root->parent = nil;
+    //root->left = nil;
+    //root->right = nil;
     current = nil;
     num_pairs = 0;
 }
@@ -24,13 +24,10 @@ Dictionary::Dictionary() {
 // Need to fix. This will not work.
 Dictionary::Dictionary(const Dictionary& D) {
     nil = new Node("/", -1);
-    //D.root = nil;
-    preOrderCopy(D.root, D.nil);
-    //nil = D.nil;
-    //root = D.root;
+    root = nil;
     current = nil;
-    //current = D.current;
-    num_pairs = D.num_pairs;
+    num_pairs = 0;
+    preOrderCopy(D.root, D.nil);
 }
 
 Dictionary::~Dictionary() {
@@ -64,10 +61,10 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
 // Recursively inserts a deep copy of the subtree rooted at R into this 
 // Dictionary. Recursion terminates at N.
 void Dictionary::preOrderCopy(Node* R, Node* N) {
-    if (R != nil) {
-        setValue(R->key, N->val);
-        preOrderCopy(R->left, N->left);
-        preOrderCopy(R->right, N->right);
+    if (R != N) {
+        setValue(R->key, R->val);
+        preOrderCopy(R->left, N);
+        preOrderCopy(R->right, N);
     }
     return;
 }
@@ -76,10 +73,11 @@ void Dictionary::preOrderCopy(Node* R, Node* N) {
 // Deletes all Nodes in the subtree rooted at R, sets R to nil.
 void Dictionary::postOrderDelete(Node* R) {
     if (R != nil) {
-        delete R;
         postOrderDelete(R->left);
         postOrderDelete(R->right);
+        delete R;
     }
+    R = nil;
     return;
 }
 
@@ -96,12 +94,11 @@ Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
     if (R == nil || k == R->key) {
         return R;
     } else if (k < R->key) {
-        search(R->left, k);
-    } else {
-        search(R->right, k);
+        return search(R->left, k);
     }
     
-    return nil;  // Should never hit this return. To silence non-void return warning.
+    return search(R->right, k);
+    
 }
 
 // findMin()
@@ -179,6 +176,9 @@ void Dictionary::transplant(Node *A, Node *B) {
 }
 
 void Dictionary::Delete(Node *N) {
+    if (current == N) {
+        current = nil;
+    }
     if (N->left == nil) {
         transplant(N, N->right);
     } else if (N->right == nil) {
@@ -196,6 +196,8 @@ void Dictionary::Delete(Node *N) {
         y->left->parent = y;
     }
 
+    delete N;
+    N = nullptr;
     return;
 }
 
@@ -270,8 +272,8 @@ valType& Dictionary::currentVal() const {
 // clear()
 // Resets this Dictionary to the empty state, containing no pairs.
 void Dictionary::clear() {
-    root = nil;
     postOrderDelete(root);
+    root = nil;
     current = nil;
     num_pairs = 0;
 }
@@ -296,6 +298,8 @@ void Dictionary::setValue(keyType k, valType v) {
     }
     Node *z = new Node(k, v);
     z->parent = y;
+    z->left = nil;
+    z->right = nil;
     if (y == nil) {
         this->root = z;
     } else if (z->key < y->key) {
@@ -306,8 +310,8 @@ void Dictionary::setValue(keyType k, valType v) {
     }
     num_pairs++;
 
-    z->left = nil;
-    z->right = nil;
+    //z->left = nil;
+    //z->right = nil;
 }
 
 
@@ -316,8 +320,10 @@ void Dictionary::remove(keyType k) {
         throw std::logic_error("Dictionary Error: Calling remove() on dictionary that doesn't contain k.");
     }
     Node *n = search(root, k);
+
     Delete(n);
 
+    num_pairs--;
     return;
 }
 
@@ -406,7 +412,7 @@ std::string Dictionary::pre_string() const {
 // Returns true if and only if this Dictionary contains the same (key, value)
 // pairs as Dictionary D.
 bool Dictionary::equals(const Dictionary& D) const {
-    if (this->pre_string() == D.pre_string()) {
+    if (this->to_string() == D.to_string()) {
         return true;
     }
     return false;
@@ -439,15 +445,16 @@ bool operator==( const Dictionary& A, const Dictionary& B ) {
 Dictionary& Dictionary::operator=( const Dictionary& D ) {
     // Copied over from PA5
     if (this != &D) {
+        // change to swap
         Dictionary temp = D;
-        root = D.root;
-        nil = D.nil;
-        current = D.current;
-        num_pairs = D.num_pairs;
-        //std::swap(root, D.root);
-        //std::swap(nil, D.nil);
-        //std::swap(current, D.current);
-        //std::swap(current, D.);
+        //root = temp.root;
+        //nil = temp.nil;
+        //current = temp.current;
+        //num_pairs = temp.num_pairs;
+        std::swap(root, temp.root);
+        std::swap(nil, temp.nil);
+        std::swap(current, temp.current);
+        std::swap(num_pairs, temp.num_pairs);
     }
 
     return *this;
