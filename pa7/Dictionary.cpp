@@ -24,8 +24,10 @@ Dictionary::Dictionary() {
 // Need to fix. This will not work.
 Dictionary::Dictionary(const Dictionary& D) {
     nil = new Node("/", -1);
-    nil = D.nil;
-    root = D.root;
+    D.root = nil;
+    preOrderCopy(D.root, D.nil);
+    //nil = D.nil;
+    //root = D.root;
     current = D.current;
     num_pairs = D.num_pairs;
 }
@@ -346,9 +348,34 @@ void Dictionary::end() {
 // the current iterator is at the last pair, makes current undefined.
 // Pre: hasCurrent()
 void Dictionary::next() {
-    if (has
+    if (hasCurrent() == false) {
+         std::logic_error("Dictionary Error: Calling next() on undefined current");
+    } else if (current == findMax(root)) {
+        current = nil;
+        return;
+    }
+
+    current = findNext(root);
+    return;
+}
 
 
+// prev()
+// If the current iterator is not at the first pair, moves current to
+// the previous pair (as defined by the order operator < on keys). If
+// the current iterator is at the first pair, makes current undefined.
+// Pre: hasCurrent()
+void Dictionary::prev() {
+    if (hasCurrent() == false) {
+        std::logic_error("Dictionary Error: Calling prev() on undefined current");
+    } else if (current == findMin(root)) {
+        current = nil;
+        return;
+    }
+
+    current = findPrev(root);
+    return;
+}
 
 
 
@@ -374,4 +401,38 @@ std::string Dictionary::pre_string() const {
     return s;
 }
 
+// equals()
+// Returns true if and only if this Dictionary contains the same (key, value)
+// pairs as Dictionary D.
+bool Dictionary::equals(const Dictionary& D) const {
+    if (this->pre_string() == D.pre_string()) {
+        return true;
+    }
+    return false;
+}
 
+
+
+
+// Overloaded Operators -------------------------------------------------------
+
+// operator<<()
+// Inserts string representation of Dictionary D into stream, as defined by
+// member function to_string().
+std::ostream& operator<<( std::ostream& stream, Dictionary& D ) {
+    return stream << D.Dictionary::to_string();
+}
+
+
+// operator==()
+// Returns true if and only if Dictionary A equals Dictionary B, as defined
+// by member function equals().
+bool operator==( const Dictionary& A, const Dictionary& B ) {
+    return (A.Dictionary::equals(B));
+}
+
+
+// operator=()
+// Overwrites the state of this Dictionary with state of D, and returns a
+// reference to this Dictionary
+Dictionary& operator=( const Dictionary& D ) {
