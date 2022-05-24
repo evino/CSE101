@@ -31,9 +31,13 @@ Dictionary::Dictionary(const Dictionary& D) {
 }
 
 Dictionary::~Dictionary() {
+    clear();
+    delete nil;
+    nil = nullptr;
+}
+
     //delete nil;
 //    nil = nullptr;
-}
 
 
 
@@ -268,6 +272,19 @@ void Dictionary::setValue(keyType k, valType v) {
     z->left = nil;
     z->right = nil;
 }
+
+
+void Dictionary::remove(keyType k) {
+    if (!contains(k)) {
+        throw std::logic_error("Dictionary Error: Calling remove() on dictionary that doesn't contain k.");
+    }
+    Node *n = search(root, k);
+    Delete(n);
+
+    return;
+}
+
+
 
 // Other Functions ------------------------------------------------------------
 
