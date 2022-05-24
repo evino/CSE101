@@ -87,9 +87,13 @@ private:
    // Node, or is nil, returns nil.
    Node* findPrev(Node* N);
 
-   void transplant(Node *A, Node* B);
 
-   void Delete(Node* N);
+   // Added these two
+   void transplant(Node *A, Node *B);
+
+   void Delete(Node *N);
+
+
 public:
 
    // Class Constructors & Destructors ----------------------------------------
@@ -127,7 +131,7 @@ public:
 
    // currentKey()
    // Returns the current key.
-   // Pre: hasCurrent() 
+   // Pre: hasCurrent()
    keyType currentKey() const;
 
    // currentVal()
