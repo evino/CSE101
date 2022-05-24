@@ -36,6 +36,7 @@ Dictionary::~Dictionary() {
 }
 
 
+
 // Binary Search Tree Helper Functions ----------------------------------------
 
 // inOrderString()
@@ -154,21 +155,44 @@ Dictionary::Node* Dictionary::findPrev(Node* N) {
     return y;
 }
 
-Dictionary::transplant(Node *A, Node *B) {
+void Dictionary::transplant(Node *A, Node *B) {
     if (A->parent== nil) {
         root = B;
-    } else if (A = A->parent->left) {
+    } else if (A == A->parent->left) {
         A->parent->left = B;
     } else {
         A->parent->right = B;
     }
 
     if (B != nil) {
-        B->parent = A.parent;
+        B->parent = A->parent;
     }
 
     return;
 }
+
+void Dictionary::Delete(Node *N) {
+    if (N->left == nil) {
+        transplant(N, N->right);
+    } else if (N->right == nil) {
+        transplant(N, N->left);
+    }
+    else {
+        Node *y = findMin(N->right);
+        if (y->parent != N) {
+            transplant(y, y->right);
+            y->right = N->right;
+            y->right->parent = y;
+        }
+        transplant(N, y);
+        y->left = N->left;
+        y->left->parent = y;
+    }
+
+    return;
+}
+
+
 
 
 // Access Functions -----------------------------------------------------------
