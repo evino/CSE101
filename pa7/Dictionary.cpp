@@ -24,11 +24,12 @@ Dictionary::Dictionary() {
 // Need to fix. This will not work.
 Dictionary::Dictionary(const Dictionary& D) {
     nil = new Node("/", -1);
-    D.root = nil;
+    //D.root = nil;
     preOrderCopy(D.root, D.nil);
     //nil = D.nil;
     //root = D.root;
-    current = D.current;
+    current = nil;
+    //current = D.current;
     num_pairs = D.num_pairs;
 }
 
@@ -435,4 +436,19 @@ bool operator==( const Dictionary& A, const Dictionary& B ) {
 // operator=()
 // Overwrites the state of this Dictionary with state of D, and returns a
 // reference to this Dictionary
-Dictionary& operator=( const Dictionary& D ) {
+Dictionary& Dictionary::operator=( const Dictionary& D ) {
+    // Copied over from PA5
+    if (this != &D) {
+        Dictionary temp = D;
+        root = D.root;
+        nil = D.nil;
+        current = D.current;
+        num_pairs = D.num_pairs;
+        //std::swap(root, D.root);
+        //std::swap(nil, D.nil);
+        //std::swap(current, D.current);
+        //std::swap(current, D.);
+    }
+
+    return *this;
+}
