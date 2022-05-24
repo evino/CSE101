@@ -56,14 +56,14 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
 
 void Dictionary::preOrderString(std::string& s, Node* R) const {
     //current = R->val;
-    std::cout << "\nRoot is " << root->val << std::endl;
-    std::cout << "current is " << current->val << std::endl;
+    //std::cout << "\nRoot is " << root->val << std::endl;
+    //std::cout << "current is " << current->val << std::endl;
     if (R != nil) {
         s = s + (R->key) + " : " + std::to_string(R->val) + " \n";
         preOrderString(s, R->left);
         preOrderString(s, R->right);
     }
-    std::cout << "s = " << s << std::endl;
+    //std::cout << "s = " << s << std::endl;
     return;
 }
 
@@ -100,27 +100,28 @@ void Dictionary::setValue(keyType k, valType v) {
     Node *y = nil;
     Node *x = root;
 
-    Node *z = new Node(k, v);
-    std::cout << "DB1" << std::endl;
+    //Node *z = new Node(k, v);
+    //std::cout << "DB1" << std::endl;
     while (x != nil) {
         y = x;
-        std::cout << "DB2" << std::endl;
-        std::cout << "Z key: " << z->key << std::endl;
-        std::cout << "x key: " << x->key << std::endl;  // segfaults cause of accessing x->key
-        if (z->key == x->key) {
-            x->val = z->val;
-            std::cout << "DB2.5" << std::endl;
+        //std::cout << "DB2" << std::endl;
+        //std::cout << "Z key: " << k << std::endl;
+        //std::cout << "x key: " << x->key << std::endl;  // segfaults cause of accessing x->key
+        if (k == x->key) {
+            x->val = v;
+            //std::cout << "DB2.5" << std::endl;
             return;
-        } else if (z->key < x->key) {
-            std::cout << "!!DB3" << std::endl;
+        } else if (k < x->key) {
+            //std::cout << "!!DB3" << std::endl;
             x = x->left;
-            std::cout << "DB4" << std::endl;
+            //std::cout << "DB4" << std::endl;
         } else {
             x = x->right;
-            std::cout << "DB5" << std::endl;
+            //std::cout << "DB5" << std::endl;
         }
     }
-    std::cout << "DB6" << std::endl;
+    Node *z = new Node(k, v);
+    //std::cout << "DB6" << std::endl;
     z->parent = y;
     if (y == nil) {
         this->root = z;
@@ -130,17 +131,17 @@ void Dictionary::setValue(keyType k, valType v) {
 
     } else if (z->key < y->key) {
         y->left = z;
-    } 
-    //else if (z->key == y->key) {
-    //y->key = z->key;
-    //}
+    }
     else {
         y->right = z;
     }
     num_pairs++;
-    std::cout << "Z key: " << z->key << std::endl;
+    //std::cout << "Z key: " << z->key << std::endl;
 
-    std::cout << "End of set value" << std::endl;
+    z->left = nil;
+    z->right = nil;
+}
+    //std::cout << "End of set value" << std::endl;
 
     /*
        if (search(root, k) != nil) {
@@ -157,7 +158,6 @@ void Dictionary::setValue(keyType k, valType v) {
         << current->val << std::endl;
     return;
     */
-}
 
 std::string Dictionary::pre_string() const {
     std::string s;
