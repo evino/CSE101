@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     cout << "\n\nB's size: " << B.size() << endl;
     std::cout << "\n" << B.pre_string() << endl;
 
-    std::cout << B.getValue("foo") << endl;
+    //std::cout << B.getValue("foo") << endl;
 
     if(B.contains("par")) {
         cout << "B containing 'par' is true!" << endl;
