@@ -44,26 +44,19 @@ Dictionary::~Dictionary() {
 void Dictionary::inOrderString(std::string& s, Node* R) const {
     // s = s + ...;
     if (R != nil) {
-        //current = R->left;
         inOrderString(s, R->left);
         s = s + (R->key) + " : " + std::to_string(R->val) + " \n";  // Concatenates key and corresponding
-                                                                   // key and value to string s.
-        //current = R->right;
         inOrderString(s, R->right);
     }
     return;
 }
 
 void Dictionary::preOrderString(std::string& s, Node* R) const {
-    //current = R->val;
-    //std::cout << "\nRoot is " << root->val << std::endl;
-    //std::cout << "current is " << current->val << std::endl;
     if (R != nil) {
         s = s + (R->key) + "\n";
         preOrderString(s, R->left);
         preOrderString(s, R->right);
     }
-    //std::cout << "s = " << s << std::endl;
     return;
 }
 
@@ -95,40 +88,23 @@ int Dictionary::size() const {
 // If a pair with key==k exists, overwrites the corresponding value with v,·
 // otherwise inserts the new pair (k, v)
 void Dictionary::setValue(keyType k, valType v) {
-    //current = root;
-
     Node *y = nil;
     Node *x = root;
-
-    //Node *z = new Node(k, v);
-    //std::cout << "DB1" << std::endl;
     while (x != nil) {
         y = x;
-        //std::cout << "DB2" << std::endl;
-        //std::cout << "Z key: " << k << std::endl;
-        //std::cout << "x key: " << x->key << std::endl;  // segfaults cause of accessing x->key
         if (k == x->key) {
             x->val = v;
-            //std::cout << "DB2.5" << std::endl;
             return;
         } else if (k < x->key) {
-            //std::cout << "!!DB3" << std::endl;
             x = x->left;
-            //std::cout << "DB4" << std::endl;
         } else {
             x = x->right;
-            //std::cout << "DB5" << std::endl;
         }
     }
     Node *z = new Node(k, v);
-    //std::cout << "DB6" << std::endl;
     z->parent = y;
     if (y == nil) {
         this->root = z;
-        //root->left = nil;
-        //root->right = nil;
-        //root->parent = nil;
-
     } else if (z->key < y->key) {
         y->left = z;
     }
@@ -136,28 +112,23 @@ void Dictionary::setValue(keyType k, valType v) {
         y->right = z;
     }
     num_pairs++;
-    //std::cout << "Z key: " << z->key << std::endl;
 
     z->left = nil;
     z->right = nil;
 }
-    //std::cout << "End of set value" << std::endl;
 
-    /*
-       if (search(root, k) != nil) {
-        current->val = v;
-    } else {
-        current->key = k;
-        current->val = v;
-        if (num_pairs == 0) {
-            root = current;
-        }
-        num_pairs++;
-    }
-    std::cout << "In setVal(), key is " << current->key << ", and value is "
-        << current->val << std::endl;
-    return;
-    */
+// Other Functions ------------------------------------------------------------
+
+// to_string()
+// Returns a string representation of this Dictionary. Consecutive (key, value)
+// pairs are separated by a newline "\n" character, and the items key and value 
+// are separated by the sequence space-colon-space " : ". The pairs are arranged 
+// in order, as defined by the order operator <.
+std::string Dictionary::to_string() const {
+    std::string s;
+    inOrderString(s, root);
+    return s;
+}
 
 std::string Dictionary::pre_string() const {
     std::string s;
