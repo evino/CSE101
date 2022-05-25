@@ -45,7 +45,7 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
         inOrderString(s, R->left);
         s = s + (R->key) + " : ";
         s = s + std::to_string(R->val);
-        s = s + " \n";  // Concatenates key and corresponding
+        s = s + "\n";  // Concatenates key and corresponding
         inOrderString(s, R->right);
     }
     return;
