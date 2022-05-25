@@ -121,6 +121,58 @@ int main(int argc, char **argv) {
     }
 
 
+    // Dictionary_equals debug
+    
+    A.clear();
+    B.clear();
+    if (!(A == B))
+      return 1;
+
+    A.setValue("a", 1);
+    A.setValue("b", 5);
+    A.setValue("e", 10);
+    A.setValue("h", 15);
+    A.setValue("f", 20);
+    A.setValue("i", 100);
+
+    if ((A == B)) {
+        cout << "Failed 2nd test, They should not be equal" << endl;
+        return 2;
+    } else {
+        cout << "Passed test 2" << endl;
+    }
+
+    B.setValue("a", 1);
+    B.setValue("b", 5);
+    B.setValue("e", 10);
+    B.setValue("h", 15);
+    B.setValue("f", 20);
+    B.setValue("i", 100);
+
+    if (!(A == B)) {
+      cout << "Failed test 3, should be equal";
+      return 3;
+    }
+
+    cout << "Passed test 3" << endl;
+
+
+    B.clear();
+    B.setValue("i", 100);
+    B.setValue("f", 20);
+    B.setValue("h", 15);
+    B.setValue("e", 10);
+    B.setValue("b", 5);
+    B.setValue("a", 1);
+
+    if (!(A == B)) {
+        cout << "Test 4 failed" << endl;
+        return 4;
+    }
+    cout << "Passed test 4" << endl;
+
+    
+
     return EXIT_SUCCESS;
 }
 
