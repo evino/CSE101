@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 
 
     Dictionary D;
-    for (int lineCount = 0 ; getline(in, str); lineCount++) {
+    for (int lineCount = 1; getline(in, str); lineCount++) {
     	D.setValue(str, lineCount);
     }
 
