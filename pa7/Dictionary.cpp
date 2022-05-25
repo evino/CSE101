@@ -14,9 +14,6 @@ Dictionary::Node::Node(keyType k, valType v) {
 Dictionary::Dictionary() {
     nil = new Node("/", -1);
     root = nil;
-    //root->parent = nil;
-    //root->left = nil;
-    //root->right = nil;
     current = nil;
     num_pairs = 0;
 }
@@ -35,10 +32,6 @@ Dictionary::~Dictionary() {
     delete nil;
     nil = nullptr;
 }
-
-    //delete nil;
-//    nil = nullptr;
-
 
 
 // Binary Search Tree Helper Functions ----------------------------------------
@@ -97,9 +90,9 @@ Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
         return R;
     } else if (k < R->key) {
         return search(R->left, k);
+    } else {
+        return search(R->right, k);
     }
-    
-    return search(R->right, k);
     
 }
 
@@ -150,7 +143,7 @@ Dictionary::Node* Dictionary::findNext(Node* N) {
     Node *y = N->parent;
     while (y != nil && N == y->right) {
         N = y;
-        y  = y->parent;
+        y = y->parent;
     }
     return y;
 }
@@ -253,9 +246,9 @@ valType& Dictionary::getValue(keyType k) const {
 bool Dictionary::hasCurrent() const {
     if (current != nil) {
         return true;
+    } else {
+        return false;
     }
-
-    return false;
 }
 
 // currentKey()
