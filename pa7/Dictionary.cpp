@@ -338,7 +338,8 @@ void Dictionary::remove(keyType k) {
 // (as defined by the order operator < on keys), otherwise does nothing.
 void Dictionary::begin() {
     if (num_pairs > 0) {
-        current = root; // might need something else
+        current = findMin(root);
+        //current = root; // might need something else
     }
     return;
 }
