@@ -77,5 +77,51 @@ int main(int argc, char **argv) {
         cout << "false" << endl;
     }
 
+    Dictionary C = B;
+    C.end();
+    cout << "C's to_string: " << C << endl;
+
+
+    cout << "Clearing C" << endl;
+    C.clear();
+
+    C.setValue("one", 1);
+    C.setValue("two", 2);
+    C.setValue("three", 3);
+    C.setValue("four", 4);
+    C.setValue("five", 5);
+
+    cout << "C's to_string now is: " << C << endl;
+
+    cout << "Calling set value with duplicate kay" << endl;
+
+    C.setValue("one", 25);
+    cout << "After overwriting value of one of the node, C nos is: \n" << C << endl;
+
+    C.end();
+    cout << "C's end value is: " << C.currentVal() << endl;
+    cout << "C's end key is: " << C.currentKey() << endl;
+
+    C.prev();
+    cout << "C's value now is: " << C.currentVal() << endl;
+
+    C.begin();
+    cout << "C's front value is: " << C.currentVal() << endl;
+    cout << "C's front key is: " << C.currentKey() << endl;
+    
+    cout << "After calling next on C, C's value is: " << C.currentVal() << endl;
+
+    cout << "C's get value at key 'three' returns: " << C.getValue("three") << endl;
+
+    
+    if (A == C) {
+        cout << "A & C are equal" << endl;
+    } else {
+        cout << "A & C are NOT equal" << endl;
+    }
+
+
     return EXIT_SUCCESS;
 }
+
+
