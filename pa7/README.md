@@ -8,7 +8,7 @@
         - Makefile provided on CSE 101 site, to
         use for compiling source code, and
         generating executable/binary files.
-    3. Dictionay.h
+    3. Dictionary.h
         - Dictionary ADT header file.
     4. Dictionary.cpp
         - Dictionary ADT implementation file.
