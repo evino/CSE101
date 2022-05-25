@@ -108,7 +108,8 @@ Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
 // leftmost Node in that subtree, otherwise returns nil.
 Dictionary::Node* Dictionary::findMin(Node* R) {
     if (R == nil) {
-        throw std::logic_error("Tree Error: Trying to find min Node from nil rooted subtree.");
+        return nil;
+        //throw std::logic_error("Tree Error: Trying to find min Node from nil rooted subtree.");
     }
 
     while (R->left != nil) {
@@ -122,7 +123,8 @@ Dictionary::Node* Dictionary::findMin(Node* R) {
 // rightmost Node in that subtree, otherwise returns nil.
 Dictionary::Node* Dictionary::findMax(Node* R) {
     if (R == nil) {
-        throw std::logic_error("Tree Error: Trying to find max node from nil rooted subtree.");
+        return nil;
+        //throw std::logic_error("Tree Error: Trying to find max node from nil rooted subtree.");
     }
 
     while (R->right != nil) {
@@ -368,12 +370,13 @@ void Dictionary::end() {
 void Dictionary::next() {
     if (hasCurrent() == false) {
          throw std::logic_error("Dictionary Error: Calling next() on undefined current");
-    } else if (current == findMax(root)) {
-        current = nil;
-        return;
     }
-
-    current = findNext(root);
+    if (current != findMax(root)) {
+        current = findNext(current);
+        return;
+    } else {
+        current = nil;
+    }
     return;
 }
 
@@ -386,12 +389,13 @@ void Dictionary::next() {
 void Dictionary::prev() {
     if (hasCurrent() == false) {
         throw std::logic_error("Dictionary Error: Calling prev() on undefined current");
-    } else if (current == findMin(root)) {
-        current = nil;
+    } else if (current != findMin(root)) {
+        current = findPrev(current);
         return;
+    } else {
+        current = nil;
     }
 
-    current = findPrev(root);
     return;
 }
 
