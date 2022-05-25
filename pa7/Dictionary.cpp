@@ -1,3 +1,10 @@
+/*
+   Evin Odisho
+   edodisho
+   PA7
+   Dictionary.cpp
+*/
+
 #include "Dictionary.h"
 
 
