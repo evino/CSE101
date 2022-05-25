@@ -54,7 +54,7 @@ void Dictionary::inOrderString(std::string& s, Node* R) const {
         s += (R->key);
         s += " : ";
         s += std::to_string(R->val);
-        s += "\n";  // Concatenates key and corresponding
+        s += "\n";
         inOrderString(s, R->right);
     }
     return;
@@ -87,7 +87,6 @@ void Dictionary::postOrderDelete(Node* R) {
 
 void Dictionary::preOrderString(std::string& s, Node* R) const {
     if (R != nil) {
-        // maybe split up?
         s += (R->key) + "\n";
         preOrderString(s, R->left);
         preOrderString(s, R->right);
@@ -112,7 +111,6 @@ Dictionary::Node* Dictionary::search(Node* R, keyType k) const {
 Dictionary::Node* Dictionary::findMin(Node* R) {
     if (R == nil) {
         return nil;
-        //throw std::logic_error("Tree Error: Trying to find min Node from nil rooted subtree.");
     }
 
     while (R->left != nil) {
@@ -127,7 +125,6 @@ Dictionary::Node* Dictionary::findMin(Node* R) {
 Dictionary::Node* Dictionary::findMax(Node* R) {
     if (R == nil) {
         return nil;
-        //throw std::logic_error("Tree Error: Trying to find max node from nil rooted subtree.");
     }
 
     while (R->right != nil) {
@@ -317,9 +314,6 @@ void Dictionary::setValue(keyType k, valType v) {
         y->right = z;
     }
     num_pairs++;
-
-    //z->left = nil;
-    //z->right = nil;
 }
 
 
@@ -341,7 +335,6 @@ void Dictionary::remove(keyType k) {
 void Dictionary::begin() {
     if (num_pairs > 0) {
         current = findMin(root);
-        //current = root; // might need something else
     }
     return;
 }
@@ -456,12 +449,7 @@ bool operator==( const Dictionary& A, const Dictionary& B ) {
 Dictionary& Dictionary::operator=( const Dictionary& D ) {
     // Copied over from PA5
     if (this != &D) {
-        // change to swap
         Dictionary temp = D;
-        //root = temp.root;
-        //nil = temp.nil;
-        //current = temp.current;
-        //num_pairs = temp.num_pairs;
         std::swap(root, temp.root);
         std::swap(nil, temp.nil);
         std::swap(current, temp.current);
