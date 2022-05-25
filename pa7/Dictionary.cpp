@@ -43,9 +43,11 @@ Dictionary::~Dictionary() {
 void Dictionary::inOrderString(std::string& s, Node* R) const {
     if (R != nil) {
         inOrderString(s, R->left);
-        s = s + (R->key) + " : ";
-        s = s + std::to_string(R->val);
-        s = s + "\n";  // Concatenates key and corresponding
+        // might be faster with +=
+        s += (R->key);
+        s += " : ";
+        s += std::to_string(R->val);
+        s += "\n";  // Concatenates key and corresponding
         inOrderString(s, R->right);
     }
     return;
@@ -78,7 +80,8 @@ void Dictionary::postOrderDelete(Node* R) {
 
 void Dictionary::preOrderString(std::string& s, Node* R) const {
     if (R != nil) {
-        s = s + (R->key) + "\n";
+        // maybe split up?
+        s += (R->key) + "\n";
         preOrderString(s, R->left);
         preOrderString(s, R->right);
     }
@@ -132,10 +135,6 @@ Dictionary::Node* Dictionary::findMax(Node* R) {
 // Node after N in an in-order tree walk.  If N points to the rightmost 
 // Node, or is nil, returns nil. 
 Dictionary::Node* Dictionary::findNext(Node* N) {
-    if (N == nil || N == findMax(root)) {
-        return nil;
-    }
-
 
     if (N->right != nil) {
         return findMin(N->right);
@@ -150,10 +149,6 @@ Dictionary::Node* Dictionary::findNext(Node* N) {
 
 
 Dictionary::Node* Dictionary::findPrev(Node* N) {
-    if (N == nil || N == findMin(root)) {
-        return nil;
-    }
-
     if (N->left != nil) {
         return findMax(N->left);
     }
@@ -307,7 +302,7 @@ void Dictionary::setValue(keyType k, valType v) {
     z->left = nil;
     z->right = nil;
     if (y == nil) {
-        this->root = z;
+        root = z;
     } else if (z->key < y->key) {
         y->left = z;
     }
