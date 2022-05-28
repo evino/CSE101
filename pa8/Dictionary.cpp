@@ -252,6 +252,35 @@ void Dictionary::RightRotate(Node *N) {
     return;
 }
 
+void Dictionary::RB_Insert(Node *N) {
+    Node *y = nil;
+    Node *x = root;
+    
+    while (x != nil) {
+        y = x;
+        if (N->key < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+
+    N->parent = y;
+    if (y == nil) {
+        root = N;
+    } else if (N->key < y->key) {
+        y->left = N;
+    } else {
+        y->right = N;
+    }
+
+    N->left = nil;
+    N->right = nil;
+    N->color = 1;
+    RB_InsertFixUp(N);
+    return;
+}
+
 void Dictionary::RB_InsertFixUp(Node* N) {
     Node *y;
     while (N->parent->color == 1) {
@@ -294,7 +323,16 @@ void Dictionary::RB_InsertFixUp(Node* N) {
 }
 
 
-
+void Dictionary::RB_Transplant(Node *u, Node *v) {
+    if (u->parent == nil) {
+        root = v;
+    } else if (u == u->parent->left) {
+        u->parent->left = v;
+    } else {
+        u->parent->right = v;
+    }
+    v->parent = u->parent;
+}
 
 
 // Access Functions -----------------------------------------------------------
