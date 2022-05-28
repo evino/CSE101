@@ -99,6 +99,9 @@ private:
    // RB_InsertFixUP()
    void RB_InsertFixUp(Node* N);
 
+   // RB_Insert()
+   void RB_Insert(Node *N);
+
    // RB_Transplant()
    void RB_Transplant(Node* u, Node* v);
 
