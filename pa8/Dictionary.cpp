@@ -334,6 +334,98 @@ void Dictionary::RB_Transplant(Node *u, Node *v) {
     v->parent = u->parent;
 }
 
+void Dictionary::RB_Delete(Node *N) {
+    Node *x;
+    Node *y;
+    y = N;
+    int y_original_color = y->color;
+    if (N->left == nil) {
+        x = N->right;
+        transplant(N, N->right);
+    } else if (N->right == nil) {
+        x = N->left;
+        transplant(N, N->left);
+    } else {
+        y = findMin(N->right);
+        y_original_color = y->color;
+        x = y->right;
+        if (y->parent == N) {
+            x->parent = y;
+        } else {
+            transplant(y, y->right);
+            y->right = N->right;
+            y->right->parent = y;
+        }
+        transplant(N, y);
+        y->left = N->left;
+        y->left->parent = y;
+        y->color = N->color;
+    }
+
+    if (y_original_color == 0) {
+        RB_DeleteFixUp(x);
+    }
+
+    return;
+}
+
+
+void Dictionary::RB_DeleteFixUp(Node *N) {
+    Node *w;
+    while (N != root && N->color == 0) {
+        if (N == N->parent->left) {
+            w = N->parent->right;
+            if (w->color == 1) {
+                w->color = 0;
+                N->parent->color = 1;
+                LeftRotate(N->parent);
+                w = N->parent->right;
+            }
+            if (w->left->color == 0 && w->right->color == 0) {
+                w->color = 1;
+                N = N->parent;
+            } else {
+                if (w->right->color == 0) {
+                    w->left->color = 0;
+                    w->color = 1;
+                    RightRotate(w);
+                    w = N->parent->right;
+                }
+                w->color = N->parent->color;
+                N->parent->color = 0;
+                w->right->color = 0;
+                LeftRotate(N->parent);
+                N = root;
+            }
+        } else {
+            w = N->parent->left;
+            if (w->color == 1) {
+                w->color = 0;
+                N->parent->color = 1;
+                RightRotate(N->parent);
+                w = N->parent->left;
+            }
+            if (w->right->color == 0 && w->left->color == 0) {
+                w->color = 1;
+                N = N->parent;
+            } else {
+                if (w->left->color == 0) {
+                    w->right->color = 0;
+                    w->color = 1;
+                    LeftRotate(w);
+                    w = N->parent->left;
+                }
+                w->color = N->parent->color;
+                N->parent->color = 0;
+                N->left->color = 0;
+                RightRotate(N->parent);
+                N = root;
+            }
+        }
+    }
+    N->color = 0;
+    return;
+}
 
 // Access Functions -----------------------------------------------------------
 
