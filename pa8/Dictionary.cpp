@@ -193,6 +193,7 @@ void Dictionary::Delete(Node *N) {
     else {
         Node *y = findMin(N->right);
         if (y->parent != N) {
+            //RB_Transplant(y, y->right);
             transplant(y, y->right);
             y->right = N->right;
             y->right->parent = y;
@@ -531,6 +532,13 @@ void Dictionary::setValue(keyType k, valType v) {
     else {
         y->right = z;
     }
+
+    // Adding RB color stuff. Should be able to remove insert helper
+    z->left = nil;
+    z->right = nil;
+    z->color = 1;
+    //RB_InsertFixUp(z);  // This line causing segfault
+
     num_pairs++;
 }
 
@@ -542,6 +550,7 @@ void Dictionary::remove(keyType k) {
     Node *n = search(root, k);
 
     Delete(n);
+    //RB_Delete(n);
 
     num_pairs--;
     return;
