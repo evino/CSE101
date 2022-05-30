@@ -216,7 +216,13 @@ void Dictionary::LeftRotate(Node* N) {
     y = N->right;
 
     N->right = y->left;
+    
     if (y->left != nil) {
+        //y->left->parent = N;
+    }
+
+    y->parent = N->parent;
+    if (N->parent == nil) {
         root = y;
     } else if (N == N->parent->left) {
         N->parent->left = y;
@@ -236,7 +242,7 @@ void Dictionary::RightRotate(Node *N) {
 
     N->left = y->right;
     if (y->right != nil) {
-        y->right->parent = N;
+        //y->right->parent = N;
     }
 
     y->parent = N->parent;
@@ -342,10 +348,10 @@ void Dictionary::RB_Delete(Node *N) {
     int y_original_color = y->color;
     if (N->left == nil) {
         x = N->right;
-        transplant(N, N->right);
+        RB_Transplant(N, N->right);
     } else if (N->right == nil) {
         x = N->left;
-        transplant(N, N->left);
+        RB_Transplant(N, N->left);
     } else {
         y = findMin(N->right);
         y_original_color = y->color;
@@ -353,11 +359,11 @@ void Dictionary::RB_Delete(Node *N) {
         if (y->parent == N) {
             x->parent = y;
         } else {
-            transplant(y, y->right);
+            RB_Transplant(y, y->right);
             y->right = N->right;
             y->right->parent = y;
         }
-        transplant(N, y);
+        RB_Transplant(N, y);
         y->left = N->left;
         y->left->parent = y;
         y->color = N->color;
@@ -507,38 +513,39 @@ void Dictionary::clear() {
 // If a pair with key==k exists, overwrites the corresponding value with v,·
 // otherwise inserts the new pair (k, v)
 void Dictionary::setValue(keyType k, valType v) {
-    Node *y = nil;
-    Node *x = root;
-    while (x != nil) {
-        y = x;
-        if (k == x->key) {
-            x->val = v;
-            return;
-        } else if (k < x->key) {
-            x = x->left;
-        } else {
-            x = x->right;
-        }
-    }
+    //Node *y = nil;
+    //Node *x = root;
+    //while (x != nil) {
+        //y = x;
+        //if (k == x->key) {
+            //x->val = v;
+            //return;
+        //} else if (k < x->key) {
+            //x = x->left;
+        //} else {
+            //x = x->right;
+        //}
+    //}
     Node *z = new Node(k, v);
-    z->parent = y;
-    z->left = nil;
-    z->right = nil;
-    if (y == nil) {
-        root = z;
-    } else if (z->key < y->key) {
-        y->left = z;
-    }
-    else {
-        y->right = z;
-    }
+    //z->parent = y;
+    //z->left = nil;
+    //z->right = nil;
+    //if (y == nil) {
+        //root = z;
+    //} else if (z->key < y->key) {
+        //y->left = z;
+    //}
+    //else {
+        //y->right = z;
+    //}
 
-    // Adding RB color stuff. Should be able to remove insert helper
-    z->left = nil;
-    z->right = nil;
-    z->color = 1;
-    //RB_InsertFixUp(z);  // This line causing segfault
+    //// Adding RB color stuff. Should be able to remove insert helper
+    //z->left = nil;
+    //z->right = nil;
+    //z->color = 1;
+    ////RB_InsertFixUp(z);  // This line causing segfault
 
+    RB_Insert(z);
     num_pairs++;
 }
 
@@ -549,8 +556,8 @@ void Dictionary::remove(keyType k) {
     }
     Node *n = search(root, k);
 
-    Delete(n);
-    //RB_Delete(n);
+    //Delete(n);
+    RB_Delete(n);
 
     num_pairs--;
     return;
