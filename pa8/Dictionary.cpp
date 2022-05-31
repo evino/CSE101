@@ -562,6 +562,9 @@ void Dictionary::remove(keyType k) {
     Node *n = search(root, k);
 
     //Delete(n);
+    if (current == n) {
+        current = nil;
+    }
     RB_Delete(n);
 
     num_pairs--;
