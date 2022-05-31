@@ -218,7 +218,7 @@ void Dictionary::LeftRotate(Node* N) {
     N->right = y->left;
     
     if (y->left != nil) {
-        //y->left->parent = N;
+        y->left->parent = N;
     }
 
     y->parent = N->parent;
@@ -242,7 +242,7 @@ void Dictionary::RightRotate(Node *N) {
 
     N->left = y->right;
     if (y->right != nil) {
-        //y->right->parent = N;
+        y->right->parent = N;
     }
 
     y->parent = N->parent;
@@ -425,7 +425,7 @@ void Dictionary::RB_DeleteFixUp(Node *N) {
                 }
                 w->color = N->parent->color;
                 N->parent->color = 0;
-                N->left->color = 0;
+                w->left->color = 0;
                 RightRotate(N->parent);
                 N = root;
             }
