@@ -369,6 +369,7 @@ void Dictionary::RB_Delete(Node *N) {
         y->color = N->color;
     }
 
+
     if (y_original_color == 0) {
         RB_DeleteFixUp(x);
     }
@@ -513,25 +514,27 @@ void Dictionary::clear() {
 // If a pair with key==k exists, overwrites the corresponding value with v,·
 // otherwise inserts the new pair (k, v)
 void Dictionary::setValue(keyType k, valType v) {
-    //Node *y = nil;
-    //Node *x = root;
-    //while (x != nil) {
-        //y = x;
-        //if (k == x->key) {
-            //x->val = v;
-            //return;
-        //} else if (k < x->key) {
-            //x = x->left;
-        //} else {
-            //x = x->right;
-        //}
-    //}
+    Node *y = nil;
+    Node *x = root;
+    while (x != nil) {
+        y = x;
+        if (k == x->key) {
+            x->val = v;
+            return;
+        } else if (k < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
     Node *z = new Node(k, v);
-    //z->parent = y;
-    //z->left = nil;
-    //z->right = nil;
+    z->parent = y;
+    z->left = nil;
+    z->right = nil;
+    
+
     //if (y == nil) {
-        //root = z;
+    //    root = z;
     //} else if (z->key < y->key) {
         //y->left = z;
     //}
