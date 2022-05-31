@@ -369,6 +369,8 @@ void Dictionary::RB_Delete(Node *N) {
         y->color = N->color;
     }
 
+    delete N;
+    N = nil;
 
     if (y_original_color == 0) {
         RB_DeleteFixUp(x);
