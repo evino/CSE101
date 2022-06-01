@@ -9,9 +9,12 @@
 #------------------------------------------------------------------------------
 
 MAIN           = WordFrequency
+ORDER		   = Order
 ADT            = Dictionary
 SOURCE         = $(MAIN).cpp
 OBJECT         = $(MAIN).o
+ORDER_SOURCE   = $(ORDER).cpp
+ORDER_OBJECT   = $(ORDER).o
 ADT_TEST	   = $(ADT)Test
 ADT_CLIENT     = $(ADT)Client
 ADT_SOURCE     = $(ADT).cpp
@@ -24,6 +27,9 @@ MEMCHECK       = valgrind --leak-check=full
 
 $(MAIN): $(OBJECT) $(ADT_OBJECT)
 	$(LINK) $(MAIN) $(OBJECT) $(ADT_OBJECT)
+
+$(ORDER): $(OBJECT) $(ADT_OBJECT)
+	$(LINK) $(ORDER) $(OBJECT) $(ADT_OBJECT)
 
 $(ADT_TEST): $(ADT_TEST).o $(ADT_OBJECT)
 	$(LINK) $(ADT_TEST) $(ADT_TEST).o $(ADT_OBJECT)
@@ -44,7 +50,7 @@ $(ADT_OBJECT): $(ADT_SOURCE) $(ADT_HEADER)
 	$(COMPILE) $(ADT_SOURCE)
 
 clean:
-	$(REMOVE) $(MAIN) $(ADT_TEST) $(ADT_CLIENT) $(OBJECT) $(ADT_TEST).o  $(ADT_CLIENT).o $(ADT_OBJECT)
+	$(REMOVE) $(MAIN) $(ORDER) $(ADT_TEST) $(ADT_CLIENT) $(OBJECT) $(ADT_TEST).o  $(ADT_CLIENT).o $(ADT_OBJECT)
 
 $(MAIN)Check: $(MAIN)
 	$(MEMCHECK) $(MAIN) GutenBerg.txt
