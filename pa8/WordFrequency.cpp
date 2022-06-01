@@ -29,7 +29,8 @@ int main(int argc, char * argv[]){
     ofstream out;
     string line;
     string token;
-    string delim = " \t\\\"\',<.>/?;:[{]}|`~!@#$^&*()-_=+0123456789";
+    //string delim = " \t\\\"\',<.>/?;:[{]}|`~!@#$^&*()-_=+0123456789";
+    string delim = " \t\\\"\',<.>/?;:[{]}|`~!@#$%^&*()-_=+0123456789";
     Dictionary D;
 
     // check command line for correct number of arguments
@@ -63,11 +64,11 @@ int main(int argc, char * argv[]){
         token = line.substr(begin, end-begin);
 
         while( token!="" ){  // we have a token
-            for (int i = 0; i < token.length(); i++) {
-                tolower(token[i]);
+            for (unsigned int i = 0; i < token.length(); i++) {
+                token[i] = tolower(token[i]);
             }
 
-            if (!D.contains(token)) {
+            if (!(D.contains(token))) {
                 D.setValue(token, 1);
             } else {
                 D.getValue(token)++;
@@ -81,11 +82,12 @@ int main(int argc, char * argv[]){
         }
 
         // print tokens in this line
-        out << D << endl;
         //out << "line " << line_count << " contains " << token_count;
         //out << " token" << (token_count==1?"":"s") << endl;
         //out << tokenBuffer << endl;
     }
+    out << D << endl;
+
 
     // close files 
     in.close();
