@@ -12,7 +12,8 @@ MAIN           = WordFrequency
 ADT            = Dictionary
 SOURCE         = $(MAIN).cpp
 OBJECT         = $(MAIN).o
-ADT_TEST       = $(ADT)Client
+ADT_TEST	   = $(ADT)Test
+ADT_CLIENT     = $(ADT)Client
 ADT_SOURCE     = $(ADT).cpp
 ADT_OBJECT     = $(ADT).o
 ADT_HEADER     = $(ADT).h
@@ -27,17 +28,23 @@ $(MAIN): $(OBJECT) $(ADT_OBJECT)
 $(ADT_TEST): $(ADT_TEST).o $(ADT_OBJECT)
 	$(LINK) $(ADT_TEST) $(ADT_TEST).o $(ADT_OBJECT)
 
+$(ADT_CLIENT): $(ADT_CLIENT).o $(ADT_OBJECT)
+	$(LINK) $(ADT_CLIENT) $(ADT_CLIENT).o $(ADT_OBJECT)
+
 $(OBJECT): $(SOURCE) $(ADT_HEADER)
 	$(COMPILE) $(SOURCE)
 
 $(ADT_TEST).o: $(ADT_TEST).cpp $(ADT_HEADER)
 	$(COMPILE) $(ADT_TEST).cpp
 
+$(ADT_CLIENT).o: $(ADT_CLIENT).cpp $(ADT_HEADER)
+	$(COMPILE) $(ADT_CLIENT).cpp
+
 $(ADT_OBJECT): $(ADT_SOURCE) $(ADT_HEADER)
 	$(COMPILE) $(ADT_SOURCE)
 
 clean:
-	$(REMOVE) $(MAIN) $(ADT_TEST) $(OBJECT) $(ADT_TEST).o $(ADT_OBJECT)
+	$(REMOVE) $(MAIN) $(ADT_TEST) $(ADT_CLIENT) $(OBJECT) $(ADT_TEST).o  $(ADT_CLIENT).o $(ADT_OBJECT)
 
 $(MAIN)Check: $(MAIN)
 	$(MEMCHECK) $(MAIN) GutenBerg.txt
