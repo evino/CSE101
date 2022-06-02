@@ -1,4 +1,7 @@
 //-----------------------------------------------------------------------------
+// Evin Odisho
+// edodisho
+// PA8
 // Dictionary.h
 // Header file for Dictionary ADT based on a Red-Black Tree. Includes a
 // built in iterator called current that can perform a smallest-to-largest
