@@ -1,4 +1,7 @@
 #------------------------------------------------------------------------------
+#  Evin Odisho
+#  edodisho
+#  PA8
 #  Makefile for CSE 101 Programming Assignment 8
 #
 #  make                     makes WordFrequency
