@@ -29,7 +29,6 @@ int main(int argc, char * argv[]){
     ofstream out;
     string line;
     string token;
-    //string delim = " \t\\\"\',<.>/?;:[{]}|`~!@#$^&*()-_=+0123456789";
     string delim = " \t\\\"\',<.>/?;:[{]}|`~!@#$%^&*()-_=+0123456789";
     Dictionary D;
 
@@ -56,8 +55,6 @@ int main(int argc, char * argv[]){
     while( getline(in, line) )  {
         len = line.length();
       
-        // get tokens in this line
-
         // get first token
         begin = min(line.find_first_not_of(delim, 0), len);
         end   = min(line.find_first_of(delim, begin), len);
@@ -80,11 +77,6 @@ int main(int argc, char * argv[]){
             end   = min(line.find_first_of(delim, begin), len);
             token = line.substr(begin, end-begin);
         }
-
-        // print tokens in this line
-        //out << "line " << line_count << " contains " << token_count;
-        //out << " token" << (token_count==1?"":"s") << endl;
-        //out << tokenBuffer << endl;
     }
     out << D << endl;
 
